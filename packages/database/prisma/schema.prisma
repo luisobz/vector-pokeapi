@@ -1,0 +1,52 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions", "typedSql"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [pgvector(map: "vector"), unaccent]
+}
+
+// Pokémon principal
+model Pokemon {
+  id           Int      @id
+  name         String
+  nameEs       String?
+  description  String?
+  types        String[]
+  generation   Int                              // Extraído de /pokemon-species
+  stats        Json                             // hp, attack, defense, spAtk, spDef, speed
+  sprite       String?                          // URL sprite oficial
+  embedding  Unsupported("vector(1536)")?
+
+  evolvesFrom  EvolutionEdge[] @relation("EvolvesTo")
+  evolvesTo    EvolutionEdge[] @relation("EvolvesFrom")
+
+  @@map("pokemons")
+}
+
+// Grafo de evoluciones (extraído de /evolution-chain)
+model EvolutionEdge {
+  id            Int     @id @default(autoincrement())
+  fromPokemonId Int
+  toPokemonId   Int
+  trigger       String  // "level-up" | "use-item" | "trade" | "other"
+  minLevel      Int?
+  itemName      String? // piedra lunar, etc.
+
+  from Pokemon @relation("EvolvesFrom", fields: [fromPokemonId], references: [id])
+  to   Pokemon @relation("EvolvesTo",   fields: [toPokemonId],   references: [id])
+
+  @@map("evolution_edges")
+}
+
+// Templates semánticos pre-vectorizados (UX showcase)
+model SearchTemplate {
+  id          Int     @id @default(autoincrement())
+  queryText   String  @unique @map("query_text")
+  category    String? // "tipo", "rol", "lore", "evolución" — para agrupar en UI
+  embedding  Unsupported("vector(1536)")?
+
+  @@map("search_templates")
+}

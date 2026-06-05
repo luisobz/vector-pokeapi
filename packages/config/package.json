@@ -1,0 +1,19 @@
+{
+  "name": "@vector-pokeapi/config",
+  "type": "module",
+  "private": true,
+  "version": "0.0.1",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "exports": {
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./tsconfig.react.json": "./tsconfig.react.json",
+    "./eslint.config.js": "./eslint.config.js",
+    "./env": "./src/environment.ts"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "@types/node": "25.9.2"
+  }
+}

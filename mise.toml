@@ -1,0 +1,24 @@
+[tools]
+starship = "latest"
+python = "3.13"
+node = "26"
+pnpm = "10.33.4"
+
+[settings]
+experimental = true
+
+[tasks.install]
+description = "Install python dependencies for pokeAPI project"
+run = "pip install -r scripts/ai-sync/requirements.txt"
+
+[tasks.fetch]
+description = "Fetch data from pokeAPI"
+run = "python scripts/ai-sync/fetch_data.py"
+
+[tasks.vectorize]
+description = "Vectorize data from pokeAPI"
+run = "python scripts/ai-sync/vectorize.py"
+
+[tasks.all]
+description = "Fetch and vectorize data from pokeAPI"
+run = "mise run fetch && mise run vectorize"

@@ -1,0 +1,34 @@
+{
+  "name": "@vector-pokeapi/web",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "clean": "rm -rf .next node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vector-pokeapi/shared-types": "workspace:*",
+    "@vector-pokeapi/ui": "workspace:*",
+    "framer-motion": "^12.40.0",
+    "next": "^16.2.7",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.3",
+    "recharts": "^3.8.1",
+    "lucide-react": "1.17.0"
+  },
+  "devDependencies": {
+    "@vector-pokeapi/config": "workspace:*",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.16",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^10.4.1",
+    "eslint-config-next": "^16.2.7",
+    "tailwindcss": "^4.3.0",
+    "@tailwindcss/postcss": "^4.3.0",
+    "typescript": "^6.0.3"
+  }
+}

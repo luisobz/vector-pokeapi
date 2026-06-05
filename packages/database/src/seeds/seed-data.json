@@ -1,0 +1,355 @@
+{
+  "pokemons": [
+    {
+      "id": 1,
+      "name": "bulbasaur",
+      "nameEs": "Bulbasaur",
+      "description": "Este Pokémon nace con una semilla en el lomo, que brota con el paso del tiempo y crece con él.",
+      "types": ["grass", "poison"],
+      "generation": 1,
+      "stats": {
+        "hp": 45,
+        "attack": 49,
+        "defense": 49,
+        "spAtk": 65,
+        "spDef": 65,
+        "speed": 45
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+    },
+    {
+      "id": 2,
+      "name": "ivysaur",
+      "nameEs": "Ivysaur",
+      "description": "Cuando le crece el capullo que tiene en el lomo, pierde la capacidad de ponerse de pie sobre las patas traseras.",
+      "types": ["grass", "poison"],
+      "generation": 1,
+      "stats": {
+        "hp": 60,
+        "attack": 62,
+        "defense": 63,
+        "spAtk": 80,
+        "spDef": 80,
+        "speed": 60
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"
+    },
+    {
+      "id": 3,
+      "name": "venusaur",
+      "nameEs": "Venusaur",
+      "description": "La flor que tiene en el lomo libera un aroma dulce y aromático que calma las emociones de la gente.",
+      "types": ["grass", "poison"],
+      "generation": 1,
+      "stats": {
+        "hp": 80,
+        "attack": 82,
+        "defense": 83,
+        "spAtk": 100,
+        "spDef": 100,
+        "speed": 80
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png"
+    },
+    {
+      "id": 4,
+      "name": "charmander",
+      "nameEs": "Charmander",
+      "description": "Prefiere las cosas calientes. Dicen que cuando llueve le sale vapor de la punta de la cola.",
+      "types": ["fire"],
+      "generation": 1,
+      "stats": {
+        "hp": 39,
+        "attack": 52,
+        "defense": 43,
+        "spAtk": 60,
+        "spDef": 50,
+        "speed": 65
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"
+    },
+    {
+      "id": 5,
+      "name": "charmeleon",
+      "nameEs": "Charmeleon",
+      "description": "Si se excita durante los combates, expulsa llamas ardientes y quema todo lo que encuentra a su alrededor.",
+      "types": ["fire"],
+      "generation": 1,
+      "stats": {
+        "hp": 58,
+        "attack": 64,
+        "defense": 58,
+        "spAtk": 80,
+        "spDef": 65,
+        "speed": 80
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png"
+    },
+    {
+      "id": 6,
+      "name": "charizard",
+      "nameEs": "Charizard",
+      "description": "Escupe fuego lo suficientemente caliente como para derretir rocas. Se sabe que causa incendios forestales sin querer.",
+      "types": ["fire", "flying"],
+      "generation": 1,
+      "stats": {
+        "hp": 78,
+        "attack": 84,
+        "defense": 78,
+        "spAtk": 109,
+        "spDef": 85,
+        "speed": 100
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
+    },
+    {
+      "id": 7,
+      "name": "squirtle",
+      "nameEs": "Squirtle",
+      "description": "Cuando se siente amenazado, esconde sus patas y su cabeza dentro del caparazón para protegerse.",
+      "types": ["water"],
+      "generation": 1,
+      "stats": {
+        "hp": 44,
+        "attack": 48,
+        "defense": 65,
+        "spAtk": 50,
+        "spDef": 64,
+        "speed": 43
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png"
+    },
+    {
+      "id": 8,
+      "name": "wartortle",
+      "nameEs": "Wartortle",
+      "description": "Es muy popular como mascota. Su peluda cola es un símbolo de longevidad.",
+      "types": ["water"],
+      "generation": 1,
+      "stats": {
+        "hp": 59,
+        "attack": 63,
+        "defense": 80,
+        "spAtk": 65,
+        "spDef": 80,
+        "speed": 58
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png"
+    },
+    {
+      "id": 9,
+      "name": "blastoise",
+      "nameEs": "Blastoise",
+      "description": "Un Pokémon brutal con cañones de agua en su caparazón. Se usa para apagar incendios y en combates pesados.",
+      "types": ["water"],
+      "generation": 1,
+      "stats": {
+        "hp": 79,
+        "attack": 83,
+        "defense": 100,
+        "spAtk": 85,
+        "spDef": 105,
+        "speed": 78
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png"
+    },
+    {
+      "id": 25,
+      "name": "pikachu",
+      "nameEs": "Pikachu",
+      "description": "Mantiene la cola en alto para vigilar su entorno. A veces le cae un rayo en esta postura.",
+      "types": ["electric"],
+      "generation": 1,
+      "stats": {
+        "hp": 35,
+        "attack": 55,
+        "defense": 40,
+        "spAtk": 50,
+        "spDef": 50,
+        "speed": 90
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
+    },
+    {
+      "id": 26,
+      "name": "raichu",
+      "nameEs": "Raichu",
+      "description": "Su cola actúa como un polo a tierra para descargar electricidad estática y no dañarse a sí mismo.",
+      "types": ["electric"],
+      "generation": 1,
+      "stats": {
+        "hp": 60,
+        "attack": 90,
+        "defense": 55,
+        "spAtk": 90,
+        "spDef": 80,
+        "speed": 110
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png"
+    },
+    {
+      "id": 133,
+      "name": "eevee",
+      "nameEs": "Eevee",
+      "description": "Posee una estructura genética inestable que le permite evolucionar en múltiples formas diferentes según su entorno.",
+      "types": ["normal"],
+      "generation": 1,
+      "stats": {
+        "hp": 55,
+        "attack": 55,
+        "defense": 50,
+        "spAtk": 45,
+        "spDef": 65,
+        "speed": 55
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png"
+    },
+    {
+      "id": 134,
+      "name": "vaporeon",
+      "nameEs": "Vaporeon",
+      "description": "Su estructura celular es similar a las moléculas de agua. Tiene la capacidad de fundirse en el agua para hacerse invisible.",
+      "types": ["water"],
+      "generation": 1,
+      "stats": {
+        "hp": 130,
+        "attack": 65,
+        "defense": 60,
+        "spAtk": 110,
+        "spDef": 95,
+        "speed": 65
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png"
+    },
+    {
+      "id": 135,
+      "name": "jolteon",
+      "nameEs": "Jolteon",
+      "description": "Acumula iones negativos en la atmósfera para lanzar rayos de 10.000 voltios.",
+      "types": ["electric"],
+      "generation": 1,
+      "stats": {
+        "hp": 65,
+        "attack": 65,
+        "defense": 60,
+        "spAtk": 110,
+        "spDef": 95,
+        "speed": 130
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png"
+    },
+    {
+      "id": 136,
+      "name": "flareon",
+      "nameEs": "Flareon",
+      "description": "Almacena aire caliente en su esponjoso cuello para exhalar llamas que alcanzan los 1.700 grados Celsius.",
+      "types": ["fire"],
+      "generation": 1,
+      "stats": {
+        "hp": 65,
+        "attack": 130,
+        "defense": 60,
+        "spAtk": 95,
+        "spDef": 110,
+        "speed": 65
+      },
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png"
+    }
+  ],
+  "evolutionEdges": [
+    {
+      "fromPokemonId": 1,
+      "toPokemonId": 2,
+      "trigger": "level-up",
+      "minLevel": 16
+    },
+    {
+      "fromPokemonId": 2,
+      "toPokemonId": 3,
+      "trigger": "level-up",
+      "minLevel": 32
+    },
+    {
+      "fromPokemonId": 4,
+      "toPokemonId": 5,
+      "trigger": "level-up",
+      "minLevel": 16
+    },
+    {
+      "fromPokemonId": 5,
+      "toPokemonId": 6,
+      "trigger": "level-up",
+      "minLevel": 36
+    },
+    {
+      "fromPokemonId": 7,
+      "toPokemonId": 8,
+      "trigger": "level-up",
+      "minLevel": 16
+    },
+    {
+      "fromPokemonId": 8,
+      "toPokemonId": 9,
+      "trigger": "level-up",
+      "minLevel": 36
+    },
+    {
+      "fromPokemonId": 25,
+      "toPokemonId": 26,
+      "trigger": "use-item",
+      "itemName": "thunder-stone"
+    },
+    {
+      "fromPokemonId": 133,
+      "toPokemonId": 134,
+      "trigger": "use-item",
+      "itemName": "water-stone"
+    },
+    {
+      "fromPokemonId": 133,
+      "toPokemonId": 135,
+      "trigger": "use-item",
+      "itemName": "thunder-stone"
+    },
+    {
+      "fromPokemonId": 133,
+      "toPokemonId": 136,
+      "trigger": "use-item",
+      "itemName": "fire-stone"
+    }
+  ],
+  "searchTemplates": [
+    {
+      "queryText": "ratón eléctrico amarillo rápido",
+      "category": "tipo"
+    },
+    {
+      "queryText": "lagarto de fuego con cola ardiente",
+      "category": "tipo"
+    },
+    {
+      "queryText": "tanque de agua defensivo pesado",
+      "category": "rol"
+    },
+    {
+      "queryText": "criatura de planta con flor gigante",
+      "category": "lore"
+    },
+    {
+      "queryText": "evoluciona usando una piedra trueno",
+      "category": "evolución"
+    },
+    {
+      "queryText": "se transforma con piedra agua",
+      "category": "evolución"
+    },
+    {
+      "queryText": "atacante físico veloz de tipo fuego",
+      "category": "rol"
+    },
+    {
+      "queryText": "criatura que se adapta a cualquier clima",
+      "category": "lore"
+    }
+  ]
+}

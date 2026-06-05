@@ -1,0 +1,31 @@
+{
+  "extends": "@vector-pokeapi/config/tsconfig.react.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@vector-pokeapi/shared-types": [
+        "../../packages/shared-types/src/index.ts"
+      ],
+      "@vector-pokeapi/ui": [
+        "../../packages/ui/src/index.ts"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "noEmit": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/**/*",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

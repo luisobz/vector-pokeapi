@@ -1,0 +1,13 @@
+node_modules/
+.turbo/
+dist/
+.next/
+*.env
+.env.local
+.env.production
+
+# AI sync — solo en tu máquina
+scripts/ai-sync/raw-data.json
+scripts/ai-sync/checkpoint.json
+scripts/ai-sync/__pycache__/
+scripts/ai-sync/.venv/

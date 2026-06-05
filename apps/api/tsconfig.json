@@ -1,0 +1,27 @@
+{
+  "extends": "@vector-pokeapi/config/tsconfig.base.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist",
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@@/*": [
+        "./*"
+      ],
+      "@vector-pokeapi/shared-types": [
+        "../../packages/shared-types/src/index.ts"
+      ],
+      "@vector-pokeapi/database": [
+        "../../packages/database/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ]
+}
