@@ -1,44 +1,83 @@
-# AI Sync — Generación de embeddings (requiere GPU)
+# AI Sync — Generación de Embeddings (requiere GPU)
 
-## Setup
+Sistema para generar embeddings de alta calidad de datos Pokémon usando **Qwen3-Embedding-8B** y preparar el `seed-data.json` para Prisma.
+
+---
+
+## Características
+
+- Descarga fresca desde PokéAPI
+- Embeddings con modelo Qwen3-Embedding-8B (4096 → padded a 1536)
+- Soporte de checkpoint y reanudación
+- Servidor FastAPI para búsquedas en runtime
+
+---
+
+## Prerrequisitos Local minimos
+
+- **RTX 5070 Ti** → Perfectamente compatible (16GB)
+- Python 3.13
+- [mise](https://mise.jdx.dev)
+- Ollama
+
+---
+
+## Uso con Mise
 
 ```bash
-cd scripts/ai-sync
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-# Si tienes CUDA 12.8:
-pip install torch --index-url https://download.pytorch.org/whl/cu128
+mise run install     # Instalar dependencias
+mise run all         # Fetch + Vectorize completo
 ```
 
-## Orden de ejecución
+### Comandos individuales
 
-### 1. Fetch de datos desde PokéAPI
 ```bash
-python fetch_data.py
-# Output: raw-data.json (ignorado por git)
-# Usa checkpoint.json para reanudar si se interrumpe
+mise run fetch      # Descargar datos PokéAPI
+mise run vectorize  # Generar embeddings
 ```
 
-### 2. Vectorización con Qwen3-Embedding-4B
-```bash
-python vectorize.py
-# Input:  raw-data.json
-# Output: ../../packages/database/prisma/seed-data.json
-# Carga el modelo en VRAM una sola vez, procesa en batches de 32
-```
+---
 
-### 3. Commitear la seed
-```bash
-cd ../..
-git add packages/database/prisma/seed-data.json
-git commit -m "chore: update vectorized seed data"
-```
+## Detalles del Pipeline
 
-## Servidor de embeddings (búsqueda de texto libre en runtime)
+### 1. Fetch
+- `python fetch_data.py`
+- Output: `data/raw-data.json`
+
+### 2. Vectorize (mejorado)
+- `python vectorize.py`
+- Modelo: **Qwen/Qwen3-Embedding-4B**
+- Batch size recomendado: **48-64** (RTX 5070 Ti)
+- Flash Attention 2 + FP16
+- Padding automático a 4096 dimensiones
+
+---
+
+## Servidor de Embeddings
 
 ```bash
 python embed_server.py
-# Levanta FastAPI en http://localhost:8000
-# POST /embed { "text": "ratón eléctrico" } → { "embedding": [...] }
 ```
+
+**Endpoint:**
+`POST http://localhost:8000/embed`
+
+```json
+{
+  "text": "ratón eléctrico tipo planta"
+}
+```
+
+---
+
+## Troubleshooting (RTX 5070 Ti)
+
+- **CUDA out of memory** → Baja `batch_size` a 32 en `vectorize.py`
+- **No detecta GPU** → Verifica con:
+  ```bash
+  python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0))"
+  ```
+- **Error de compute capability** → Asegúrate de haber instalado Torch con `cu128`
+
+---
+

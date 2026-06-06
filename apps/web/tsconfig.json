@@ -11,6 +11,9 @@
       ],
       "@vector-pokeapi/ui": [
         "../../packages/ui/src/index.ts"
+      ],
+      "@vector-pokeapi/elements-effects": [
+        "../../packages/elements-effects/src/index.tsx"
       ]
     },
     "plugins": [

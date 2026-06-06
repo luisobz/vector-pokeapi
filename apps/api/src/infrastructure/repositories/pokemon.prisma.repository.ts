@@ -91,18 +91,25 @@ export class PokemonRepository implements IPokemonRepository {
    */
   async searchBySimilarity(
     embedding: number[],
-    options?: { type?: string; gen?: number; limit?: number }
+    options?: { type?: string; gen?: number; limit?: number; distanceThreshold?: number }
   ): Promise<Pokemon[]> {
     const limit = options?.limit || 12;
     const type = options?.type || null;
     const gen = options?.gen || null;
+    const distanceThreshold = options?.distanceThreshold ?? null;
+
+    const embeddingString = `[${embedding.join(",")}]`;
+    const sqlParams: any[] = [];
+
+    // $1 is always the embedding vector so we can reference it multiple times
+    sqlParams.push(embeddingString);
+    const embeddingParamIndex = sqlParams.length; // 1
 
     let query = `
-      SELECT id, name, "nameEs", description, types, generation, stats, sprite
+      SELECT id, name, "nameEs", description, types, generation, stats, sprite, height, weight
       FROM pokemons
       WHERE embedding IS NOT NULL
     `;
-    const sqlParams: any[] = [];
 
     if (type) {
       sqlParams.push(type);
@@ -114,9 +121,13 @@ export class PokemonRepository implements IPokemonRepository {
       query += ` AND generation = $${sqlParams.length}`;
     }
 
-    const embeddingString = `[${embedding.join(",")}]`;
-    sqlParams.push(embeddingString);
-    query += ` ORDER BY embedding <=> $${sqlParams.length}::vector ASC`;
+    // Distance threshold: only include results closer than the threshold
+    if (distanceThreshold !== null) {
+      sqlParams.push(distanceThreshold);
+      query += ` AND (embedding <=> $${embeddingParamIndex}::vector) <= $${sqlParams.length}`;
+    }
+
+    query += ` ORDER BY embedding <=> $${embeddingParamIndex}::vector ASC`;
 
     sqlParams.push(limit);
     query += ` LIMIT $${sqlParams.length}`;
@@ -141,8 +152,10 @@ export class PokemonRepository implements IPokemonRepository {
           speed: stats?.speed || 0,
         },
         sprite: r.sprite,
+        height: r.height,
+        weight: r.weight,
       };
-    });
+    }).sort((a, b) => a.id - b.id);
   }
 
   /**
@@ -157,7 +170,7 @@ export class PokemonRepository implements IPokemonRepository {
     const gen = options?.gen || null;
 
     let sql = `
-      SELECT id, name, "nameEs", description, types, generation, stats, sprite
+      SELECT id, name, "nameEs", description, types, generation, stats, sprite, height, weight
       FROM pokemons
       WHERE 1=1
     `;
@@ -176,7 +189,7 @@ export class PokemonRepository implements IPokemonRepository {
     if (query) {
       sqlParams.push(`%${query}%`);
       sql += ` AND (name ILIKE $${sqlParams.length} OR "nameEs" ILIKE $${sqlParams.length} OR description ILIKE $${sqlParams.length})`;
-      sql += ` ORDER BY name ASC`;
+      sql += ` ORDER BY id ASC`;
     } else {
       sql += ` ORDER BY id ASC`;
     }
@@ -204,6 +217,8 @@ export class PokemonRepository implements IPokemonRepository {
           speed: stats?.speed || 0,
         },
         sprite: r.sprite,
+        height: r.height,
+        weight: r.weight,
       };
     });
   }

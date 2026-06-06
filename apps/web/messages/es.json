@@ -1,0 +1,40 @@
+{
+  "Layout": {
+    "title": "Pokédex Semántica — v2.0",
+    "description": "Buscador de Pokémon potenciado por inteligencia artificial y emparejamientos vectoriales semánticos usando Qwen3-Embedding.",
+    "headerLogoPrefix": "POKÉDEX",
+    "headerLogoSuffix": "SEMÁNTICA",
+    "versionLabel": "v2.0 Qwen Embedding",
+    "footer": "© 2026 Pokédex Semántica. Construido con Next.js + Fastify + pgvector."
+  },
+  "SearchPage": {
+    "hnswBadge": "Búsqueda Vectorial HNSW",
+    "heroTitle1": "Explora la Pokédex de Forma",
+    "heroTitleHighlight": "Semántica",
+    "heroSubtitle": "Busca por rasgos, roles competitivos o descripciones. El modelo de embeddings Qwen3 mapea tus ideas a los Pokémon correspondientes.",
+    "searchPlaceholder": "Ej. 'lagarto escupidor de fuego' o 'tanque defensivo de agua'...",
+    "filtersButton": "Filtros",
+    "clearFilters": "Limpiar filtros",
+    "elementalType": "Tipo Elemental",
+    "generation": "Generación",
+    "genPrefix": "Gén",
+    "semanticExamples": "Consultas Semánticas de Ejemplo",
+    "noResults": "No se encontraron resultados",
+    "noResultsDesc": "Intenta cambiar los términos de búsqueda o limpiar los filtros activos."
+  },
+  "PokemonDetail": {
+    "loading": "Cargando base de datos semántica...",
+    "errorTitle": "Error",
+    "errorDefault": "No se pudo cargar el Pokémon.",
+    "backButton": "Volver al Buscador",
+    "baseStats": "Estadísticas Base",
+    "evolutionRoadmap": "Hoja de Ruta Evolutiva",
+    "similarConcepts": "Esencia Conceptual Similar",
+    "cosineSimilarity": "Similitud de Coseno",
+    "genAccordion": "Generación {gen} ({count})",
+    "noVectors": "No hay suficientes datos de embeddings vectoriales cargados para buscar similitudes.",
+    "loreTitle": "Lore del Pokémon",
+    "showMore": "Leer más",
+    "showLess": "Mostrar menos"
+  }
+}

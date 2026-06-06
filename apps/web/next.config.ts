@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       }
     ]
   },
-  transpilePackages: ["@vector-pokeapi/ui"]
+  transpilePackages: ["@vector-pokeapi/ui", "@vector-pokeapi/elements-effects"]
 };
 
 export default nextConfig;

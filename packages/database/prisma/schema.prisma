@@ -18,6 +18,9 @@ model Pokemon {
   generation   Int                              // Extraído de /pokemon-species
   stats        Json                             // hp, attack, defense, spAtk, spDef, speed
   sprite       String?                          // URL sprite oficial
+  height       Int?
+  order        Int?
+  weight       Int?
   embedding  Unsupported("vector(1536)")?
 
   evolvesFrom  EvolutionEdge[] @relation("EvolvesTo")

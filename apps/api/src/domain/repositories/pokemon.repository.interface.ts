@@ -2,7 +2,7 @@ import { Pokemon, PokemonDetail, PokemonSimilarResult, SimilarGroupedByGen } fro
 
 export interface IPokemonRepository {
   getById(id: number): Promise<PokemonDetail | null>;
-  searchBySimilarity(embedding: number[], options?: { type?: string; gen?: number; limit?: number }): Promise<Pokemon[]>;
+  searchBySimilarity(embedding: number[], options?: { type?: string; gen?: number; limit?: number; distanceThreshold?: number }): Promise<Pokemon[]>;
   searchByText(query: string, options?: { type?: string; gen?: number; limit?: number }): Promise<Pokemon[]>;
   getConceptuallySimilar(id: number): Promise<SimilarGroupedByGen[]>;
 }

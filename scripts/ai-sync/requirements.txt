@@ -1,15 +1,13 @@
-# Embeddings y ML
-sentence-transformers>=3.4.0
-torch>=2.6.0
-# CUDA: instala manualmente según tu versión de CUDA:
-# pip install torch --index-url https://download.pytorch.org/whl/cu128
+# ==================== AI Embeddings ====================
+ollama>=0.4.0
 
-# Servidor de embeddings on-demand
+# ==================== Servidor de embeddings ====================
 fastapi>=0.115.0
 uvicorn[standard]>=0.34.0
 
-# HTTP async para PokéAPI
+# ==================== Fetch de datos (PokéAPI) ====================
+requests>=2.32.0
 httpx>=0.28.0
 
-# Utilidades
+# ==================== Utilidades ====================
 tqdm>=4.67.0

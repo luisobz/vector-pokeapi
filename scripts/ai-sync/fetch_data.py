@@ -52,6 +52,57 @@ def clean_text(text):
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
 
+def build_pokemon_lore(species, language='es'):
+    names = species.get('names', [])
+    name = next((n['name'] for n in names if n['language']['name'] == language), species.get('name', ''))
+
+    genera = species.get('genera', [])
+    genus = next((g['genus'] for g in genera if g['language']['name'] == language), None)
+    if not genus:
+        genus = next((g['genus'] for g in genera if g['language']['name'] == 'en'), '')
+
+    flavor_text_entries = species.get('flavor_text_entries', [])
+    flavor_texts = []
+    for f in flavor_text_entries:
+        if f['language']['name'] == language:
+            text = f['flavor_text'].replace('\f', ' ').replace('\n', ' ')
+            text = re.sub(r'\s+', ' ', text).strip()
+            if text not in flavor_texts:
+                flavor_texts.append(text)
+
+    lore_fragments = re.sub(r'\s+', ' ', ' '.join(flavor_texts[:10]))
+
+    traits = []
+    if species.get('is_baby'): traits.append('un Pokémon bebé')
+    if species.get('is_legendary'): traits.append('un Pokémon legendario')
+    if species.get('is_mythical'): traits.append('un Pokémon singular')
+
+    if genus:
+        traits.append(f'conocido como "{genus}"')
+
+    habitat = species.get('habitat')
+    if habitat:
+        traits.append(f"habitante habitual de entornos {habitat['name']}")
+
+    color = species.get('color')
+    if color:
+        traits.append(f"de color predominante {color['name']}")
+
+    shape = species.get('shape')
+    if shape:
+        traits.append(f"con una silueta clasificada como {shape['name']}")
+
+    intro = f"{name} es {', '.join(traits)}." if traits else f"{name} es un Pokémon."
+    
+    generation_name = species.get('generation', {}).get('name', '')
+    generation = f"{name} apareció por primera vez en la {generation_name}."
+
+    egg_groups = species.get('egg_groups', [])
+    breeding = f"Pertenece a los grupos huevo {', '.join([g['name'] for g in egg_groups])}." if egg_groups else ""
+
+    parts = [intro, generation, breeding, lore_fragments]
+    return '\n\n'.join([p for p in parts if p])
+
 def parse_evolution_chain(node, edges, visited_edges):
     current_species_id = int(node['species']['url'].split('/')[-2])
     for child in node.get('evolves_to', []):
@@ -84,11 +135,11 @@ def main():
     start_id = 1
     end_id = 151
     
-    output_dir = os.path.join(os.path.dirname(__file__), "..", "..", "data")
+    output_dir = os.path.join(os.path.dirname(__file__), "..", "..", "packages", "database", "src", "seeds")
     os.makedirs(output_dir, exist_ok=True)
     
     checkpoint_path = os.path.join(output_dir, "checkpoint.json")
-    raw_data_path = os.path.join(output_dir, "raw-data.json")
+    raw_data_path = os.path.join(output_dir, "seed-data.json")
     
     # Load checkpoint if exists
     state = {"last_id": 0, "pokemons": [], "evolution_edges": [], "processed_chains": []}
@@ -141,11 +192,14 @@ def main():
             # Extract Spanish name if available, fallback to default name
             name_es = next((n['name'] for n in s_data['names'] if n['language']['name'] == 'es'), None)
             
-            # Extract Spanish description (flavor text)
-            desc_es = next((f['flavor_text'] for f in s_data['flavor_text_entries'] if f['language']['name'] == 'es'), None)
-            desc_es = clean_text(desc_es) if desc_es else ""
+            # Extract Spanish description (flavor text) using the new lore builder
+            desc_es = build_pokemon_lore(s_data, 'es')
             
             gen_number = parse_roman_generation(s_data['generation']['name'])
+            
+            height = p_data.get('height')
+            order = p_data.get('order')
+            weight = p_data.get('weight')
             
             # Append Pokemon
             pokemons.append({
@@ -156,7 +210,10 @@ def main():
                 "types": types,
                 "generation": gen_number,
                 "stats": stats,
-                "sprite": sprite
+                "sprite": sprite,
+                "height": height,
+                "order": order,
+                "weight": weight
             })
             
             # 3. Fetch Evolution Chain if not processed yet
@@ -182,7 +239,7 @@ def main():
         except Exception as e:
             print(f"\n❌ Exception occurred for Pokemon {pokemon_id}: {str(e)}")
             
-    # Output final raw-data.json
+    # Output final seed-data.json
     final_output = {
         "pokemons": pokemons,
         "evolutionEdges": evolution_edges,
@@ -196,7 +253,7 @@ def main():
     if os.path.exists(checkpoint_path):
         os.remove(checkpoint_path)
         
-    print(f"\n✅ Data fetching complete! Saved {len(pokemons)} pokemons and {len(evolution_edges)} evolution edges to data/raw-data.json")
+    print(f"\n✅ Data fetching complete! Saved {len(pokemons)} pokemons and {len(evolution_edges)} evolution edges to {output_dir}/seed-data.json")
 
 if __name__ == "__main__":
     main()

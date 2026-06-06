@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
-import { prisma } from "../client.js";
+import { prisma } from "../client.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,10 +12,6 @@ async function main() {
   const data = JSON.parse(fileContent);
 
   console.log("Seeding database...");
-
-  // Enable extensions in case migrations haven't run them yet
-  await prisma.$executeRawUnsafe(`CREATE EXTENSION IF NOT EXISTS vector;`);
-  await prisma.$executeRawUnsafe(`CREATE EXTENSION IF NOT EXISTS unaccent;`);
 
   // Clean existing data in reverse order of dependencies
   console.log("Cleaning existing database records...");
@@ -45,17 +41,31 @@ async function main() {
     );
   }
 
-  // 2. Insert Evolution Edges
-  console.log(`Inserting ${data.evolutionEdges.length} evolution edges...`);
-  await prisma.evolutionEdge.createMany({
-    data: data.evolutionEdges.map((edge: any) => ({
-      fromPokemonId: edge.fromPokemonId,
-      toPokemonId: edge.toPokemonId,
-      trigger: edge.trigger,
-      minLevel: edge.minLevel || null,
-      itemName: edge.itemName || null,
-    })),
+  // 2. Insert Evolution Edges only for existing pokemons
+  const insertedPokemonIds = await prisma.pokemon.findMany({
+    select: { id: true },
   });
+  const idSet = new Set(insertedPokemonIds.map((p) => p.id));
+
+  const validEdges = data.evolutionEdges.filter(
+    (edge: any) => idSet.has(edge.fromPokemonId) && idSet.has(edge.toPokemonId)
+  );
+
+  console.log(
+    `De ${data.evolutionEdges.length} aristas totales, se insertarán ${validEdges.length} (IDs válidos)`
+  );
+
+  if (validEdges.length > 0) {
+    await prisma.evolutionEdge.createMany({
+      data: validEdges.map((edge: any) => ({
+        fromPokemonId: edge.fromPokemonId,
+        toPokemonId: edge.toPokemonId,
+        trigger: edge.trigger,
+        minLevel: edge.minLevel || null,
+        itemName: edge.itemName || null,
+      })),
+    });
+  }
 
   // 3. Insert Search Templates
   console.log(`Inserting ${data.searchTemplates.length} search templates...`);

@@ -1,0 +1,40 @@
+{
+  "Layout": {
+    "title": "Semantic Pokédex — v2.0",
+    "description": "AI-powered Pokémon search engine with semantic vector embeddings using Qwen3-Embedding.",
+    "headerLogoPrefix": "SEMANTIC",
+    "headerLogoSuffix": "POKÉDEX",
+    "versionLabel": "v2.0 Qwen Embedding",
+    "footer": "© 2026 Semantic Pokédex. Built with Next.js + Fastify + pgvector."
+  },
+  "SearchPage": {
+    "hnswBadge": "HNSW Vector Search",
+    "heroTitle1": "Explore the Pokédex",
+    "heroTitleHighlight": "Semantically",
+    "heroSubtitle": "Search by traits, competitive roles, or descriptions. The Qwen3 embeddings model maps your ideas to the corresponding Pokémon.",
+    "searchPlaceholder": "E.g. 'fire-spitting lizard' or 'defensive water tank'...",
+    "filtersButton": "Filters",
+    "clearFilters": "Clear filters",
+    "elementalType": "Elemental Type",
+    "generation": "Generation",
+    "genPrefix": "Gen",
+    "semanticExamples": "Example Semantic Queries",
+    "noResults": "No results found",
+    "noResultsDesc": "Try changing the search terms or clearing the active filters."
+  },
+  "PokemonDetail": {
+    "loading": "Loading semantic database...",
+    "errorTitle": "Error",
+    "errorDefault": "Could not load the Pokémon.",
+    "backButton": "Back to Search",
+    "baseStats": "Base Stats",
+    "evolutionRoadmap": "Evolution Roadmap",
+    "similarConcepts": "Similar Conceptual Essence",
+    "cosineSimilarity": "Cosine Similarity",
+    "genAccordion": "Generation {gen} ({count})",
+    "noVectors": "Not enough vector embedding data loaded to search for similarities.",
+    "loreTitle": "Pokémon Lore",
+    "showMore": "Read more",
+    "showLess": "Show less"
+  }
+}

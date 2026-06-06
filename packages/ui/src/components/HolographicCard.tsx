@@ -170,23 +170,34 @@ export function HolographicCard({
                       transition: { duration: 0.2 },
                     }}
                     className={cn(
-                      "absolute top-0 left-0 w-full h-full rounded-2xl flex flex-col justify-center items-center border p-2 backdrop-blur-md shadow-2xl",
+                      "absolute top-0 left-0 w-full h-full rounded-2xl flex flex-col justify-center items-center border p-2 backdrop-blur-md shadow-2xl overflow-hidden",
                       evolTheme.bg,
                       evolTheme.border
                     )}
                   >
+                    {/* Background Image Layer */}
+                    <div
+                      className="absolute top-0 left-0 w-full h-full pointer-events-none z-[-1] opacity-50 mix-blend-overlay bg-no-repeat"
+                      style={{
+                        backgroundImage: "url('/future-background.png')",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        zIndex: -1,
+                      }}
+                    />
                     {/* Sprite */}
                     {evol.sprite && (
                       <img
                         src={evol.sprite}
                         alt={evol.name}
-                        className="w-24 h-24 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]"
+                        className="w-24 h-24 object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] pointer-events-none select-none z-10 relative"
+                        draggable={false}
                       />
                     )}
-                    <span className="text-white text-[10px] uppercase tracking-wider font-bold mt-1">
+                    <span className="text-white text-[10px] uppercase tracking-wider font-bold mt-1 z-10 relative">
                       {evol.nameEs || evol.name}
                     </span>
-                    <div className="flex gap-1 mt-1">
+                    <div className="flex gap-1 mt-1 z-10 relative">
                       {evol.types.map((t: string) => (
                         <span
                           key={t}
@@ -218,15 +229,26 @@ export function HolographicCard({
         animate={{
           scale: hovered ? 1.03 : 1,
         }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        transition={{ type: "spring", stiffness: 500, damping: 15 }}
         className={cn(
-          "relative w-72 h-[420px] rounded-2xl p-4 border flex flex-col justify-between overflow-hidden cursor-pointer shadow-xl transition-all duration-300 z-10",
+          "relative w-72 h-[420px] rounded-2xl p-4 border flex flex-col justify-between overflow-hidden cursor-pointer shadow-xl transition-colors transition-shadow duration-150 z-10",
           theme.bg,
           theme.border,
           theme.glow,
           hovered && "shadow-2xl"
         )}
       >
+        {/* Background Image */}
+        <div
+          className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40 mix-blend-overlay bg-no-repeat"
+          style={{
+            backgroundImage: "url('/future-background.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            zIndex: -1,
+          }}
+        />
+
         {/* Holographic Reflective Overlay */}
         <div
           style={{
@@ -272,8 +294,9 @@ export function HolographicCard({
                 scale: hovered ? 1.05 : 0.95,
                 y: hovered ? -8 : 0,
               }}
-              transition={{ type: "spring", stiffness: 200, damping: 15 }}
-              className="w-44 h-44 object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)] z-10"
+              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+              className="w-44 h-44 object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)] z-10 pointer-events-none select-none"
+              draggable={false}
             />
           ) : (
             <div className="w-44 h-44 flex items-center justify-center text-zinc-600 z-10">
@@ -303,12 +326,8 @@ export function HolographicCard({
             ))}
           </div>
 
-          <p className="text-xs text-zinc-300 line-clamp-3 leading-relaxed font-medium italic min-h-[54px]">
-            &ldquo;{pokemon.description || "Sin descripción disponible."}&rdquo;
-          </p>
-
-          {/* Quick stats mini bar */}
-          <div className="grid grid-cols-3 gap-1 pt-2 border-t border-white/10 text-center text-[10px] font-mono text-zinc-400">
+          {/* Quick stats mini bar horizontal */}
+          <div className="flex gap-1 justify-between items-center pt-2 border-t border-white/10 text-center text-[10px] font-mono text-zinc-400">
             <div>
               <span className="block text-white font-bold">{pokemon.stats.hp}</span>
               <span>HP</span>
@@ -320,6 +339,14 @@ export function HolographicCard({
             <div>
               <span className="block text-white font-bold">{pokemon.stats.defense}</span>
               <span>DEF</span>
+            </div>
+            <div>
+              <span className="block text-white font-bold">{(pokemon as any).weight ? `${(pokemon as any).weight / 10}kg` : '-'}</span>
+              <span>PESO</span>
+            </div>
+            <div>
+              <span className="block text-white font-bold">{(pokemon as any).height ? `${(pokemon as any).height / 10}m` : '-'}</span>
+              <span>ALT.</span>
             </div>
           </div>
         </div>
