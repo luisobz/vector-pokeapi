@@ -1,14 +1,12 @@
 import { ISearchService } from "../../domain/services/search.service.interface";
 import { IPokemonRepository } from "../../domain/repositories/pokemon.repository.interface";
 import { ISearchTemplateRepository } from "../../domain/repositories/search-template.repository.interface";
-import { EmbedClientService } from "./embed-client.service";
 import { Pokemon } from "@vector-pokeapi/shared-types";
 
 export class SearchService implements ISearchService {
   constructor(
     private pokemonRepository: IPokemonRepository,
     private templateRepository: ISearchTemplateRepository,
-    private embedClient: EmbedClientService
   ) { }
 
   async search(
@@ -29,21 +27,7 @@ export class SearchService implements ISearchService {
           distanceThreshold: TEMPLATE_DISTANCE_THRESHOLD,
         });
       }
-      console.warn(`[SearchService] → Template found but NO embedding, falling through to text search`);
     }
-
-    if (query) {
-      const embedding = await this.embedClient.getEmbedding(query);
-      if (embedding) {
-        console.log(`[SearchService] → Using live embedding for query "${query}"`);
-        return this.pokemonRepository.searchBySimilarity(embedding, options);
-      }
-
-      console.log(`[SearchService] → Falling back to text search for "${query}"`);
-      return this.pokemonRepository.searchByText(query, options);
-    }
-
-    console.log(`[SearchService] → No query, returning default text search (all results)`);
-    return this.pokemonRepository.searchByText("", options);
+    return this.pokemonRepository.searchByText(query ?? "", options);
   }
 }

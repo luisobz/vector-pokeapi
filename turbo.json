@@ -14,7 +14,7 @@
     },
     "postinstall": {
       "dependsOn": [
-        "prisma:generate"
+        "db:generate"
       ]
     },
     "dev": {
@@ -37,7 +37,13 @@
         "^build"
       ]
     },
-    "prisma:generate": {
+    "db:generate": {
+      "cache": false
+    },
+    "db:migrate": {
+      "cache": false
+    },
+    "db:migrate:create": {
       "cache": false
     },
     "db:seed": {

@@ -11,3 +11,6 @@ scripts/ai-sync/raw-data.json
 scripts/ai-sync/checkpoint.json
 scripts/ai-sync/__pycache__/
 scripts/ai-sync/.venv/
+
+# AI CLI
+.commandcode

@@ -15,9 +15,9 @@ model Pokemon {
   nameEs       String?
   description  String?
   types        String[]
-  generation   Int                              // Extraído de /pokemon-species
-  stats        Json                             // hp, attack, defense, spAtk, spDef, speed
-  sprite       String?                          // URL sprite oficial
+  generation   Int
+  stats        Json
+  sprite       String?
   height       Int?
   order        Int?
   weight       Int?
@@ -48,8 +48,9 @@ model EvolutionEdge {
 model SearchTemplate {
   id          Int     @id @default(autoincrement())
   queryText   String  @unique @map("query_text")
-  category    String? // "tipo", "rol", "lore", "evolución" — para agrupar en UI
+  category    String?
   embedding  Unsupported("vector(1536)")?
 
   @@map("search_templates")
 }
+

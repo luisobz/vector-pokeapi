@@ -1,5 +1,5 @@
 import { PrismaClient } from "@vector-pokeapi/database";
-import { IPokemonRepository } from "../../domain/repositories/pokemon.repository.interface.js";
+import { IPokemonRepository, SearchBySimilarityOptions, SearchTextOptions } from "../../domain/repositories/pokemon.repository.interface.js";
 import { Pokemon, PokemonDetail, PokemonSimilarResult, SimilarGroupedByGen } from "@vector-pokeapi/shared-types";
 
 export class PokemonRepository implements IPokemonRepository {
@@ -91,7 +91,7 @@ export class PokemonRepository implements IPokemonRepository {
    */
   async searchBySimilarity(
     embedding: number[],
-    options?: { type?: string; gen?: number; limit?: number; distanceThreshold?: number }
+    options?: SearchBySimilarityOptions
   ): Promise<Pokemon[]> {
     const limit = options?.limit || 12;
     const type = options?.type || null;
@@ -163,7 +163,7 @@ export class PokemonRepository implements IPokemonRepository {
    */
   async searchByText(
     query: string,
-    options?: { type?: string; gen?: number; limit?: number }
+    options?: SearchTextOptions
   ): Promise<Pokemon[]> {
     const limit = options?.limit || 12;
     const type = options?.type || null;

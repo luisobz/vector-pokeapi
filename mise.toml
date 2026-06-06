@@ -3,6 +3,7 @@ starship = "latest"
 python = "3.13"
 node = "26"
 pnpm = "10.33.4"
+"npm:command-code" = "0.32.3"
 
 [settings]
 experimental = true
@@ -11,14 +12,18 @@ experimental = true
 description = "Install python dependencies for pokeAPI project"
 run = "pip install -r scripts/ai-sync/requirements.txt"
 
+[tasks.templates]
+description = "Generate templates"
+run = "python scripts/ai-sync/generate_templates.py"
+
 [tasks.fetch]
 description = "Fetch data from pokeAPI"
-run = "python scripts/ai-sync/fetch_data.py"
+run = "python scripts/ai-sync/fetch_pokeapi.py"
 
 [tasks.vectorize]
 description = "Vectorize data from pokeAPI"
-run = "python scripts/ai-sync/vectorize.py"
+run = "python scripts/ai-sync/vectorize_full.py"
 
 [tasks.all]
 description = "Fetch and vectorize data from pokeAPI"
-run = "mise run fetch && mise run vectorize"
+run = "mise run fetch && mise run templates && mise run vectorize"
