@@ -6,24 +6,41 @@ import { prisma } from "../client.ts";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+function readJson<T>(filename: string): T {
+  const filePath = path.join(__dirname, filename);
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Seed file not found: ${filename}. Run the fetch / vectorize scripts first.`);
+  }
+  return JSON.parse(fs.readFileSync(filePath, "utf8")) as T;
+}
+
 async function main() {
-  const dataPath = path.join(__dirname, "seed-data.json");
-  const fileContent = fs.readFileSync(dataPath, "utf8");
-  const data = JSON.parse(fileContent);
+  // ── Load seed files ──────────────────────────────────────────────────────
+  const pokemons        = readJson<any[]>("pokemon.json");
+  const evolutionEdges  = readJson<any[]>("evolutionEdges.json");
+  const templates       = readJson<any[]>("templates.json");
+
+  // Vector files are optional (seeding without embeddings is allowed)
+  const pokemonVectors:  (number[] | null)[] = fs.existsSync(path.join(__dirname, "pokemon.vectors.json"))
+    ? readJson<number[][]>("pokemon.vectors.json")
+    : [];
+  const templateVectors: (number[] | null)[] = fs.existsSync(path.join(__dirname, "templates.vectors.json"))
+    ? readJson<number[][]>("templates.vectors.json")
+    : [];
 
   console.log("Seeding database...");
 
-  // Clean existing data in reverse order of dependencies
+  // ── Clean existing data (reverse dependency order) ───────────────────────
   console.log("Cleaning existing database records...");
   await prisma.evolutionEdge.deleteMany();
   await prisma.pokemon.deleteMany();
   await prisma.searchTemplate.deleteMany();
 
-
-  // 1. Insert Pokemons
-  console.log(`Inserting ${data.pokemons.length} pokemons...`);
-  for (const p of data.pokemons) {
-    const embedding = p.embedding;
+  // ── 1. Insert Pokémons ───────────────────────────────────────────────────
+  console.log(`Inserting ${pokemons.length} pokemons...`);
+  for (let i = 0; i < pokemons.length; i++) {
+    const p = pokemons[i];
+    const embedding = pokemonVectors[i] ?? null;
     const embeddingString = embedding ? `[${embedding.join(",")}]` : null;
 
     await prisma.$executeRawUnsafe(
@@ -41,18 +58,16 @@ async function main() {
     );
   }
 
-  // 2. Insert Evolution Edges only for existing pokemons
-  const insertedPokemonIds = await prisma.pokemon.findMany({
-    select: { id: true },
-  });
+  // ── 2. Insert Evolution Edges (only for existing Pokémons) ───────────────
+  const insertedPokemonIds = await prisma.pokemon.findMany({ select: { id: true } });
   const idSet = new Set(insertedPokemonIds.map((p) => p.id));
 
-  const validEdges = data.evolutionEdges.filter(
+  const validEdges = evolutionEdges.filter(
     (edge: any) => idSet.has(edge.fromPokemonId) && idSet.has(edge.toPokemonId)
   );
 
   console.log(
-    `De ${data.evolutionEdges.length} aristas totales, se insertarán ${validEdges.length} (IDs válidos)`
+    `De ${evolutionEdges.length} aristas totales, se insertarán ${validEdges.length} (IDs válidos)`
   );
 
   if (validEdges.length > 0) {
@@ -67,17 +82,11 @@ async function main() {
     });
   }
 
-  // 3. Insert Search Templates
-  console.log(`Inserting ${data.searchTemplates.length} search templates...`);
-  for (let i = 0; i < data.searchTemplates.length; i++) {
-    const t = data.searchTemplates[i];
-    const types: string[] = [];
-    if (t.queryText.includes("eléctrico") || t.queryText.includes("trueno")) types.push("electric");
-    if (t.queryText.includes("fuego")) types.push("fire");
-    if (t.queryText.includes("agua")) types.push("water");
-    if (t.queryText.includes("planta") || t.queryText.includes("flor")) types.push("grass");
-
-    const embedding = t.embedding;
+  // ── 3. Insert Search Templates ───────────────────────────────────────────
+  console.log(`Inserting ${templates.length} search templates...`);
+  for (let i = 0; i < templates.length; i++) {
+    const t = templates[i];
+    const embedding = templateVectors[i] ?? null;
     const embeddingString = embedding ? `[${embedding.join(",")}]` : null;
 
     await prisma.$executeRawUnsafe(

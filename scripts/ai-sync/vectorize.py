@@ -10,33 +10,50 @@ def main():
     
     # ==================== PATHS ====================
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    seed_path = os.path.join(script_dir, "..", "..", "packages", "database", "src", "seeds", "seed-data.json")
-    backup_path = seed_path + ".backup"
-    progress_path = seed_path + ".progress"   # para guardar avances
-    tmp_path = seed_path + ".tmp"             # archivo final atómico
+    seeds_dir  = os.path.join(script_dir, "..", "..", "packages", "database", "src", "seeds")
 
-    # 1. Si no hay backup, crearlo una sola vez (así el original siempre está a salvo)
-    if not os.path.exists(backup_path):
-        print(f"📦 Creando backup original en {backup_path}")
-        shutil.copy2(seed_path, backup_path)
-    else:
-        print(f"ℹ️  Backup ya existe en {backup_path}, se usará el original de trabajo.")
+    # Inputs (written by fetch_data.py)
+    pokemon_path         = os.path.join(seeds_dir, "pokemon.json")
+    templates_path       = os.path.join(seeds_dir, "templates.json")
 
-    # 2. Cargar datos desde el progress (si existe) o desde el seed original
-    if os.path.exists(progress_path):
-        print("⏳ Detectado archivo de progreso. Reanudando desde ahí...")
-        load_path = progress_path
-    else:
-        load_path = seed_path
+    # Outputs (vectors only – no data duplication)
+    pokemon_vectors_path   = os.path.join(seeds_dir, "pokemon.vectors.json")
+    templates_vectors_path = os.path.join(seeds_dir, "templates.vectors.json")
 
-    with open(load_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    # Progress files (resumability)
+    pokemon_progress_path   = os.path.join(seeds_dir, "pokemon.vectors.progress")
+    templates_progress_path = os.path.join(seeds_dir, "templates.vectors.progress")
 
-    pokemons = data.get("pokemons", [])
-    search_templates = data.get("searchTemplates", [])
-    evolution_edges = data.get("evolutionEdges", [])
-    
+    # ── Validate inputs ──────────────────────────────────────────────────────
+    for path, name in [(pokemon_path, "pokemon.json"), (templates_path, "templates.json")]:
+        if not os.path.exists(path):
+            print(f"❌ Missing input file: {name}. Run `mise run fetch` first.")
+            return
+
+    # ── Load data ────────────────────────────────────────────────────────────
+    with open(pokemon_path, 'r', encoding='utf-8') as f:
+        pokemons = json.load(f)
+
+    with open(templates_path, 'r', encoding='utf-8') as f:
+        search_templates = json.load(f)
+
     print(f"Loaded {len(pokemons)} pokemons, {len(search_templates)} templates.")
+
+    # ── Resume pokemon vectors if progress file exists ───────────────────────
+    if os.path.exists(pokemon_progress_path):
+        print("⏳ Detectado progreso de vectorización de pokémons. Reanudando...")
+        with open(pokemon_progress_path, 'r', encoding='utf-8') as f:
+            pokemon_vectors = json.load(f)   # {id: [float, ...]}
+    else:
+        pokemon_vectors = {}
+
+    # ── Resume template vectors if progress file exists ──────────────────────
+    if os.path.exists(templates_progress_path):
+        print("⏳ Detectado progreso de vectorización de templates. Reanudando...")
+        with open(templates_progress_path, 'r', encoding='utf-8') as f:
+            template_vectors = json.load(f)  # {index: [float, ...]}
+    else:
+        template_vectors = {}
 
     # ==================== MODEL SETUP ====================
     model_name = "qwen3-embedding:8b"
@@ -52,16 +69,16 @@ def main():
         print(f"❌ Error conectando con Ollama: {e}")
         return
 
-    # ==================== VECTORIZATION (con progreso) ====================
-    batch_size = 8   # reducimos para evitar problemas de memoria/tiempo
+    # ==================== HELPERS ====================
+    batch_size = 8
     max_retries = 3
 
     def embed_batch(texts, desc=""):
-        """Intenta embedding con reintentos. Si falla, devuelve None y el script lo maneja."""
+        """Intenta embedding con reintentos. Si falla, devuelve None."""
         for attempt in range(max_retries):
             try:
                 response = ollama.embed(model=model_name, input=texts)
-                return [emb[:target_dim] + [0.0]*(target_dim - min(len(emb), target_dim)) 
+                return [emb[:target_dim] + [0.0] * (target_dim - min(len(emb), target_dim))
                         for emb in response['embeddings']]
             except Exception as e:
                 print(f"⚠️  Error en batch ({desc}), intento {attempt+1}/{max_retries}: {e}")
@@ -69,77 +86,75 @@ def main():
         print(f"❌ Batch falló definitivamente: {desc}")
         return None
 
-    # Filtrar Pokémon que ya tienen embedding (por si reanudamos)
-    pokemons_pendientes = [i for i, p in enumerate(pokemons) 
-                           if "embedding" not in p or len(p.get("embedding", [])) != target_dim]
-    print(f"Pokémons con embedding pendiente: {len(pokemons_pendientes)} de {len(pokemons)}")
+    # ==================== VECTORIZE POKÉMONS ====================
+    # Keys already done (stored as str because JSON keys are always str)
+    done_ids = set(pokemon_vectors.keys())
+    pending_pokemon = [(i, p) for i, p in enumerate(pokemons) if str(p['id']) not in done_ids]
+    print(f"Pokémons con embedding pendiente: {len(pending_pokemon)} de {len(pokemons)}")
 
-    # Procesar Pokémon por lotes
-    pokemon_texts_all = [
-        f"{p['name']} | tipos: {', '.join(p.get('types', []))} | gen: {p.get('generation', '')} | {p.get('description') or ''}"
+    pokemon_texts_all = {
+        str(p['id']): f"{p['name']} | tipos: {', '.join(p.get('types', []))} | gen: {p.get('generation', '')} | {p.get('description') or ''}"
         for p in pokemons
-    ]
-
-    for start in tqdm(range(0, len(pokemons_pendientes), batch_size), desc="Pokémon"):
-        indices = pokemons_pendientes[start:start+batch_size]
-        batch_texts = [pokemon_texts_all[i] for i in indices]
-        embeddings = embed_batch(batch_texts, f"Pokémon indices {indices}")
-        if embeddings is None:
-            print("⚠️  No se pudo procesar este batch. Guardando progreso y abortando para no perder lo avanzado.")
-            # Guardar estado actual (lo que haya, aunque incompleto)
-            with open(progress_path, 'w', encoding='utf-8') as pf:
-                json.dump({"pokemons": pokemons, "searchTemplates": search_templates, "evolutionEdges": evolution_edges},
-                          pf, ensure_ascii=False, indent=2)
-            return  # Salir sin tocar el archivo original
-        # Asignar embeddings a los Pokémon correspondientes
-        for idx, emb in zip(indices, embeddings):
-            pokemons[idx]["embedding"] = emb
-
-        # Guardar progreso después de cada batch exitoso
-        with open(progress_path, 'w', encoding='utf-8') as pf:
-            json.dump({"pokemons": pokemons, "searchTemplates": search_templates, "evolutionEdges": evolution_edges},
-                      pf, ensure_ascii=False, indent=2)
-
-    # Templates (igual lógica)
-    templates_pendientes = [i for i, t in enumerate(search_templates) 
-                            if "embedding" not in t or len(t.get("embedding", [])) != target_dim]
-    print(f"Templates pendientes: {len(templates_pendientes)} de {len(search_templates)}")
-
-    template_texts_all = [t["queryText"] for t in search_templates]
-    for start in tqdm(range(0, len(templates_pendientes), batch_size), desc="Templates"):
-        indices = templates_pendientes[start:start+batch_size]
-        batch_texts = [template_texts_all[i] for i in indices]
-        embeddings = embed_batch(batch_texts, f"Templates indices {indices}")
-        if embeddings is None:
-            with open(progress_path, 'w', encoding='utf-8') as pf:
-                json.dump({"pokemons": pokemons, "searchTemplates": search_templates, "evolutionEdges": evolution_edges},
-                          pf, ensure_ascii=False, indent=2)
-            return
-        for idx, emb in zip(indices, embeddings):
-            search_templates[idx]["embedding"] = emb
-        with open(progress_path, 'w', encoding='utf-8') as pf:
-            json.dump({"pokemons": pokemons, "searchTemplates": search_templates, "evolutionEdges": evolution_edges},
-                      pf, ensure_ascii=False, indent=2)
-
-    # ==================== GUARDADO FINAL ATÓMICO ====================
-    final_data = {
-        "pokemons": pokemons,
-        "searchTemplates": search_templates,
-        "evolutionEdges": evolution_edges
     }
-    # Escribir en temporal
-    with open(tmp_path, 'w', encoding='utf-8') as f:
-        json.dump(final_data, f, ensure_ascii=False, indent=2)
-    # Reemplazar el original
-    os.replace(tmp_path, seed_path)  # operación atómica en la mayoría de sistemas
-    # Limpiar archivos auxiliares
-    if os.path.exists(progress_path):
-        os.remove(progress_path)
-    # Opcional: mantener el backup como histórico
-    # os.remove(backup_path)
 
-    print(f"\n✅ Vectorization complete! Seed actualizado en {seed_path}")
-    print(f"   Backup original conservado en {backup_path}")
+    for start in tqdm(range(0, len(pending_pokemon), batch_size), desc="Pokémon"):
+        batch = pending_pokemon[start:start + batch_size]
+        batch_texts = [pokemon_texts_all[str(p['id'])] for _, p in batch]
+        embeddings = embed_batch(batch_texts, f"Pokémon ids {[p['id'] for _, p in batch]}")
+
+        if embeddings is None:
+            print("⚠️  No se pudo procesar este batch. Guardando progreso...")
+            with open(pokemon_progress_path, 'w', encoding='utf-8') as f:
+                json.dump(pokemon_vectors, f, ensure_ascii=False)
+            return
+
+        for (_, p), emb in zip(batch, embeddings):
+            pokemon_vectors[str(p['id'])] = emb
+
+        # Persist progress after every successful batch
+        with open(pokemon_progress_path, 'w', encoding='utf-8') as f:
+            json.dump(pokemon_vectors, f, ensure_ascii=False)
+
+    # ==================== VECTORIZE TEMPLATES ====================
+    done_tmpl = set(template_vectors.keys())
+    pending_templates = [(i, t) for i, t in enumerate(search_templates) if str(i) not in done_tmpl]
+    print(f"Templates pendientes: {len(pending_templates)} de {len(search_templates)}")
+
+    for start in tqdm(range(0, len(pending_templates), batch_size), desc="Templates"):
+        batch = pending_templates[start:start + batch_size]
+        batch_texts = [t['queryText'] for _, t in batch]
+        embeddings = embed_batch(batch_texts, f"Template indices {[i for i, _ in batch]}")
+
+        if embeddings is None:
+            with open(templates_progress_path, 'w', encoding='utf-8') as f:
+                json.dump(template_vectors, f, ensure_ascii=False)
+            return
+
+        for (i, _), emb in zip(batch, embeddings):
+            template_vectors[str(i)] = emb
+
+        with open(templates_progress_path, 'w', encoding='utf-8') as f:
+            json.dump(template_vectors, f, ensure_ascii=False)
+
+    # ==================== WRITE FINAL VECTOR FILES ====================
+    # pokemon.vectors.json  → list ordered by pokemon id, same index as pokemon.json
+    ordered_pokemon_vectors = [pokemon_vectors[str(p['id'])] for p in pokemons]
+    with open(pokemon_vectors_path, 'w', encoding='utf-8') as f:
+        json.dump(ordered_pokemon_vectors, f, ensure_ascii=False)
+    print(f"   📄 pokemon.vectors.json   → {len(ordered_pokemon_vectors)} vectores")
+
+    # templates.vectors.json → list ordered by template index
+    ordered_template_vectors = [template_vectors[str(i)] for i in range(len(search_templates))]
+    with open(templates_vectors_path, 'w', encoding='utf-8') as f:
+        json.dump(ordered_template_vectors, f, ensure_ascii=False)
+    print(f"   📄 templates.vectors.json → {len(ordered_template_vectors)} vectores")
+
+    # Cleanup progress files
+    for p in [pokemon_progress_path, templates_progress_path]:
+        if os.path.exists(p):
+            os.remove(p)
+
+    print(f"\n✅ Vectorization complete! Archivos de vectores guardados en {seeds_dir}/")
 
 if __name__ == "__main__":
     main()

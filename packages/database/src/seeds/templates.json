@@ -1,0 +1,82 @@
+[
+  {
+    "queryText": "ratón eléctrico amarillo rápido",
+    "category": "tipo"
+  },
+  {
+    "queryText": "lagarto de fuego con cola ardiente",
+    "category": "tipo"
+  },
+  {
+    "queryText": "tortuga de agua con cañones en el caparazón",
+    "category": "tipo"
+  },
+  {
+    "queryText": "dinosaurio de planta con una flor en el lomo",
+    "category": "tipo"
+  },
+  {
+    "queryText": "dragón volador de fuego temible",
+    "category": "tipo"
+  },
+  {
+    "queryText": "pájaro volador rápido de tipo normal",
+    "category": "tipo"
+  },
+  {
+    "queryText": "serpiente venenosa de color morado",
+    "category": "tipo"
+  },
+  {
+    "queryText": "tanque defensivo lento y pesado",
+    "category": "rol"
+  },
+  {
+    "queryText": "atacante físico rápido y agresivo",
+    "category": "rol"
+  },
+  {
+    "queryText": "atacante especial con alto poder espiritual",
+    "category": "rol"
+  },
+  {
+    "queryText": "soporte curativo para el equipo",
+    "category": "rol"
+  },
+  {
+    "queryText": "muralla defensiva con mucha salud",
+    "category": "rol"
+  },
+  {
+    "queryText": "experimento genético científico misterioso y poderoso",
+    "category": "lore"
+  },
+  {
+    "queryText": "criatura mística que vive en cuevas oscuras",
+    "category": "lore"
+  },
+  {
+    "queryText": "pokémon fósil prehistórico resucitado",
+    "category": "lore"
+  },
+  {
+    "queryText": "guardián legendario de los bosques y la naturaleza",
+    "category": "lore"
+  },
+  {
+    "queryText": "evoluciona usando una piedra trueno brillante",
+    "category": "evolución"
+  },
+  {
+    "queryText": "se transforma con la energía de la piedra agua",
+    "category": "evolución"
+  },
+  {
+    "queryText": "evoluciona mediante intercambio con otro entrenador",
+    "category": "evolución"
+  },
+  {
+    "queryText": "línea evolutiva que tiene múltiples transformaciones",
+    "category": "evolución"
+  }
+]

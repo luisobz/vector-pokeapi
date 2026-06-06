@@ -131,15 +131,17 @@ def parse_evolution_chain(node, edges, visited_edges):
 def main():
     print("🚀 Starting PokéAPI data fetching pipeline...")
     
-    # We fetch first 151 Pokemon (Gen 1) by default, or configurable
     start_id = 1
     end_id = 1025
     
     output_dir = os.path.join(os.path.dirname(__file__), "..", "..", "packages", "database", "src", "seeds")
     os.makedirs(output_dir, exist_ok=True)
     
-    checkpoint_path = os.path.join(output_dir, "checkpoint.json")
-    raw_data_path = os.path.join(output_dir, "seed-data.json")
+    # ── Output paths (one file per domain) ──────────────────────────────────
+    checkpoint_path       = os.path.join(output_dir, "checkpoint.json")
+    pokemon_path          = os.path.join(output_dir, "pokemon.json")
+    templates_path        = os.path.join(output_dir, "templates.json")
+    evolution_edges_path  = os.path.join(output_dir, "evolutionEdges.json")
     
     # Load checkpoint if exists
     state = {"last_id": 0, "pokemons": [], "evolution_edges": [], "processed_chains": []}
@@ -227,7 +229,7 @@ def main():
                     c_data = c_res.json()
                     parse_evolution_chain(c_data['chain'], evolution_edges, visited_edges)
             
-            # Save checkpoints incrementally (every 10 items)
+            # Save checkpoint incrementally (every 10 items)
             if pokemon_id % 10 == 0 or pokemon_id == end_id:
                 state["last_id"] = pokemon_id
                 state["pokemons"] = pokemons
@@ -239,21 +241,24 @@ def main():
         except Exception as e:
             print(f"\n❌ Exception occurred for Pokemon {pokemon_id}: {str(e)}")
             
-    # Output final seed-data.json
-    final_output = {
-        "pokemons": pokemons,
-        "evolutionEdges": evolution_edges,
-        "searchTemplates": SEARCH_TEMPLATES
-    }
-    
-    with open(raw_data_path, 'w', encoding='utf-8') as f:
-        json.dump(final_output, f, ensure_ascii=False, indent=2)
+    # ── Write one file per domain ────────────────────────────────────────────
+    with open(pokemon_path, 'w', encoding='utf-8') as f:
+        json.dump(pokemons, f, ensure_ascii=False, indent=2)
+    print(f"   📄 pokemon.json         → {len(pokemons)} registros")
+
+    with open(templates_path, 'w', encoding='utf-8') as f:
+        json.dump(SEARCH_TEMPLATES, f, ensure_ascii=False, indent=2)
+    print(f"   📄 templates.json       → {len(SEARCH_TEMPLATES)} registros")
+
+    with open(evolution_edges_path, 'w', encoding='utf-8') as f:
+        json.dump(evolution_edges, f, ensure_ascii=False, indent=2)
+    print(f"   📄 evolutionEdges.json  → {len(evolution_edges)} registros")
         
     # Remove checkpoint after success
     if os.path.exists(checkpoint_path):
         os.remove(checkpoint_path)
         
-    print(f"\n✅ Data fetching complete! Saved {len(pokemons)} pokemons and {len(evolution_edges)} evolution edges to {output_dir}/seed-data.json")
+    print(f"\n✅ Data fetching complete! Archivos guardados en {output_dir}/")
 
 if __name__ == "__main__":
     main()

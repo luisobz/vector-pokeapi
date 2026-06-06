@@ -18,7 +18,7 @@ export default function TypeSelector({ selectedType, onSelect, types }: TypeSele
       </label>
       <div className="flex flex-wrap gap-1.5">
         {types.map((type) => (
-          <ElementEffect type={type as ElementType}>
+          <ElementEffect key={type} type={type as ElementType}>
             <button
               key={type}
               onClick={() => onSelect(selectedType === type ? "" : type)}
