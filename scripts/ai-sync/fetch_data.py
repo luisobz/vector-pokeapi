@@ -133,7 +133,7 @@ def main():
     
     # We fetch first 151 Pokemon (Gen 1) by default, or configurable
     start_id = 1
-    end_id = 151
+    end_id = 1025
     
     output_dir = os.path.join(os.path.dirname(__file__), "..", "..", "packages", "database", "src", "seeds")
     os.makedirs(output_dir, exist_ok=True)
