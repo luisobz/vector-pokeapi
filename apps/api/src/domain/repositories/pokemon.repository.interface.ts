@@ -12,6 +12,8 @@ export type SearchByMultipleEmbeddingsOptions = {
   gen?: number;
   limit?: number;
   minSimilarityThreshold?: number;
+  positiveThreshold?: number;
+  negativeWeight?: number;
 };
 
 export interface IPokemonRepository {

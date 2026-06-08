@@ -7,6 +7,11 @@ export interface IEnvironment {
     PORT: string;
     NODE_ENV?: string;
     HOST: string;
+    // Generation weights
+    TEMPLATE_DISTANCE_THRESHOLD: string;
+    KEYWORD_MIN_SIMILARITY: string;
+    KEYWORD_POSITIVE_THRESHOLD: string;
+    KEYWORD_NEGATIVE_WEIGHT: string;
 }
 
 export class Environments {
@@ -30,11 +35,16 @@ export class Environments {
             throw new Error('DATABASE_URL es obligatoria y no está definida');
         }
 
+        // Valores por defecto para los pesos
         Environments.instance = {
             DATABASE_URL: env.DATABASE_URL,
             PORT: env.PORT || '3001',
             NODE_ENV: env.NODE_ENV ?? 'development',
             HOST: env.HOST || '0.0.0.0',
+            TEMPLATE_DISTANCE_THRESHOLD: env.TEMPLATE_DISTANCE_THRESHOLD || '0.60',
+            KEYWORD_MIN_SIMILARITY: env.KEYWORD_MIN_SIMILARITY || '0.35',
+            KEYWORD_POSITIVE_THRESHOLD: env.KEYWORD_POSITIVE_THRESHOLD || '0.25',
+            KEYWORD_NEGATIVE_WEIGHT: env.KEYWORD_NEGATIVE_WEIGHT || '1.2',
         };
     }
 
@@ -49,6 +59,20 @@ export class Environments {
     static get PORT(): string { return Environments.get('PORT'); }
     static get NODE_ENV(): string | undefined { return Environments.get('NODE_ENV'); }
     static get HOST(): string { return Environments.get('HOST'); }
+
+    // Getters para los pesos
+    static get TEMPLATE_DISTANCE_THRESHOLD(): number {
+        return parseFloat(Environments.get('TEMPLATE_DISTANCE_THRESHOLD'));
+    }
+    static get KEYWORD_MIN_SIMILARITY(): number {
+        return parseFloat(Environments.get('KEYWORD_MIN_SIMILARITY'));
+    }
+    static get KEYWORD_POSITIVE_THRESHOLD(): number {
+        return parseFloat(Environments.get('KEYWORD_POSITIVE_THRESHOLD'));
+    }
+    static get KEYWORD_NEGATIVE_WEIGHT(): number {
+        return parseFloat(Environments.get('KEYWORD_NEGATIVE_WEIGHT'));
+    }
 }
 
 Environments.load();

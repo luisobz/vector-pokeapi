@@ -98,11 +98,11 @@ export class PokemonRepository implements IPokemonRepository {
     const type = options?.type ?? null;
     const gen = options?.gen ?? null;
     const minSimilarity = options?.minSimilarityThreshold ?? 0.0;
+    const positiveThreshold = options?.positiveThreshold ?? 0.0;
+    const negativeWeight = options?.negativeWeight ?? 1.2;
 
     if (!embeddings.length) return [];
 
-    const positiveThreshold = 0.25;
-    const negativeWeight = 1.2;
 
     const vectorLiterals = embeddings
       .map((emb) => `'[${emb.join(",")}]'::vector`)

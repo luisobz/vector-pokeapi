@@ -3,11 +3,10 @@ import { IPokemonRepository } from "../../domain/repositories/pokemon.repository
 import { ISearchTemplateRepository } from "../../domain/repositories/search-template.repository.interface";
 import { ITemplateWordRepository } from "../../domain/repositories/template-word.repository.interface";
 import { Pokemon } from "@vector-pokeapi/shared-types";
+import { Environments } from "@vector-pokeapi/config/env";
 
 
 export class SearchService implements ISearchService {
-  private readonly TEMPLATE_DISTANCE_THRESHOLD = 0.45;
-  private readonly KEYWORD_MIN_SIMILARITY = 0.35;
 
   constructor(
     private pokemonRepository: IPokemonRepository,
@@ -29,13 +28,15 @@ export class SearchService implements ISearchService {
           const embeddings = keywords.map((k) => k.embedding);
           return this.pokemonRepository.searchByMultipleEmbeddings(embeddings, {
             ...trimmedOptions,
-            minSimilarityThreshold: this.KEYWORD_MIN_SIMILARITY,
+            minSimilarityThreshold: Environments.KEYWORD_MIN_SIMILARITY,
+            positiveThreshold: Environments.KEYWORD_POSITIVE_THRESHOLD,
+            negativeWeight: Environments.KEYWORD_NEGATIVE_WEIGHT,
           });
         }
       } else if (template?.embedding) {
         return this.pokemonRepository.searchByEmbedding(template.embedding, {
           ...trimmedOptions,
-          distanceThreshold: this.TEMPLATE_DISTANCE_THRESHOLD,
+          distanceThreshold: Environments.TEMPLATE_DISTANCE_THRESHOLD,
         });
       }
     }
