@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import {
   ResponsiveContainer,
   RadarChart as RechartsRadarChart,
@@ -18,14 +19,16 @@ interface RadarChartProps {
 }
 
 export default function StatsRadar({ stats, className, primaryColor = "#06b6d4" }: RadarChartProps) {
+  const t = useTranslations("PokemonDetail");
+  
   // Convert stats to Recharts format
   const data = [
-    { name: "HP", value: stats.hp },
-    { name: "Ataque", value: stats.attack },
-    { name: "Defensa", value: stats.defense },
-    { name: "Velocidad", value: stats.speed },
-    { name: "Def. Esp", value: stats.spDef },
-    { name: "Atq. Esp", value: stats.spAtk },
+    { name: t("statHP"), value: stats.hp },
+    { name: t("statAttack"), value: stats.attack },
+    { name: t("statDefense"), value: stats.defense },
+    { name: t("statSpeed"), value: stats.speed },
+    { name: t("statSpDef"), value: stats.spDef },
+    { name: t("statSpAtk"), value: stats.spAtk },
   ];
 
   return (

@@ -35,7 +35,7 @@ export default function PokemonDetailPage() {
         <div className="lg:col-span-8 space-y-8">
           <StatsSection stats={pokemon.stats} />
           <LoreSection description={pokemon.description} />
-          <EvolutionSection evolutionChain={pokemon.evolutionChain} currentPokemonId={pokemon.id} />
+          <EvolutionSection pokemon={pokemon} />
           <section className="space-y-4">
             <h2 className="text-lg font-black uppercase tracking-wider text-zinc-400 flex items-center gap-2">
               <Compass size={18} className="text-purple-400" /> {t("similarConcepts")}

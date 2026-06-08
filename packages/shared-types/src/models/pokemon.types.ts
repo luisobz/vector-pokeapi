@@ -9,7 +9,7 @@ export interface PokemonStats {
     speed: number;
 }
 
-export interface Pokemon {
+export interface PokemonDetail {
     id: number;
     name: string;
     nameEs?: string | null;
@@ -21,8 +21,4 @@ export interface Pokemon {
     embedding?: number[] | null;
     evolvesFrom?: EvolutionEdge[];
     evolvesTo?: EvolutionEdge[];
-}
-
-export interface PokemonDetail extends Pokemon {
-    evolutionChain?: any;
 }

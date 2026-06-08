@@ -4,7 +4,6 @@
     "description": "AI-powered Pokémon search engine with semantic vector embeddings using Qwen3-Embedding.",
     "headerLogoPrefix": "SEMANTIC",
     "headerLogoSuffix": "POKÉDEX",
-    "versionLabel": "v2.0 Qwen Embedding",
     "footer": "© 2026 Semantic Pokédex. Built with Next.js + Fastify + pgvector."
   },
   "SearchPage": {
@@ -20,7 +19,10 @@
     "genPrefix": "Gen",
     "semanticExamples": "Example Semantic Queries",
     "noResults": "No results found",
-    "noResultsDesc": "Try changing the search terms or clearing the active filters."
+    "noResultsDesc": "Try changing the search terms or clearing the active filters.",
+    "useKeywordsLabel": "Use Keywords (Template)",
+    "typeSelector": "Filter by Type",
+    "generationSelector": "Filter by Generation"
   },
   "PokemonDetail": {
     "loading": "Loading semantic database...",
@@ -35,6 +37,21 @@
     "noVectors": "Not enough vector embedding data loaded to search for similarities.",
     "loreTitle": "Pokémon Lore",
     "showMore": "Read more",
-    "showLess": "Show less"
+    "showLess": "Show less",
+    "evolutionLevel": "Level",
+    "evolutionLevelNo": "No. {level}",
+    "evolutionItem": "Item",
+    "evolutionTrade": "Trade",
+    "evolutionOther": "Other",
+    "evolutionUnknown": "Unknown",
+    "noEvolutions": "No known evolutions",
+    "current": "Current",
+    "noImage": "No Image",
+    "statHP": "HP",
+    "statAttack": "Attack",
+    "statDefense": "Defense",
+    "statSpAtk": "Sp. Attack",
+    "statSpDef": "Sp. Defense",
+    "statSpeed": "Speed"
   }
 }

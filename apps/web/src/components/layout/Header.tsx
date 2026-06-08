@@ -22,10 +22,6 @@ export default function Header({ t }: HeaderProps) {
         </Link>
         <div className="flex items-center gap-4 text-xs font-mono text-zinc-500">
           <LanguageSwitcher />
-          <span className="px-2.5 py-1 rounded-full border border-white/5 bg-white/2 flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            {t.versionLabel}
-          </span>
         </div>
       </div>
     </header>

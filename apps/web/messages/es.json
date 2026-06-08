@@ -4,7 +4,6 @@
     "description": "Buscador de Pokémon potenciado por inteligencia artificial y emparejamientos vectoriales semánticos usando Qwen3-Embedding.",
     "headerLogoPrefix": "POKÉDEX",
     "headerLogoSuffix": "SEMÁNTICA",
-    "versionLabel": "v2.0 Qwen Embedding",
     "footer": "© 2026 Pokédex Semántica. Construido con Next.js + Fastify + pgvector."
   },
   "SearchPage": {
@@ -20,7 +19,10 @@
     "genPrefix": "Gén",
     "semanticExamples": "Consultas Semánticas de Ejemplo",
     "noResults": "No se encontraron resultados",
-    "noResultsDesc": "Intenta cambiar los términos de búsqueda o limpiar los filtros activos."
+    "noResultsDesc": "Intenta cambiar los términos de búsqueda o limpiar los filtros activos.",
+    "useKeywordsLabel": "Usar Palabras Clave (Template)",
+    "typeSelector": "Filtrar por Tipo",
+    "generationSelector": "Filtrar por Generación"
   },
   "PokemonDetail": {
     "loading": "Cargando base de datos semántica...",
@@ -35,6 +37,21 @@
     "noVectors": "No hay suficientes datos de embeddings vectoriales cargados para buscar similitudes.",
     "loreTitle": "Lore del Pokémon",
     "showMore": "Leer más",
-    "showLess": "Mostrar menos"
+    "showLess": "Mostrar menos",
+    "evolutionLevel": "Nivel",
+    "evolutionLevelNo": "N.º {level}",
+    "evolutionItem": "Objeto",
+    "evolutionTrade": "Intercambio",
+    "evolutionOther": "Otro",
+    "evolutionUnknown": "Desconocido",
+    "noEvolutions": "Sin evoluciones conocidas",
+    "current": "Actual",
+    "noImage": "Sin Imagen",
+    "statHP": "PV",
+    "statAttack": "Ataque",
+    "statDefense": "Defensa",
+    "statSpAtk": "At. Esp.",
+    "statSpDef": "Def. Esp.",
+    "statSpeed": "Velocidad"
   }
 }

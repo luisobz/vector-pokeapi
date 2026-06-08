@@ -2,12 +2,12 @@
 
 import React, { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Pokemon, EvolutionEdge } from "@vector-pokeapi/shared-types";
+import { PokemonDetail, EvolutionEdge } from "@vector-pokeapi/shared-types";
 import { cn } from "../utils";
 import { Sparkles } from "lucide-react";
 
 interface HolographicCardProps {
-  pokemon: Pokemon;
+  pokemon: PokemonDetail;
   className?: string;
   onClick?: () => void;
   showEvolutionsHover?: boolean;
@@ -126,7 +126,7 @@ export function HolographicCard({
   // Safe checks for nested evolution data
   const nextEvolutions = pokemon.evolvesTo
     ?.map((edge: EvolutionEdge) => edge.to)
-    .filter((p): p is Pokemon => !!p) || [];
+    .filter((p): p is PokemonDetail => !!p) || [];
 
   return (
     <div className="relative group/fan select-none">
@@ -135,7 +135,7 @@ export function HolographicCard({
         <div className="absolute inset-0 pointer-events-none z-0">
           <AnimatePresence>
             {hovered &&
-              nextEvolutions.map((evol: Pokemon, index: number) => {
+              nextEvolutions.map((evol: PokemonDetail, index: number) => {
                 // Calculate fan offsets
                 const angle = (index - (nextEvolutions.length - 1) / 2) * 20; // 20 deg spacing
                 const xOffset = (index - (nextEvolutions.length - 1) / 2) * 55 + 50; // offset right

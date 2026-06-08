@@ -103,8 +103,17 @@ def parse_evolution_chain(node, edges, visited_edges):
 def main():
     print("🚀 Starting PokéAPI data fetching pipeline...")
     
+    # 151 original
+    # 251 original + Johto
+    # 386 + Hoenn
+    # 493 + Sinnoh
+    # 649 + Unova
+    # 721 + Kalos
+    # 809 + Alola
+    # 905 + Galar
+    # 1025 + Paldea
     start_id = 1
-    end_id = 151
+    end_id = 1025
     
     output_dir = os.path.join(os.path.dirname(__file__), "..", "..", "packages", "database", "src", "seeds")
     os.makedirs(output_dir, exist_ok=True)

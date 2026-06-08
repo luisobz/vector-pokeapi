@@ -768,5 +768,2623 @@
     "trigger": "level-up",
     "min_level": 55,
     "item_name": null
+  },
+  {
+    "from_pokemon_id": 152,
+    "to_pokemon_id": 153,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 153,
+    "to_pokemon_id": 154,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 155,
+    "to_pokemon_id": 156,
+    "trigger": "level-up",
+    "min_level": 14,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 156,
+    "to_pokemon_id": 157,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 158,
+    "to_pokemon_id": 159,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 159,
+    "to_pokemon_id": 160,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 161,
+    "to_pokemon_id": 162,
+    "trigger": "level-up",
+    "min_level": 15,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 163,
+    "to_pokemon_id": 164,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 165,
+    "to_pokemon_id": 166,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 167,
+    "to_pokemon_id": 168,
+    "trigger": "level-up",
+    "min_level": 22,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 170,
+    "to_pokemon_id": 171,
+    "trigger": "level-up",
+    "min_level": 27,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 175,
+    "to_pokemon_id": 176,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 176,
+    "to_pokemon_id": 468,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "shiny-stone"
+  },
+  {
+    "from_pokemon_id": 177,
+    "to_pokemon_id": 178,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 179,
+    "to_pokemon_id": 180,
+    "trigger": "level-up",
+    "min_level": 15,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 180,
+    "to_pokemon_id": 181,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 298,
+    "to_pokemon_id": 183,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 183,
+    "to_pokemon_id": 184,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 438,
+    "to_pokemon_id": 185,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 187,
+    "to_pokemon_id": 188,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 188,
+    "to_pokemon_id": 189,
+    "trigger": "level-up",
+    "min_level": 27,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 190,
+    "to_pokemon_id": 424,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 191,
+    "to_pokemon_id": 192,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "sun-stone"
+  },
+  {
+    "from_pokemon_id": 193,
+    "to_pokemon_id": 469,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 194,
+    "to_pokemon_id": 195,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 194,
+    "to_pokemon_id": 980,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 198,
+    "to_pokemon_id": 430,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "dusk-stone"
+  },
+  {
+    "from_pokemon_id": 200,
+    "to_pokemon_id": 429,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "dusk-stone"
+  },
+  {
+    "from_pokemon_id": 360,
+    "to_pokemon_id": 202,
+    "trigger": "level-up",
+    "min_level": 15,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 203,
+    "to_pokemon_id": 981,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 204,
+    "to_pokemon_id": 205,
+    "trigger": "level-up",
+    "min_level": 31,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 206,
+    "to_pokemon_id": 982,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 207,
+    "to_pokemon_id": 472,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 209,
+    "to_pokemon_id": 210,
+    "trigger": "level-up",
+    "min_level": 23,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 211,
+    "to_pokemon_id": 904,
+    "trigger": "strong-style-move",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 215,
+    "to_pokemon_id": 461,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 215,
+    "to_pokemon_id": 903,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 216,
+    "to_pokemon_id": 217,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 217,
+    "to_pokemon_id": 901,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "peat-block"
+  },
+  {
+    "from_pokemon_id": 218,
+    "to_pokemon_id": 219,
+    "trigger": "level-up",
+    "min_level": 38,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 220,
+    "to_pokemon_id": 221,
+    "trigger": "level-up",
+    "min_level": 33,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 221,
+    "to_pokemon_id": 473,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 222,
+    "to_pokemon_id": 864,
+    "trigger": "level-up",
+    "min_level": 38,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 223,
+    "to_pokemon_id": 224,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 458,
+    "to_pokemon_id": 226,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 228,
+    "to_pokemon_id": 229,
+    "trigger": "level-up",
+    "min_level": 24,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 231,
+    "to_pokemon_id": 232,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 234,
+    "to_pokemon_id": 899,
+    "trigger": "agile-style-move",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 246,
+    "to_pokemon_id": 247,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 247,
+    "to_pokemon_id": 248,
+    "trigger": "level-up",
+    "min_level": 55,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 252,
+    "to_pokemon_id": 253,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 253,
+    "to_pokemon_id": 254,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 255,
+    "to_pokemon_id": 256,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 256,
+    "to_pokemon_id": 257,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 258,
+    "to_pokemon_id": 259,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 259,
+    "to_pokemon_id": 260,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 261,
+    "to_pokemon_id": 262,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 263,
+    "to_pokemon_id": 264,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 264,
+    "to_pokemon_id": 862,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 265,
+    "to_pokemon_id": 266,
+    "trigger": "level-up",
+    "min_level": 7,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 266,
+    "to_pokemon_id": 267,
+    "trigger": "level-up",
+    "min_level": 10,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 265,
+    "to_pokemon_id": 268,
+    "trigger": "level-up",
+    "min_level": 7,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 268,
+    "to_pokemon_id": 269,
+    "trigger": "level-up",
+    "min_level": 10,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 270,
+    "to_pokemon_id": 271,
+    "trigger": "level-up",
+    "min_level": 14,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 271,
+    "to_pokemon_id": 272,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "water-stone"
+  },
+  {
+    "from_pokemon_id": 273,
+    "to_pokemon_id": 274,
+    "trigger": "level-up",
+    "min_level": 14,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 274,
+    "to_pokemon_id": 275,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "leaf-stone"
+  },
+  {
+    "from_pokemon_id": 276,
+    "to_pokemon_id": 277,
+    "trigger": "level-up",
+    "min_level": 22,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 278,
+    "to_pokemon_id": 279,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 280,
+    "to_pokemon_id": 281,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 281,
+    "to_pokemon_id": 282,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 281,
+    "to_pokemon_id": 475,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "dawn-stone"
+  },
+  {
+    "from_pokemon_id": 283,
+    "to_pokemon_id": 284,
+    "trigger": "level-up",
+    "min_level": 22,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 285,
+    "to_pokemon_id": 286,
+    "trigger": "level-up",
+    "min_level": 23,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 287,
+    "to_pokemon_id": 288,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 288,
+    "to_pokemon_id": 289,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 290,
+    "to_pokemon_id": 291,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 290,
+    "to_pokemon_id": 292,
+    "trigger": "shed",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 293,
+    "to_pokemon_id": 294,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 294,
+    "to_pokemon_id": 295,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 296,
+    "to_pokemon_id": 297,
+    "trigger": "level-up",
+    "min_level": 24,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 299,
+    "to_pokemon_id": 476,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 300,
+    "to_pokemon_id": 301,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "moon-stone"
+  },
+  {
+    "from_pokemon_id": 304,
+    "to_pokemon_id": 305,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 305,
+    "to_pokemon_id": 306,
+    "trigger": "level-up",
+    "min_level": 42,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 307,
+    "to_pokemon_id": 308,
+    "trigger": "level-up",
+    "min_level": 37,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 309,
+    "to_pokemon_id": 310,
+    "trigger": "level-up",
+    "min_level": 26,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 406,
+    "to_pokemon_id": 315,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 315,
+    "to_pokemon_id": 407,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "shiny-stone"
+  },
+  {
+    "from_pokemon_id": 316,
+    "to_pokemon_id": 317,
+    "trigger": "level-up",
+    "min_level": 26,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 318,
+    "to_pokemon_id": 319,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 320,
+    "to_pokemon_id": 321,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 322,
+    "to_pokemon_id": 323,
+    "trigger": "level-up",
+    "min_level": 33,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 325,
+    "to_pokemon_id": 326,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 328,
+    "to_pokemon_id": 329,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 329,
+    "to_pokemon_id": 330,
+    "trigger": "level-up",
+    "min_level": 45,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 331,
+    "to_pokemon_id": 332,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 333,
+    "to_pokemon_id": 334,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 339,
+    "to_pokemon_id": 340,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 341,
+    "to_pokemon_id": 342,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 343,
+    "to_pokemon_id": 344,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 345,
+    "to_pokemon_id": 346,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 347,
+    "to_pokemon_id": 348,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 349,
+    "to_pokemon_id": 350,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 353,
+    "to_pokemon_id": 354,
+    "trigger": "level-up",
+    "min_level": 37,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 355,
+    "to_pokemon_id": 356,
+    "trigger": "level-up",
+    "min_level": 37,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 356,
+    "to_pokemon_id": 477,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 433,
+    "to_pokemon_id": 358,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 361,
+    "to_pokemon_id": 362,
+    "trigger": "level-up",
+    "min_level": 42,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 361,
+    "to_pokemon_id": 478,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "dawn-stone"
+  },
+  {
+    "from_pokemon_id": 363,
+    "to_pokemon_id": 364,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 364,
+    "to_pokemon_id": 365,
+    "trigger": "level-up",
+    "min_level": 44,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 366,
+    "to_pokemon_id": 367,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 366,
+    "to_pokemon_id": 368,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 371,
+    "to_pokemon_id": 372,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 372,
+    "to_pokemon_id": 373,
+    "trigger": "level-up",
+    "min_level": 50,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 374,
+    "to_pokemon_id": 375,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 375,
+    "to_pokemon_id": 376,
+    "trigger": "level-up",
+    "min_level": 45,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 387,
+    "to_pokemon_id": 388,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 388,
+    "to_pokemon_id": 389,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 390,
+    "to_pokemon_id": 391,
+    "trigger": "level-up",
+    "min_level": 14,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 391,
+    "to_pokemon_id": 392,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 393,
+    "to_pokemon_id": 394,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 394,
+    "to_pokemon_id": 395,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 396,
+    "to_pokemon_id": 397,
+    "trigger": "level-up",
+    "min_level": 14,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 397,
+    "to_pokemon_id": 398,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 399,
+    "to_pokemon_id": 400,
+    "trigger": "level-up",
+    "min_level": 15,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 401,
+    "to_pokemon_id": 402,
+    "trigger": "level-up",
+    "min_level": 10,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 403,
+    "to_pokemon_id": 404,
+    "trigger": "level-up",
+    "min_level": 15,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 404,
+    "to_pokemon_id": 405,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 408,
+    "to_pokemon_id": 409,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 410,
+    "to_pokemon_id": 411,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 412,
+    "to_pokemon_id": 413,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 412,
+    "to_pokemon_id": 414,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 415,
+    "to_pokemon_id": 416,
+    "trigger": "level-up",
+    "min_level": 21,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 418,
+    "to_pokemon_id": 419,
+    "trigger": "level-up",
+    "min_level": 26,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 420,
+    "to_pokemon_id": 421,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 422,
+    "to_pokemon_id": 423,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 425,
+    "to_pokemon_id": 426,
+    "trigger": "level-up",
+    "min_level": 28,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 427,
+    "to_pokemon_id": 428,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 431,
+    "to_pokemon_id": 432,
+    "trigger": "level-up",
+    "min_level": 38,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 434,
+    "to_pokemon_id": 435,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 436,
+    "to_pokemon_id": 437,
+    "trigger": "level-up",
+    "min_level": 33,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 443,
+    "to_pokemon_id": 444,
+    "trigger": "level-up",
+    "min_level": 24,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 444,
+    "to_pokemon_id": 445,
+    "trigger": "level-up",
+    "min_level": 48,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 447,
+    "to_pokemon_id": 448,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 449,
+    "to_pokemon_id": 450,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 451,
+    "to_pokemon_id": 452,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 453,
+    "to_pokemon_id": 454,
+    "trigger": "level-up",
+    "min_level": 37,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 456,
+    "to_pokemon_id": 457,
+    "trigger": "level-up",
+    "min_level": 31,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 459,
+    "to_pokemon_id": 460,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 489,
+    "to_pokemon_id": 490,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 495,
+    "to_pokemon_id": 496,
+    "trigger": "level-up",
+    "min_level": 17,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 496,
+    "to_pokemon_id": 497,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 498,
+    "to_pokemon_id": 499,
+    "trigger": "level-up",
+    "min_level": 17,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 499,
+    "to_pokemon_id": 500,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 501,
+    "to_pokemon_id": 502,
+    "trigger": "level-up",
+    "min_level": 17,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 502,
+    "to_pokemon_id": 503,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 504,
+    "to_pokemon_id": 505,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 506,
+    "to_pokemon_id": 507,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 507,
+    "to_pokemon_id": 508,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 509,
+    "to_pokemon_id": 510,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 511,
+    "to_pokemon_id": 512,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "leaf-stone"
+  },
+  {
+    "from_pokemon_id": 513,
+    "to_pokemon_id": 514,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "fire-stone"
+  },
+  {
+    "from_pokemon_id": 515,
+    "to_pokemon_id": 516,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "water-stone"
+  },
+  {
+    "from_pokemon_id": 517,
+    "to_pokemon_id": 518,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "moon-stone"
+  },
+  {
+    "from_pokemon_id": 519,
+    "to_pokemon_id": 520,
+    "trigger": "level-up",
+    "min_level": 21,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 520,
+    "to_pokemon_id": 521,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 522,
+    "to_pokemon_id": 523,
+    "trigger": "level-up",
+    "min_level": 27,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 524,
+    "to_pokemon_id": 525,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 525,
+    "to_pokemon_id": 526,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 527,
+    "to_pokemon_id": 528,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 529,
+    "to_pokemon_id": 530,
+    "trigger": "level-up",
+    "min_level": 31,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 532,
+    "to_pokemon_id": 533,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 533,
+    "to_pokemon_id": 534,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 535,
+    "to_pokemon_id": 536,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 536,
+    "to_pokemon_id": 537,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 540,
+    "to_pokemon_id": 541,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 541,
+    "to_pokemon_id": 542,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 543,
+    "to_pokemon_id": 544,
+    "trigger": "level-up",
+    "min_level": 22,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 544,
+    "to_pokemon_id": 545,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 546,
+    "to_pokemon_id": 547,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "sun-stone"
+  },
+  {
+    "from_pokemon_id": 548,
+    "to_pokemon_id": 549,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "sun-stone"
+  },
+  {
+    "from_pokemon_id": 550,
+    "to_pokemon_id": 902,
+    "trigger": "recoil-damage",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 551,
+    "to_pokemon_id": 552,
+    "trigger": "level-up",
+    "min_level": 29,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 552,
+    "to_pokemon_id": 553,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 554,
+    "to_pokemon_id": 555,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 557,
+    "to_pokemon_id": 558,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 559,
+    "to_pokemon_id": 560,
+    "trigger": "level-up",
+    "min_level": 39,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 562,
+    "to_pokemon_id": 563,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 562,
+    "to_pokemon_id": 867,
+    "trigger": "take-damage",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 564,
+    "to_pokemon_id": 565,
+    "trigger": "level-up",
+    "min_level": 37,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 566,
+    "to_pokemon_id": 567,
+    "trigger": "level-up",
+    "min_level": 37,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 568,
+    "to_pokemon_id": 569,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 570,
+    "to_pokemon_id": 571,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 572,
+    "to_pokemon_id": 573,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "shiny-stone"
+  },
+  {
+    "from_pokemon_id": 574,
+    "to_pokemon_id": 575,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 575,
+    "to_pokemon_id": 576,
+    "trigger": "level-up",
+    "min_level": 41,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 577,
+    "to_pokemon_id": 578,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 578,
+    "to_pokemon_id": 579,
+    "trigger": "level-up",
+    "min_level": 41,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 580,
+    "to_pokemon_id": 581,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 582,
+    "to_pokemon_id": 583,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 583,
+    "to_pokemon_id": 584,
+    "trigger": "level-up",
+    "min_level": 47,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 585,
+    "to_pokemon_id": 586,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 588,
+    "to_pokemon_id": 589,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 590,
+    "to_pokemon_id": 591,
+    "trigger": "level-up",
+    "min_level": 39,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 592,
+    "to_pokemon_id": 593,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 595,
+    "to_pokemon_id": 596,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 597,
+    "to_pokemon_id": 598,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 599,
+    "to_pokemon_id": 600,
+    "trigger": "level-up",
+    "min_level": 38,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 600,
+    "to_pokemon_id": 601,
+    "trigger": "level-up",
+    "min_level": 49,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 602,
+    "to_pokemon_id": 603,
+    "trigger": "level-up",
+    "min_level": 39,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 603,
+    "to_pokemon_id": 604,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "thunder-stone"
+  },
+  {
+    "from_pokemon_id": 605,
+    "to_pokemon_id": 606,
+    "trigger": "level-up",
+    "min_level": 42,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 607,
+    "to_pokemon_id": 608,
+    "trigger": "level-up",
+    "min_level": 41,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 608,
+    "to_pokemon_id": 609,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "dusk-stone"
+  },
+  {
+    "from_pokemon_id": 610,
+    "to_pokemon_id": 611,
+    "trigger": "level-up",
+    "min_level": 38,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 611,
+    "to_pokemon_id": 612,
+    "trigger": "level-up",
+    "min_level": 48,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 613,
+    "to_pokemon_id": 614,
+    "trigger": "level-up",
+    "min_level": 37,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 616,
+    "to_pokemon_id": 617,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 619,
+    "to_pokemon_id": 620,
+    "trigger": "level-up",
+    "min_level": 50,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 622,
+    "to_pokemon_id": 623,
+    "trigger": "level-up",
+    "min_level": 43,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 624,
+    "to_pokemon_id": 625,
+    "trigger": "level-up",
+    "min_level": 52,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 625,
+    "to_pokemon_id": 983,
+    "trigger": "three-defeated-bisharp",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 627,
+    "to_pokemon_id": 628,
+    "trigger": "level-up",
+    "min_level": 54,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 629,
+    "to_pokemon_id": 630,
+    "trigger": "level-up",
+    "min_level": 54,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 633,
+    "to_pokemon_id": 634,
+    "trigger": "level-up",
+    "min_level": 50,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 634,
+    "to_pokemon_id": 635,
+    "trigger": "level-up",
+    "min_level": 64,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 636,
+    "to_pokemon_id": 637,
+    "trigger": "level-up",
+    "min_level": 59,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 650,
+    "to_pokemon_id": 651,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 651,
+    "to_pokemon_id": 652,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 653,
+    "to_pokemon_id": 654,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 654,
+    "to_pokemon_id": 655,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 656,
+    "to_pokemon_id": 657,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 657,
+    "to_pokemon_id": 658,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 659,
+    "to_pokemon_id": 660,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 661,
+    "to_pokemon_id": 662,
+    "trigger": "level-up",
+    "min_level": 17,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 662,
+    "to_pokemon_id": 663,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 664,
+    "to_pokemon_id": 665,
+    "trigger": "level-up",
+    "min_level": 9,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 665,
+    "to_pokemon_id": 666,
+    "trigger": "level-up",
+    "min_level": 12,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 667,
+    "to_pokemon_id": 668,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 669,
+    "to_pokemon_id": 670,
+    "trigger": "level-up",
+    "min_level": 19,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 670,
+    "to_pokemon_id": 671,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "shiny-stone"
+  },
+  {
+    "from_pokemon_id": 672,
+    "to_pokemon_id": 673,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 674,
+    "to_pokemon_id": 675,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 677,
+    "to_pokemon_id": 678,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 679,
+    "to_pokemon_id": 680,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 680,
+    "to_pokemon_id": 681,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "dusk-stone"
+  },
+  {
+    "from_pokemon_id": 682,
+    "to_pokemon_id": 683,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 684,
+    "to_pokemon_id": 685,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 686,
+    "to_pokemon_id": 687,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 688,
+    "to_pokemon_id": 689,
+    "trigger": "level-up",
+    "min_level": 39,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 690,
+    "to_pokemon_id": 691,
+    "trigger": "level-up",
+    "min_level": 48,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 692,
+    "to_pokemon_id": 693,
+    "trigger": "level-up",
+    "min_level": 37,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 694,
+    "to_pokemon_id": 695,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "sun-stone"
+  },
+  {
+    "from_pokemon_id": 696,
+    "to_pokemon_id": 697,
+    "trigger": "level-up",
+    "min_level": 39,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 698,
+    "to_pokemon_id": 699,
+    "trigger": "level-up",
+    "min_level": 39,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 704,
+    "to_pokemon_id": 705,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 705,
+    "to_pokemon_id": 706,
+    "trigger": "level-up",
+    "min_level": 50,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 708,
+    "to_pokemon_id": 709,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 710,
+    "to_pokemon_id": 711,
+    "trigger": "trade",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 712,
+    "to_pokemon_id": 713,
+    "trigger": "level-up",
+    "min_level": 37,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 714,
+    "to_pokemon_id": 715,
+    "trigger": "level-up",
+    "min_level": 48,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 722,
+    "to_pokemon_id": 723,
+    "trigger": "level-up",
+    "min_level": 17,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 723,
+    "to_pokemon_id": 724,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 725,
+    "to_pokemon_id": 726,
+    "trigger": "level-up",
+    "min_level": 17,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 726,
+    "to_pokemon_id": 727,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 728,
+    "to_pokemon_id": 729,
+    "trigger": "level-up",
+    "min_level": 17,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 729,
+    "to_pokemon_id": 730,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 731,
+    "to_pokemon_id": 732,
+    "trigger": "level-up",
+    "min_level": 14,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 732,
+    "to_pokemon_id": 733,
+    "trigger": "level-up",
+    "min_level": 28,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 734,
+    "to_pokemon_id": 735,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 736,
+    "to_pokemon_id": 737,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 737,
+    "to_pokemon_id": 738,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 739,
+    "to_pokemon_id": 740,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 742,
+    "to_pokemon_id": 743,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 744,
+    "to_pokemon_id": 745,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 747,
+    "to_pokemon_id": 748,
+    "trigger": "level-up",
+    "min_level": 38,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 749,
+    "to_pokemon_id": 750,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 751,
+    "to_pokemon_id": 752,
+    "trigger": "level-up",
+    "min_level": 22,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 753,
+    "to_pokemon_id": 754,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 755,
+    "to_pokemon_id": 756,
+    "trigger": "level-up",
+    "min_level": 24,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 757,
+    "to_pokemon_id": 758,
+    "trigger": "level-up",
+    "min_level": 33,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 759,
+    "to_pokemon_id": 760,
+    "trigger": "level-up",
+    "min_level": 27,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 761,
+    "to_pokemon_id": 762,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 762,
+    "to_pokemon_id": 763,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 767,
+    "to_pokemon_id": 768,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 769,
+    "to_pokemon_id": 770,
+    "trigger": "level-up",
+    "min_level": 42,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 772,
+    "to_pokemon_id": 773,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 782,
+    "to_pokemon_id": 783,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 783,
+    "to_pokemon_id": 784,
+    "trigger": "level-up",
+    "min_level": 45,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 789,
+    "to_pokemon_id": 790,
+    "trigger": "level-up",
+    "min_level": 43,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 790,
+    "to_pokemon_id": 791,
+    "trigger": "level-up",
+    "min_level": 53,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 790,
+    "to_pokemon_id": 792,
+    "trigger": "level-up",
+    "min_level": 53,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 803,
+    "to_pokemon_id": 804,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 810,
+    "to_pokemon_id": 811,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 811,
+    "to_pokemon_id": 812,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 813,
+    "to_pokemon_id": 814,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 814,
+    "to_pokemon_id": 815,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 816,
+    "to_pokemon_id": 817,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 817,
+    "to_pokemon_id": 818,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 819,
+    "to_pokemon_id": 820,
+    "trigger": "level-up",
+    "min_level": 24,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 821,
+    "to_pokemon_id": 822,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 822,
+    "to_pokemon_id": 823,
+    "trigger": "level-up",
+    "min_level": 38,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 824,
+    "to_pokemon_id": 825,
+    "trigger": "level-up",
+    "min_level": 10,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 825,
+    "to_pokemon_id": 826,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 827,
+    "to_pokemon_id": 828,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 829,
+    "to_pokemon_id": 830,
+    "trigger": "level-up",
+    "min_level": 20,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 831,
+    "to_pokemon_id": 832,
+    "trigger": "level-up",
+    "min_level": 24,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 833,
+    "to_pokemon_id": 834,
+    "trigger": "level-up",
+    "min_level": 22,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 835,
+    "to_pokemon_id": 836,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 837,
+    "to_pokemon_id": 838,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 838,
+    "to_pokemon_id": 839,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 840,
+    "to_pokemon_id": 841,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "tart-apple"
+  },
+  {
+    "from_pokemon_id": 840,
+    "to_pokemon_id": 842,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "sweet-apple"
+  },
+  {
+    "from_pokemon_id": 840,
+    "to_pokemon_id": 1011,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "syrupy-apple"
+  },
+  {
+    "from_pokemon_id": 1011,
+    "to_pokemon_id": 1019,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 843,
+    "to_pokemon_id": 844,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 846,
+    "to_pokemon_id": 847,
+    "trigger": "level-up",
+    "min_level": 26,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 848,
+    "to_pokemon_id": 849,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 850,
+    "to_pokemon_id": 851,
+    "trigger": "level-up",
+    "min_level": 28,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 852,
+    "to_pokemon_id": 853,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 854,
+    "to_pokemon_id": 855,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "cracked-pot"
+  },
+  {
+    "from_pokemon_id": 856,
+    "to_pokemon_id": 857,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 857,
+    "to_pokemon_id": 858,
+    "trigger": "level-up",
+    "min_level": 42,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 859,
+    "to_pokemon_id": 860,
+    "trigger": "level-up",
+    "min_level": 32,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 860,
+    "to_pokemon_id": 861,
+    "trigger": "level-up",
+    "min_level": 42,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 868,
+    "to_pokemon_id": 869,
+    "trigger": "spin",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 872,
+    "to_pokemon_id": 873,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 878,
+    "to_pokemon_id": 879,
+    "trigger": "level-up",
+    "min_level": 34,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 884,
+    "to_pokemon_id": 1018,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "metal-alloy"
+  },
+  {
+    "from_pokemon_id": 885,
+    "to_pokemon_id": 886,
+    "trigger": "level-up",
+    "min_level": 50,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 886,
+    "to_pokemon_id": 887,
+    "trigger": "level-up",
+    "min_level": 60,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 891,
+    "to_pokemon_id": 892,
+    "trigger": "tower-of-darkness",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 906,
+    "to_pokemon_id": 907,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 907,
+    "to_pokemon_id": 908,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 909,
+    "to_pokemon_id": 910,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 910,
+    "to_pokemon_id": 911,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 912,
+    "to_pokemon_id": 913,
+    "trigger": "level-up",
+    "min_level": 16,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 913,
+    "to_pokemon_id": 914,
+    "trigger": "level-up",
+    "min_level": 36,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 915,
+    "to_pokemon_id": 916,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 917,
+    "to_pokemon_id": 918,
+    "trigger": "level-up",
+    "min_level": 15,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 919,
+    "to_pokemon_id": 920,
+    "trigger": "level-up",
+    "min_level": 24,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 921,
+    "to_pokemon_id": 922,
+    "trigger": "level-up",
+    "min_level": 18,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 922,
+    "to_pokemon_id": 923,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 924,
+    "to_pokemon_id": 925,
+    "trigger": "other",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 926,
+    "to_pokemon_id": 927,
+    "trigger": "level-up",
+    "min_level": 26,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 928,
+    "to_pokemon_id": 929,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 929,
+    "to_pokemon_id": 930,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 932,
+    "to_pokemon_id": 933,
+    "trigger": "level-up",
+    "min_level": 24,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 933,
+    "to_pokemon_id": 934,
+    "trigger": "level-up",
+    "min_level": 38,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 935,
+    "to_pokemon_id": 936,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "auspicious-armor"
+  },
+  {
+    "from_pokemon_id": 935,
+    "to_pokemon_id": 937,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "malicious-armor"
+  },
+  {
+    "from_pokemon_id": 938,
+    "to_pokemon_id": 939,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "thunder-stone"
+  },
+  {
+    "from_pokemon_id": 940,
+    "to_pokemon_id": 941,
+    "trigger": "level-up",
+    "min_level": 25,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 942,
+    "to_pokemon_id": 943,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 944,
+    "to_pokemon_id": 945,
+    "trigger": "level-up",
+    "min_level": 28,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 946,
+    "to_pokemon_id": 947,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 948,
+    "to_pokemon_id": 949,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 951,
+    "to_pokemon_id": 952,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "fire-stone"
+  },
+  {
+    "from_pokemon_id": 953,
+    "to_pokemon_id": 954,
+    "trigger": "level-up",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 955,
+    "to_pokemon_id": 956,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 957,
+    "to_pokemon_id": 958,
+    "trigger": "level-up",
+    "min_level": 24,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 958,
+    "to_pokemon_id": 959,
+    "trigger": "level-up",
+    "min_level": 38,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 960,
+    "to_pokemon_id": 961,
+    "trigger": "level-up",
+    "min_level": 26,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 963,
+    "to_pokemon_id": 964,
+    "trigger": "level-up",
+    "min_level": 38,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 965,
+    "to_pokemon_id": 966,
+    "trigger": "level-up",
+    "min_level": 40,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 969,
+    "to_pokemon_id": 970,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 971,
+    "to_pokemon_id": 972,
+    "trigger": "level-up",
+    "min_level": 30,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 974,
+    "to_pokemon_id": 975,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "ice-stone"
+  },
+  {
+    "from_pokemon_id": 996,
+    "to_pokemon_id": 997,
+    "trigger": "level-up",
+    "min_level": 35,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 997,
+    "to_pokemon_id": 998,
+    "trigger": "level-up",
+    "min_level": 54,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 999,
+    "to_pokemon_id": 1000,
+    "trigger": "gimmighoul-coins",
+    "min_level": null,
+    "item_name": null
+  },
+  {
+    "from_pokemon_id": 1012,
+    "to_pokemon_id": 1013,
+    "trigger": "use-item",
+    "min_level": null,
+    "item_name": "unremarkable-teacup"
   }
 ]

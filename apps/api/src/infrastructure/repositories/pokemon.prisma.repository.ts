@@ -1,5 +1,5 @@
-import { PrismaClient, Pokemon, Prisma } from "@vector-pokeapi/database";
-import { PokemonDetail, PokemonStats, SimilarGroupedByGen } from "@vector-pokeapi/shared-types";
+import { PrismaClient, Prisma } from "@vector-pokeapi/database";
+import { EvolutionEdge, PokemonDetail, PokemonStats, SimilarGroupedByGen } from "@vector-pokeapi/shared-types";
 import {
   IPokemonRepository,
   SearchByEmbeddingOptions,
@@ -12,6 +12,44 @@ export class PokemonRepository implements IPokemonRepository {
     private prisma: PrismaClient,
     private evolutionEdgeRepository: IEvolutionEdgeRepository
   ) { }
+
+  private async collectAncestors(
+    pokemonId: number,
+    visited = new Set<number>()
+  ): Promise<EvolutionEdge[]> {
+    if (visited.has(pokemonId)) return [];
+    visited.add(pokemonId);
+
+    const incoming = await this.evolutionEdgeRepository.findEdgesTo(pokemonId);
+    const ordered = incoming.sort((a, b) => a.fromPokemonId - b.fromPokemonId);
+
+    const result: EvolutionEdge[] = [];
+    for (const edge of ordered) {
+      result.push(...(await this.collectAncestors(edge.fromPokemonId, visited)));
+      result.push(edge);
+    }
+
+    return result;
+  }
+
+  private async collectDescendants(
+    pokemonId: number,
+    visited = new Set<number>()
+  ): Promise<EvolutionEdge[]> {
+    if (visited.has(pokemonId)) return [];
+    visited.add(pokemonId);
+
+    const outgoing = await this.evolutionEdgeRepository.findEdgesFrom(pokemonId);
+    const ordered = outgoing.sort((a, b) => a.toPokemonId - b.toPokemonId);
+
+    const result: EvolutionEdge[] = [];
+    for (const edge of ordered) {
+      result.push(edge);
+      result.push(...(await this.collectDescendants(edge.toPokemonId, visited)));
+    }
+
+    return result;
+  }
 
   private formatStats(stats: Prisma.JsonValue): PokemonStats {
     const defaults = { hp: 0, attack: 0, defense: 0, spAtk: 0, spDef: 0, speed: 0 };
@@ -35,8 +73,8 @@ export class PokemonRepository implements IPokemonRepository {
     if (!rawPokemon) return null;
 
     const [evolvesFrom, evolvesTo] = await Promise.all([
-      this.evolutionEdgeRepository.findEdgesTo(id),
-      this.evolutionEdgeRepository.findEdgesFrom(id),
+      this.collectAncestors(id),
+      this.collectDescendants(id),
     ]);
 
     return {

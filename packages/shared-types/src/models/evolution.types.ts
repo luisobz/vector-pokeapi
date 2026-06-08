@@ -1,4 +1,4 @@
-import { Pokemon } from "./pokemon.types.ts";
+import { PokemonDetail } from "./pokemon.types.ts";
 
 export interface EvolutionEdge {
     id: number;
@@ -7,7 +7,7 @@ export interface EvolutionEdge {
     trigger: string;
     minLevel?: number | null;
     itemName?: string | null;
-    from?: Pokemon;
-    to?: Pokemon;
+    from?: PokemonDetail;
+    to?: PokemonDetail;
 }
 
