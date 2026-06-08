@@ -1,4 +1,4 @@
-import { PokemonDetail } from "./pokemon.types.ts";
+import type { PokemonDetail } from "./pokemon.types.ts";
 
 export interface EvolutionEdge {
     id: number;

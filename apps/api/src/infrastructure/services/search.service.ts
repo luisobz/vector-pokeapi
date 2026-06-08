@@ -2,8 +2,8 @@ import { ISearchService, SearchOptions } from "../../domain/services/search.serv
 import { IPokemonRepository } from "../../domain/repositories/pokemon.repository.interface";
 import { ISearchTemplateRepository } from "../../domain/repositories/search-template.repository.interface";
 import { ITemplateWordRepository } from "../../domain/repositories/template-word.repository.interface";
-import { Pokemon } from "@vector-pokeapi/shared-types";
 import { Environments } from "@vector-pokeapi/config/env";
+import { PokemonDetail } from "@vector-pokeapi/shared-types";
 
 
 export class SearchService implements ISearchService {
@@ -17,7 +17,7 @@ export class SearchService implements ISearchService {
   async search(
     query: string,
     options?: SearchOptions
-  ): Promise<Pokemon[]> {
+  ): Promise<PokemonDetail[]> {
     const { templateId, useKeywords, ...trimmedOptions } = options ?? {};
 
     if (templateId) {

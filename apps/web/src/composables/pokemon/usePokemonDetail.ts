@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { getPokemon, getSimilar } from "@/services/api";
+import { getPokemon, getSimilar } from "../../services/api";
 import type { GetPokemonReply, GetSimilarReply } from "@vector-pokeapi/shared-types";
 import { registerReset } from "../reset";
 

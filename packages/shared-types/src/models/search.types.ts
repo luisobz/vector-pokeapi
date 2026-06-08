@@ -1,4 +1,4 @@
-import { PokemonDetail } from "./pokemon.types.ts";
+import type { PokemonDetail } from "./pokemon.types.ts";
 
 export interface SearchTemplate {
     id: number;
@@ -7,7 +7,7 @@ export interface SearchTemplate {
     embedding?: number[] | null;
 }
 
-export interface PokemonSimilarResult extends PokemonDetail  {
+export interface PokemonSimilarResult extends PokemonDetail {
     similarity_score: number;
 }
 

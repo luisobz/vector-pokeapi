@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { ArrowRight, Sparkles, HelpCircle, RefreshCw, Zap } from "lucide-react";
 import { cn } from "@vector-pokeapi/ui";
 import Link from "next/link";
-import { buildPath } from "@/lib/routes";
+import { buildPath } from "../../lib/routes";
 import type { PokemonDetail, EvolutionEdge } from "@vector-pokeapi/shared-types";
 
 interface EvolutionGraphProps {

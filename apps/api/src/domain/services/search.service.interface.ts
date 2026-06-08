@@ -1,4 +1,4 @@
-import { Pokemon } from "@vector-pokeapi/shared-types";
+import { PokemonDetail } from "@vector-pokeapi/shared-types";
 
 export type SearchOptions = {
   type?: string;
@@ -9,5 +9,5 @@ export type SearchOptions = {
 };
 
 export interface ISearchService {
-  search(query: string, options: SearchOptions): Promise<Pokemon[]>;
+  search(query: string, options: SearchOptions): Promise<PokemonDetail[]>;
 }

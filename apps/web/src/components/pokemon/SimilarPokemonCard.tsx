@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import PokemonTypeBadge from "./PokemonTypeBadge";
 import SimilarScoreBadge from "./SimilarScoreBadge";
-import { buildPath } from "@/lib/routes";
+import { buildPath } from "../../lib/routes";
 
 interface SimilarPokemonCardProps {
   similar: any;

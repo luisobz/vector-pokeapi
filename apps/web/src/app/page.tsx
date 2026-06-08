@@ -2,17 +2,17 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { HolographicCard } from "@vector-pokeapi/ui";
-import { useSearch } from "@/composables";
-import SearchHero from "@/components/search/SearchHero";
-import SearchInput from "@/components/search/SearchInput";
-import ClearFiltersButton from "@/components/search/ClearFiltersButton";
-import FilterPanel from "@/components/search/FilterPanel";
-import TypeSelector from "@/components/search/TypeSelector";
-import GenerationSelector from "@/components/search/GenerationSelector";
-import ResultsGrid from "@/components/search/ResultsGrid";
+import { useSearch } from "../composables";
+import SearchHero from "../components/search/SearchHero";
+import SearchInput from "../components/search/SearchInput";
+import ClearFiltersButton from "../components/search/ClearFiltersButton";
+import FilterPanel from "../components/search/FilterPanel";
+import TypeSelector from "../components/search/TypeSelector";
+import GenerationSelector from "../components/search/GenerationSelector";
+import ResultsGrid from "../components/search/ResultsGrid";
 import Link from "next/link";
 import { Sparkles, ToggleLeft, ToggleRight } from "lucide-react";
-import { buildPath } from "@/lib/routes";
+import { buildPath } from "../lib/routes";
 
 export default function SearchPage() {
   const t = useTranslations("SearchPage");

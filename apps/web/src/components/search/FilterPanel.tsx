@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 interface FilterPanelProps {
   isOpen: boolean;

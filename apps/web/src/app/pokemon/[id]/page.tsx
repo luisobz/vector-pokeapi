@@ -3,15 +3,15 @@ import React from "react";
 import { useParams } from "next/navigation";
 import { Compass } from "lucide-react";
 import { HolographicCard } from "@vector-pokeapi/ui";
-import { usePokemonDetail } from "@/composables";
-import StatsSection from "@/components/pokemon/StatsSection";
-import EvolutionSection from "@/components/pokemon/EvolutionSection";
-import SimilarPokemonAccordion from "@/components/pokemon/SimilarPokemonAccordion";
-import LoreSection from "@/components/pokemon/LoreSection";
+import { usePokemonDetail } from "../../../composables";
+import StatsSection from "../../../components/pokemon/StatsSection";
+import EvolutionSection from "../../../components/pokemon/EvolutionSection";
+import SimilarPokemonAccordion from "../../../components/pokemon/SimilarPokemonAccordion";
+import LoreSection from "../../../components/pokemon/LoreSection";
 import { motion } from "framer-motion";
-import LoadingState from "@/components/LoadingState";
-import ErrorState from "@/components/ErrorState";
-import BackButton from "@/components/BackButton";
+import LoadingState from "../../../components/LoadingState";
+import ErrorState from "../../../components/ErrorState";
+import BackButton from "../../../components/BackButton";
 import { useTranslations } from "next-intl";
 
 export default function PokemonDetailPage() {

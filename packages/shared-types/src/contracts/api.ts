@@ -1,6 +1,6 @@
-import { PokemonDetail } from "../models/pokemon.types.ts";
-import type { GetPokemonParams } from "../schemas/pokemon.schema.js";
-import type { SearchQuerystring } from "../schemas/search.schema.js";
+import type { PokemonDetail } from "../models/pokemon.types.ts";
+import type { GetPokemonParams } from "../schemas/pokemon.schema.ts";
+import type { SearchQuerystring } from "../schemas/search.schema.ts";
 import type { SearchTemplate, SimilarGroupedByGen } from "../models/search.types.ts";
 
 export type GenericRequest<Params = void, Query = void, Body = void> = {

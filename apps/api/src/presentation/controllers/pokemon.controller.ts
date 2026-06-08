@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { IPokemonService } from "../../domain/services/pokemon.service.interface";
-import { GetPokemonParams } from "../schemas/pokemon.schema";
+import { GetPokemonParams } from "@vector-pokeapi/shared-types";
 
 export class PokemonController {
     constructor(private pokemonService: IPokemonService) { }

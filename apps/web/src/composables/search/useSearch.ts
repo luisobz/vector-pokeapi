@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { searchPokemon, getTemplates } from "@/services/api";
+import { searchPokemon, getTemplates } from "../../services/api";
 import type { GetSearchRequest, GetSearchReply, GetTemplatesReply } from "@vector-pokeapi/shared-types";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useDebounce } from "../../hooks/useDebounce";
 import { registerReset } from "../reset";
 
 const STORAGE_KEY = "pokemonSearchState";

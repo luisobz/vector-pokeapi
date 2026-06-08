@@ -2,12 +2,12 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CardSkeleton from "./CardSkeleton";
 import EmptyResults from "./EmptyResults";
-import { Pokemon } from "@vector-pokeapi/shared-types";
+import { PokemonDetail } from "@vector-pokeapi/shared-types";
 
 interface ResultsGridProps {
   isLoading: boolean;
-  pokemonList: Pokemon[];
-  renderItem: (pokemon: Pokemon) => React.ReactNode;
+  pokemonList: PokemonDetail[];
+  renderItem: (pokemon: PokemonDetail) => React.ReactNode;
   skeletonCount?: number;
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import LanguageSwitcher from "../LanguageSwitcher";
-import { buildPath } from "@/lib/routes";
+import { buildPath } from "../../lib/routes";
 
 interface HeaderProps {
   t: any;

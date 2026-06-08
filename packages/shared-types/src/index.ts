@@ -1,3 +1,3 @@
-export * from "./contracts/api.ts";
-export * from "./schemas/index.ts";
-export * from "./models/index.ts";
+export type * from "./contracts/api.ts";
+export type * from "./models/index.ts";
+export * from "./schemas/index.js";
