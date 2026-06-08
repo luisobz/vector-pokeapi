@@ -4,7 +4,27 @@ import React from "react";
 import { ArrowRight, Sparkles, HelpCircle, RefreshCw, Zap } from "lucide-react";
 import { cn } from "@vector-pokeapi/ui";
 import Link from "next/link";
-import type { EvolutionNode, EvolutionLink, EvolutionTree } from "@vector-pokeapi/shared-types";
+import { buildPath } from "@/lib/routes";
+
+interface EvolutionNode {
+  id: number;
+  name: string;
+  nameEs?: string | null;
+  sprite?: string | null;
+  types: string[];
+}
+
+interface EvolutionLink {
+  trigger: string;
+  minLevel?: number | null;
+  itemName?: string | null;
+  to: EvolutionTree;
+}
+
+interface EvolutionTree {
+  pokemon: EvolutionNode;
+  evolvesTo: EvolutionLink[];
+}
 
 interface EvolutionGraphProps {
   chain: EvolutionTree;
@@ -58,7 +78,7 @@ export default function EvolutionGraph({ chain, currentPokemonId, className }: E
 
     return (
       <Link
-        href={`/pokemon/${node.id}`}
+        href={buildPath('POKEMON_DETAIL', { id: node.id })}
         key={node.id}
         className={cn(
           "relative flex flex-col items-center p-3 rounded-xl border w-36 bg-zinc-900/60 transition-all duration-300 hover:scale-105 hover:-translate-y-1 shadow-md hover:shadow-xl",

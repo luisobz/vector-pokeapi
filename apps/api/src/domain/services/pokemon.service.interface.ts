@@ -1,4 +1,4 @@
-import { PokemonDetail, SimilarGroupedByGen } from "@vector-pokeapi/shared-types";
+import { SimilarGroupedByGen, PokemonDetail } from "@vector-pokeapi/shared-types";
 
 export interface IPokemonService {
     getById(id: number): Promise<PokemonDetail | null>;

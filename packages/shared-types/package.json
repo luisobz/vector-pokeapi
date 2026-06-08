@@ -10,5 +10,8 @@
   },
   "scripts": {
     "clean": "rm -rf node_modules dist"
+  },
+  "devDependencies": {
+    "zod": "^4.4.3"
   }
 }

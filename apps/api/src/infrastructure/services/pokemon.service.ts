@@ -1,6 +1,6 @@
 import { IPokemonService } from "../../domain/services/pokemon.service.interface";
 import { IPokemonRepository } from "../../domain/repositories/pokemon.repository.interface";
-import { PokemonDetail, SimilarGroupedByGen } from "@vector-pokeapi/shared-types";
+import { SimilarGroupedByGen, PokemonDetail } from "@vector-pokeapi/shared-types";
 
 export class PokemonService implements IPokemonService {
     constructor(private pokemonRepository: IPokemonRepository) { }

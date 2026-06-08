@@ -1,5 +1,5 @@
-import { PrismaClient } from "@vector-pokeapi/database";
-import { Pokemon, PokemonDetail, PokemonStats, SimilarGroupedByGen } from "@vector-pokeapi/shared-types";
+import { PrismaClient, Pokemon, Prisma } from "@vector-pokeapi/database";
+import { PokemonDetail, PokemonStats, SimilarGroupedByGen } from "@vector-pokeapi/shared-types";
 import {
   IPokemonRepository,
   SearchByEmbeddingOptions,
@@ -13,15 +13,18 @@ export class PokemonRepository implements IPokemonRepository {
     private evolutionEdgeRepository: IEvolutionEdgeRepository
   ) { }
 
-  private formatStats(stats: any): PokemonStats {
+  private formatStats(stats: Prisma.JsonValue): PokemonStats {
+    const defaults = { hp: 0, attack: 0, defense: 0, spAtk: 0, spDef: 0, speed: 0 };
+    if (!stats || typeof stats !== 'object') return defaults;
+    const { hp, attack, defense, sp_atk, sp_def, speed } = stats as Record<string, unknown>;
     return {
-      hp: stats?.hp || 0,
-      attack: stats?.attack || 0,
-      defense: stats?.defense || 0,
-      spAtk: stats?.sp_atk || 0,
-      spDef: stats?.sp_def || 0,
-      speed: stats?.speed || 0,
-    }
+      hp: Number(hp) || 0,
+      attack: Number(attack) || 0,
+      defense: Number(defense) || 0,
+      spAtk: Number(sp_atk) || 0,
+      spDef: Number(sp_def) || 0,
+      speed: Number(speed) || 0,
+    };
   }
 
   async getById(id: number): Promise<PokemonDetail | null> {
@@ -53,7 +56,7 @@ export class PokemonRepository implements IPokemonRepository {
   async searchByEmbedding(
     embedding: number[],
     options?: SearchByEmbeddingOptions
-  ): Promise<Pokemon[]> {
+  ): Promise<PokemonDetail[]> {
     const limit = options?.limit ?? 12;
     const type = options?.type ?? null;
     const gen = options?.gen ?? null;
@@ -93,7 +96,7 @@ export class PokemonRepository implements IPokemonRepository {
   async searchByMultipleEmbeddings(
     embeddings: number[][],
     options?: SearchByMultipleEmbeddingsOptions
-  ): Promise<Pokemon[]> {
+  ): Promise<PokemonDetail[]> {
     const limit = options?.limit ?? 12;
     const type = options?.type ?? null;
     const gen = options?.gen ?? null;
@@ -197,17 +200,31 @@ export class PokemonRepository implements IPokemonRepository {
   async searchByText(
     query: string,
     options?: { type?: string; gen?: number; limit?: number }
-  ): Promise<Pokemon[]> {
+  ): Promise<PokemonDetail[]> {
     const limit = options?.limit ?? 12;
     const type = options?.type ?? null;
     const gen = options?.gen ?? null;
 
+    // SELECT base
     let sql = `
-      SELECT id, name, name_es, description, types, generation, stats, sprite, height, weight
-      FROM pokemons
-      WHERE 1=1
-    `;
+    SELECT id, name, name_es, description, types, generation, stats, sprite, height, weight
+  `;
+
     const sqlParams: any[] = [];
+
+    if (query && query.trim() !== '') {
+      sql += `, (
+      CASE WHEN name ILIKE '%' || $1 || '%' THEN 99 ELSE 0 END +
+      CASE WHEN name_es ILIKE '%' || $1 || '%' THEN 98 ELSE 0 END +
+      COALESCE(
+        (LENGTH(LOWER(description)) - LENGTH(REPLACE(LOWER(description), LOWER($1::text), '')))
+        / NULLIF(LENGTH(LOWER($1::text)), 0),
+        0
+      )
+    ) as score`;
+    }
+
+    sql += ` FROM pokemons WHERE 1=1`;
 
     if (type) {
       sqlParams.push(type);
@@ -217,11 +234,26 @@ export class PokemonRepository implements IPokemonRepository {
       sqlParams.push(Number(gen));
       sql += ` AND generation = $${sqlParams.length}`;
     }
-    if (query) {
-      sqlParams.push(`%${query}%`);
-      sql += ` AND (name ILIKE $${sqlParams.length} OR name_es ILIKE $${sqlParams.length} OR description ILIKE $${sqlParams.length})`;
+
+    if (query && query.trim() !== '') {
+      const trimmed = query.trim();
+      sqlParams.push(trimmed);
+      const qIdx = sqlParams.length;
+
+      sql += ` AND (
+      name ILIKE '%' || $${qIdx} || '%' OR 
+      name_es ILIKE '%' || $${qIdx} || '%' OR 
+      description ILIKE '%' || $${qIdx} || '%'
+    )`;
+
+      sql = sql.replace(/\$1::text/g, `$${qIdx}::text`);
+      sql = sql.replace(/\$1/g, `$${qIdx}`);
+
+      sql += ` ORDER BY score DESC, id ASC`;
+    } else {
+      sql += ` ORDER BY id ASC`;
     }
-    sql += ` ORDER BY id ASC`;
+
     sqlParams.push(limit);
     sql += ` LIMIT $${sqlParams.length}`;
 
@@ -266,7 +298,7 @@ export class PokemonRepository implements IPokemonRepository {
       .sort((a, b) => a.generation - b.generation);
   }
 
-  private mapResults(rawResults: any[]): Pokemon[] {
+  private mapResults(rawResults: any[]): PokemonDetail[] {
     return rawResults
       .map((r) => {
         const stats = typeof r.stats === "string" ? JSON.parse(r.stats) : r.stats;
@@ -282,7 +314,6 @@ export class PokemonRepository implements IPokemonRepository {
           height: r.height,
           weight: r.weight,
         };
-      })
-      .sort((a, b) => a.id - b.id);
+      });
   }
 }

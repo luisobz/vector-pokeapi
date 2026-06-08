@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import PokemonTypeBadge from "./PokemonTypeBadge";
 import SimilarScoreBadge from "./SimilarScoreBadge";
+import { buildPath } from "@/lib/routes";
 
 interface SimilarPokemonCardProps {
   similar: any;
@@ -10,7 +11,7 @@ interface SimilarPokemonCardProps {
 export default function SimilarPokemonCard({ similar }: SimilarPokemonCardProps) {
   return (
     <Link
-      href={`/pokemon/${similar.id}`}
+      href={buildPath('POKEMON_DETAIL', { id: similar.id })}
       className="flex items-center justify-between p-3 rounded-lg border border-zinc-900 hover:border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900/60 transition-all group"
     >
       <div className="flex items-center gap-3">

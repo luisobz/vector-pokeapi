@@ -1,6 +1,6 @@
 import { FastifyRequest } from "fastify";
 import { ISearchService } from "../../domain/services/search.service.interface";
-import { SearchQuerystring } from "../schemas/search.schema";
+import { SearchQuerystring } from "@vector-pokeapi/shared-types";
 
 export class SearchController {
     constructor(private searchService: ISearchService) { }
