@@ -1,36 +1,21 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "@fastify/type-provider-zod";
 import { getPokemonParamsSchema } from "../schemas/pokemon.schema.js";
-import { IPokemonRepository } from "../../domain/repositories/pokemon.repository.interface.js";
+import { PokemonController } from "../controllers/pokemon.controller.js";
 
-export async function pokemonRoutes(fastify: FastifyInstance, opts: { pokemonRepository: IPokemonRepository }) {
+export async function pokemonRoutes(fastify: FastifyInstance, opts: { controller: PokemonController }) {
   const server = fastify.withTypeProvider<ZodTypeProvider>();
+  const ctrl = opts.controller;
 
   server.get(
     "/api/pokemon/:id",
-    {
-      schema: { params: getPokemonParamsSchema },
-    },
-    async (request, reply) => {
-      const { id } = request.params;
-      const pokemon = await opts.pokemonRepository.getById(id);
-
-      if (!pokemon) {
-        return reply.status(404).send({ error: "Pokemon not found" });
-      }
-
-      return pokemon;
-    }
+    { schema: { params: getPokemonParamsSchema } },
+    ctrl.getById.bind(ctrl)
   );
 
   server.get(
     "/api/pokemon/:id/similar",
-    {
-      schema: { params: getPokemonParamsSchema },
-    },
-    async (request) => {
-      const { id } = request.params;
-      return await opts.pokemonRepository.getConceptuallySimilar(id);
-    }
+    { schema: { params: getPokemonParamsSchema } },
+    ctrl.getSimilar.bind(ctrl)
   );
 }

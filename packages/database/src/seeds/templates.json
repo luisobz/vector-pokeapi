@@ -1,205 +1,208 @@
 [
   {
-    "queryText": "ratón eléctrico amarillo rápido",
-    "category": "tipo",
+    "query_text": "fast yellow electric mouse",
+    "category": "type",
     "keywords": [
-      "ratón",
-      "eléctrico",
-      "amarillo",
-      "rápido"
+      "fast",
+      "yellow",
+      "electric",
+      "mouse"
     ]
   },
   {
-    "queryText": "lagarto de fuego con cola ardiente",
-    "category": "tipo",
+    "query_text": "fire lizard with a blazing tail",
+    "category": "type",
     "keywords": [
-      "lagarto",
-      "fuego",
-      "cola",
-      "ardiente"
+      "fire",
+      "lizard",
+      "blazing",
+      "tail"
     ]
   },
   {
-    "queryText": "tortuga de agua con cañones en el caparazón",
-    "category": "tipo",
+    "query_text": "water turtle with cannons on its shell",
+    "category": "type",
     "keywords": [
-      "tortuga",
-      "agua",
-      "cañones",
-      "caparazón"
+      "water",
+      "turtle",
+      "cannons",
+      "its",
+      "shell"
     ]
   },
   {
-    "queryText": "dinosaurio de planta con una flor en el lomo",
-    "category": "tipo",
+    "query_text": "plant dinosaur with a flower on its back",
+    "category": "type",
     "keywords": [
-      "dinosaurio",
-      "planta",
-      "flor",
-      "lomo"
+      "plant",
+      "dinosaur",
+      "flower",
+      "its",
+      "back"
     ]
   },
   {
-    "queryText": "dragón volador de fuego temible",
-    "category": "tipo",
+    "query_text": "fearsome flying fire dragon",
+    "category": "type",
     "keywords": [
-      "dragón",
-      "volador",
-      "fuego",
-      "temible"
+      "fearsome",
+      "flying",
+      "fire",
+      "dragon"
     ]
   },
   {
-    "queryText": "pájaro volador rápido de tipo normal",
-    "category": "tipo",
+    "query_text": "fast flying bird of normal type",
+    "category": "type",
     "keywords": [
-      "pájaro",
-      "volador",
-      "rápido",
-      "normal"
+      "fast",
+      "flying",
+      "bird",
+      "normal",
+      "type"
     ]
   },
   {
-    "queryText": "serpiente venenosa de color morado",
-    "category": "tipo",
+    "query_text": "purple poisonous snake",
+    "category": "type",
     "keywords": [
-      "serpiente",
-      "venenosa",
-      "morado"
+      "purple",
+      "poisonous",
+      "snake"
     ]
   },
   {
-    "queryText": "tanque defensivo lento y pesado",
-    "category": "rol",
+    "query_text": "slow and heavy defensive tank",
+    "category": "role",
     "keywords": [
-      "tanque",
-      "defensivo",
-      "lento",
-      "pesado"
+      "slow",
+      "heavy",
+      "defensive",
+      "tank"
     ]
   },
   {
-    "queryText": "atacante físico rápido y agresivo",
-    "category": "rol",
+    "query_text": "fast and aggressive physical attacker",
+    "category": "role",
     "keywords": [
-      "atacante",
-      "físico",
-      "rápido",
-      "agresivo"
+      "fast",
+      "aggressive",
+      "physical",
+      "attacker"
     ]
   },
   {
-    "queryText": "atacante especial con alto poder espiritual",
-    "category": "rol",
+    "query_text": "special attacker with high spiritual power",
+    "category": "role",
     "keywords": [
-      "atacante",
-      "especial",
-      "alto",
-      "poder",
-      "espiritual"
+      "special",
+      "attacker",
+      "high",
+      "spiritual",
+      "power"
     ]
   },
   {
-    "queryText": "soporte curativo para el equipo",
-    "category": "rol",
+    "query_text": "healing support for the team",
+    "category": "role",
     "keywords": [
-      "soporte",
-      "curativo",
-      "equipo"
+      "healing",
+      "support",
+      "team"
     ]
   },
   {
-    "queryText": "muralla defensiva con mucha salud",
-    "category": "rol",
+    "query_text": "defensive wall with high health",
+    "category": "role",
     "keywords": [
-      "muralla",
-      "defensiva",
-      "mucha",
-      "salud"
+      "defensive",
+      "wall",
+      "high",
+      "health"
     ]
   },
   {
-    "queryText": "experimento genético científico misterioso y poderoso",
+    "query_text": "mysterious and powerful scientific genetic experiment",
     "category": "lore",
     "keywords": [
-      "experimento",
-      "genético",
-      "científico",
-      "misterioso",
-      "poderoso"
+      "mysterious",
+      "powerful",
+      "scientific",
+      "genetic",
+      "experiment"
     ]
   },
   {
-    "queryText": "criatura mística que vive en cuevas oscuras",
+    "query_text": "mystical creature living in dark caves",
     "category": "lore",
     "keywords": [
-      "criatura",
-      "mística",
-      "vive",
-      "cuevas",
-      "oscuras"
+      "mystical",
+      "creature",
+      "living",
+      "dark",
+      "caves"
     ]
   },
   {
-    "queryText": "pokémon fósil prehistórico resucitado",
+    "query_text": "resurrected prehistoric fossil pokemon",
     "category": "lore",
     "keywords": [
-      "pokémon",
-      "fósil",
-      "prehistórico",
-      "resucitado"
+      "resurrected",
+      "prehistoric",
+      "fossil",
+      "pokemon"
     ]
   },
   {
-    "queryText": "guardián legendario de los bosques y la naturaleza",
+    "query_text": "legendary guardian of forests and nature",
     "category": "lore",
     "keywords": [
-      "guardián",
-      "legendario",
-      "bosques",
-      "naturaleza"
+      "legendary",
+      "guardian",
+      "forests",
+      "nature"
     ]
   },
   {
-    "queryText": "evoluciona usando una piedra trueno brillante",
-    "category": "evolución",
+    "query_text": "evolves using a bright thunder stone",
+    "category": "evolution",
     "keywords": [
-      "evoluciona",
-      "usando",
-      "piedra",
-      "trueno",
-      "brillante"
+      "evolves",
+      "using",
+      "bright",
+      "thunder",
+      "stone"
     ]
   },
   {
-    "queryText": "se transforma con la energía de la piedra agua",
-    "category": "evolución",
+    "query_text": "transforms through the energy of a water stone",
+    "category": "evolution",
     "keywords": [
-      "transforma",
-      "energía",
-      "piedra",
-      "agua"
+      "transforms",
+      "through",
+      "energy",
+      "water",
+      "stone"
     ]
   },
   {
-    "queryText": "evoluciona mediante intercambio con otro entrenador",
-    "category": "evolución",
+    "query_text": "evolves by trading with another trainer",
+    "category": "evolution",
     "keywords": [
-      "evoluciona",
-      "intercambio",
-      "otro",
-      "entrenador"
+      "evolves",
+      "trading",
+      "another",
+      "trainer"
     ]
   },
   {
-    "queryText": "línea evolutiva que tiene múltiples transformaciones",
-    "category": "evolución",
+    "query_text": "evolutionary line with multiple transformations",
+    "category": "evolution",
     "keywords": [
-      "línea",
-      "evolutiva",
-      "tiene",
-      "múltiples",
-      "transformaciones"
+      "evolutionary",
+      "line",
+      "multiple",
+      "transformations"
     ]
   }
 ]

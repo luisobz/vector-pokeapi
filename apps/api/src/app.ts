@@ -1,35 +1,21 @@
 import Fastify, { FastifyInstance } from "fastify";
-import cors from "@fastify/cors";
-import { serializerCompiler, validatorCompiler } from "@fastify/type-provider-zod";
 import { prisma } from "@vector-pokeapi/database";
-import { PokemonRepository } from "./infrastructure/repositories/pokemon.prisma.repository.js";
-import { TemplateRepository } from "./infrastructure/repositories/search-template.prisma.repository.js";
-import { SearchService } from "./infrastructure/services/search.service.js";
+import { setupValidator } from "./infrastructure/http/validator.js";
+import { registerCors } from "./infrastructure/http/cors.js";
+import { registerRateLimit } from "./infrastructure/http/rate-limit.js";
+import { registerRoutes } from "./presentation/routes/index.js";
 
-import { pokemonRoutes } from "./presentation/routes/pokemon.routes.js";
-import { searchRoutes } from "./presentation/routes/search.routes.js";
-import { templatesRoutes } from "./presentation/routes/templates.routes.js";
+function initFastifyApp(): FastifyInstance {
+  return Fastify({ logger: true });
+}
 
 export async function buildApp(): Promise<FastifyInstance> {
-  const app = Fastify({ logger: true });
+  const app = initFastifyApp();
 
-  app.setValidatorCompiler(validatorCompiler);
-  app.setSerializerCompiler(serializerCompiler);
-
-  await app.register(cors, {
-    origin: "*",
-    methods: ["GET", "OPTIONS"],
-  });
-
-  const pokemonRepository = new PokemonRepository(prisma);
-  const templateRepository = new TemplateRepository(prisma);
-  const searchService = new SearchService(pokemonRepository, templateRepository);
-
-  app.register(pokemonRoutes, { pokemonRepository });
-  app.register(searchRoutes, { searchService });
-  app.register(templatesRoutes, { templateRepository });
-
-  app.get("/health", async () => ({ status: "OK", timestamp: new Date().toISOString() }));
+  setupValidator(app);
+  await registerCors(app);
+  await registerRateLimit(app);
+  await registerRoutes(app, { prisma });
 
   return app;
 }

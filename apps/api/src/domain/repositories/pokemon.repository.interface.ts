@@ -1,22 +1,23 @@
 import { Pokemon, PokemonDetail, SimilarGroupedByGen } from "@vector-pokeapi/shared-types";
 
-export type SearchBySimilarityOptions = {
+export type SearchByEmbeddingOptions = {
   type?: string;
   gen?: number;
   limit?: number;
   distanceThreshold?: number;
 };
 
-export type SearchTextOptions = {
+export type SearchByMultipleEmbeddingsOptions = {
   type?: string;
   gen?: number;
   limit?: number;
+  minSimilarityThreshold?: number;
 };
 
 export interface IPokemonRepository {
   getById(id: number): Promise<PokemonDetail | null>;
-  searchBySimilarity(embedding: number[], options?: SearchBySimilarityOptions): Promise<Pokemon[]>;
-  searchByText(query: string, options?: SearchTextOptions): Promise<Pokemon[]>;
+  searchByEmbedding(embedding: number[], options?: SearchByEmbeddingOptions): Promise<Pokemon[]>;
+  searchByMultipleEmbeddings(embeddings: number[][], options?: SearchByMultipleEmbeddingsOptions): Promise<Pokemon[]>;
+  searchByText(query: string, options?: { type?: string; gen?: number; limit?: number }): Promise<Pokemon[]>;
   getConceptuallySimilar(id: number): Promise<SimilarGroupedByGen[]>;
-  searchByTemplate(templateId: number, options?: SearchBySimilarityOptions & { minSimilarityThreshold: number }): Promise<Pokemon[]>;
 }

@@ -1,15 +1,4 @@
 #!/usr/bin/env python3
-"""
-vectorize_full.py
-Genera embeddings para:
-- Pokémon (descripción + tipos + generación)
-- Templates (queryText completa)
-- Palabras clave de cada template (extraídas de templates.json)
-
-Usa Ollama con el modelo qwen3-embedding:8b.
-Salida: pokemon.vectors.json, templates.vectors.json, templates.keywords.vectors.json
-"""
-
 import os
 import json
 import time
@@ -52,7 +41,7 @@ def main():
 
     # ── Resume pokemon vectors if progress file exists ───────────────────────
     if os.path.exists(pokemon_progress_path):
-        print("⏳ Detectado progreso de vectorización de pokémons. Reanudando...")
+        print("⏳ Detected pokemon vectorization progress. Resuming...")
         with open(pokemon_progress_path, 'r', encoding='utf-8') as f:
             pokemon_vectors = json.load(f)   # {id: [float, ...]}
     else:
@@ -60,14 +49,14 @@ def main():
 
     # ── Resume template vectors if progress file exists ──────────────────────
     if os.path.exists(templates_progress_path):
-        print("⏳ Detectado progreso de vectorización de templates. Reanudando...")
+        print("⏳ Detected template vectorization progress. Resuming...")
         with open(templates_progress_path, 'r', encoding='utf-8') as f:
             template_vectors = json.load(f)  # {index: [float, ...]}
     else:
         template_vectors = {}
 
     if os.path.exists(keywords_progress_path):
-        print("⏳ Detectado progreso de vectorización de keywords. Reanudando...")
+        print("⏳ Detected keyword vectorization progress. Resuming...")
         with open(keywords_progress_path, 'r', encoding='utf-8') as f:
             keywords_data = json.load(f)   # { template_index: { keyword: embedding } }
     else:
@@ -79,12 +68,12 @@ def main():
     try:
         test = ollama.embed(model=model_name, input="test")
         dim = len(test['embeddings'][0])
-        print(f"✅ Conexión con Ollama exitosa. Dimensión real: {dim}")
-        target_dim = 1536  # PostgreSQL pgvector dimension
+        print(f"✅ Connection with Ollama successful. Real dimension: {dim}")
+        target_dim = 3072  # PostgreSQL pgvector dimension
         if dim > target_dim:
-            print(f"⚠️  El modelo devuelve {dim} dims, se truncará a {target_dim}")
+            print(f"⚠️  The model returns {dim} dims, it will be truncated to {target_dim}")
     except Exception as e:
-        print(f"❌ Error conectando con Ollama: {e}")
+        print(f"❌ Error connecting with Ollama: {e}")
         return
 
     # ==================== HELPERS ====================
@@ -92,25 +81,26 @@ def main():
     max_retries = 3
 
     def embed_batch(texts, desc=""):
-        """Intenta embedding con reintentos. Si falla, devuelve None."""
+        """Attempt embedding with retries. If it fails, return None."""
         for attempt in range(max_retries):
             try:
                 response = ollama.embed(model=model_name, input=texts)
                 return [emb[:target_dim] + [0.0] * (target_dim - min(len(emb), target_dim))
                         for emb in response['embeddings']]
             except Exception as e:
-                print(f"⚠️  Error en batch ({desc}), intento {attempt+1}/{max_retries}: {e}")
+                print(f"⚠️  Error in batch ({desc}), attempt {attempt+1}/{max_retries}: {e}")
                 time.sleep(2 ** attempt)
-        print(f"❌ Batch falló definitivamente: {desc}")
+        print(f"❌ Batch failed: {desc}")
         return None
 
     # ==================== VECTORIZE POKÉMONS ====================
     done_ids = set(pokemon_vectors.keys())
     pending_pokemon = [(i, p) for i, p in enumerate(pokemons) if str(p['id']) not in done_ids]
-    print(f"Pokémons con embedding pendiente: {len(pending_pokemon)} de {len(pokemons)}")
+    print(f"Pending pokemon embeddings: {len(pending_pokemon)} of {len(pokemons)}")
 
+    # only description
     pokemon_texts_all = {
-        str(p['id']): f"{p['name']} | tipos: {', '.join(p.get('types', []))} | gen: {p.get('generation', '')} | {p.get('description') or ''}"
+        str(p['id']): f"{p['description'] or ''}"
         for p in pokemons
     }
 
@@ -134,12 +124,12 @@ def main():
     # ==================== VECTORIZE TEMPLATES ====================
     done_tmpl = set(template_vectors.keys())
     pending_templates = [(i, t) for i, t in enumerate(search_templates) if str(i) not in done_tmpl]
-    print(f"Templates pendientes: {len(pending_templates)} de {len(search_templates)}")
+    print(f"Pending template embeddings: {len(pending_templates)} of {len(search_templates)}")
 
     for start in tqdm(range(0, len(pending_templates), batch_size), desc="Templates"):
         batch = pending_templates[start:start + batch_size]
-        batch_texts = [t['queryText'] for _, t in batch]
-        embeddings = embed_batch(batch_texts, f"Template indices {[i for i, _ in batch]}")
+        batch_texts = [t['query_text'] for _, t in batch]
+        embeddings = embed_batch(batch_texts, f"Template indexes: {[i for i, _ in batch]}")
 
         if embeddings is None:
             with open(templates_progress_path, 'w', encoding='utf-8') as f:
@@ -165,7 +155,7 @@ def main():
             if kw not in existing:
                 pending_keywords.append((idx_str, kw))
 
-    print(f"Palabras clave pendientes: {len(pending_keywords)}")
+    print(f"Pending keywords: {len(pending_keywords)}")
     # Batch by keyword text
     for start in tqdm(range(0, len(pending_keywords), batch_size), desc="Keywords"):
         batch = pending_keywords[start:start + batch_size]

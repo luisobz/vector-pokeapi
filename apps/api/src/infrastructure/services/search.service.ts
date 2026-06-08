@@ -1,41 +1,45 @@
-import { ISearchService } from "../../domain/services/search.service.interface";
+import { ISearchService, SearchOptions } from "../../domain/services/search.service.interface";
 import { IPokemonRepository } from "../../domain/repositories/pokemon.repository.interface";
 import { ISearchTemplateRepository } from "../../domain/repositories/search-template.repository.interface";
+import { ITemplateWordRepository } from "../../domain/repositories/template-word.repository.interface";
 import { Pokemon } from "@vector-pokeapi/shared-types";
 
+
 export class SearchService implements ISearchService {
+  private readonly TEMPLATE_DISTANCE_THRESHOLD = 0.45;
+  private readonly KEYWORD_MIN_SIMILARITY = 0.35;
+
   constructor(
     private pokemonRepository: IPokemonRepository,
     private templateRepository: ISearchTemplateRepository,
+    private templateWordRepository: ITemplateWordRepository,
   ) { }
 
   async search(
     query: string,
-    options?: { type?: string; gen?: number; limit?: number; templateId?: number; useKeywords?: boolean }
+    options?: SearchOptions
   ): Promise<Pokemon[]> {
-    console.log(`[SearchService] search() called — query="${query}", templateId=${options?.templateId}, type=${options?.type}, gen=${options?.gen}`);
+    const { templateId, useKeywords, ...trimmedOptions } = options ?? {};
 
-    const TEMPLATE_DISTANCE_THRESHOLD = 0.40; // higher = more results
-    const TEMPLATE_DISTANCE_THRESHOLD_KEYWORD = 0.20; // lower = more results
-
-    if (options?.templateId) {
-      const template = await this.templateRepository.getById(options.templateId);
-      console.log(`[SearchService] Template lookup result: id=${template?.id}, hasEmbedding=${!!template?.embedding}, embeddingLength=${template?.embedding?.length}`);
-      if (template?.embedding) {
-        if (options.useKeywords) {
-          console.log(`[SearchService] → Using template keywords for keyword-based search`);
-          return this.pokemonRepository.searchByTemplate(template.id, {
-            ...options,
-            minSimilarityThreshold: TEMPLATE_DISTANCE_THRESHOLD_KEYWORD,
+    if (templateId) {
+      const template = await this.templateRepository.getById(templateId);
+      if (useKeywords) {
+        const keywords = await this.templateWordRepository.getKeywordsByTemplateId(templateId);
+        if (keywords.length > 0) {
+          const embeddings = keywords.map((k) => k.embedding);
+          return this.pokemonRepository.searchByMultipleEmbeddings(embeddings, {
+            ...trimmedOptions,
+            minSimilarityThreshold: this.KEYWORD_MIN_SIMILARITY,
           });
         }
-        console.log(`[SearchService] → Using template embedding for similarity search (threshold=${TEMPLATE_DISTANCE_THRESHOLD})`);
-        return this.pokemonRepository.searchBySimilarity(template.embedding, {
-          ...options,
-          distanceThreshold: TEMPLATE_DISTANCE_THRESHOLD,
+      } else if (template?.embedding) {
+        return this.pokemonRepository.searchByEmbedding(template.embedding, {
+          ...trimmedOptions,
+          distanceThreshold: this.TEMPLATE_DISTANCE_THRESHOLD,
         });
       }
     }
-    return this.pokemonRepository.searchByText(query ?? "", options);
+
+    return this.pokemonRepository.searchByText(query ?? "", trimmedOptions);
   }
 }

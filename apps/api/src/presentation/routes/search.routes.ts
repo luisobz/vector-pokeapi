@@ -1,26 +1,15 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "@fastify/type-provider-zod";
 import { searchQuerystringSchema } from "../schemas/search.schema.js";
-import { ISearchService } from "../../domain/services/search.service.interface.js";
+import { SearchController } from "../controllers/search.controller.js";
 
-export async function searchRoutes(fastify: FastifyInstance, opts: { searchService: ISearchService }) {
+export async function searchRoutes(fastify: FastifyInstance, opts: { controller: SearchController }) {
   const server = fastify.withTypeProvider<ZodTypeProvider>();
+  const ctrl = opts.controller;
 
   server.get(
     "/api/search",
-    {
-      schema: { querystring: searchQuerystringSchema },
-    },
-    async (request) => {
-      const { q, type, gen, limit, templateId, useKeywords } = request.query;
-      const options: { type?: string; gen?: number; limit?: number; templateId?: number; useKeywords?: boolean } = {};
-      if (type !== undefined) options.type = type;
-      if (gen !== undefined) options.gen = gen;
-      if (limit !== undefined) options.limit = limit;
-      if (templateId !== undefined) options.templateId = templateId;
-      if (useKeywords !== undefined) options.useKeywords = useKeywords;
-      const pokemons = await opts.searchService.search(q || "", options);
-      return pokemons;
-    }
+    { schema: { querystring: searchQuerystringSchema } },
+    ctrl.search.bind(ctrl)
   );
 }

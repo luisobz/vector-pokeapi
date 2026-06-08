@@ -39,37 +39,37 @@ def tokenize_keywords(query_text: str):
 # ----------------------------------------------------------------------
 SEARCH_TEMPLATES = [
     # Category: type
-    {"queryText": "fast yellow electric mouse", "category": "type"},
-    {"queryText": "fire lizard with a blazing tail", "category": "type"},
-    {"queryText": "water turtle with cannons on its shell", "category": "type"},
-    {"queryText": "plant dinosaur with a flower on its back", "category": "type"},
-    {"queryText": "fearsome flying fire dragon", "category": "type"},
-    {"queryText": "fast flying bird of normal type", "category": "type"},
-    {"queryText": "purple poisonous snake", "category": "type"},
+    {"query_text": "fast yellow electric mouse", "category": "type"},
+    {"query_text": "fire lizard with a blazing tail", "category": "type"},
+    {"query_text": "water turtle with cannons on its shell", "category": "type"},
+    {"query_text": "plant dinosaur with a flower on its back", "category": "type"},
+    {"query_text": "fearsome flying fire dragon", "category": "type"},
+    {"query_text": "fast flying bird of normal type", "category": "type"},
+    {"query_text": "purple poisonous snake", "category": "type"},
 
     # Category: role
-    {"queryText": "slow and heavy defensive tank", "category": "role"},
-    {"queryText": "fast and aggressive physical attacker", "category": "role"},
-    {"queryText": "special attacker with high spiritual power", "category": "role"},
-    {"queryText": "healing support for the team", "category": "role"},
-    {"queryText": "defensive wall with high health", "category": "role"},
+    {"query_text": "slow and heavy defensive tank", "category": "role"},
+    {"query_text": "fast and aggressive physical attacker", "category": "role"},
+    {"query_text": "special attacker with high spiritual power", "category": "role"},
+    {"query_text": "healing support for the team", "category": "role"},
+    {"query_text": "defensive wall with high health", "category": "role"},
 
     # Category: lore
-    {"queryText": "mysterious and powerful scientific genetic experiment", "category": "lore"},
-    {"queryText": "mystical creature living in dark caves", "category": "lore"},
-    {"queryText": "resurrected prehistoric fossil pokemon", "category": "lore"},
-    {"queryText": "legendary guardian of forests and nature", "category": "lore"},
+    {"query_text": "mysterious and powerful scientific genetic experiment", "category": "lore"},
+    {"query_text": "mystical creature living in dark caves", "category": "lore"},
+    {"query_text": "resurrected prehistoric fossil pokemon", "category": "lore"},
+    {"query_text": "legendary guardian of forests and nature", "category": "lore"},
 
     # Category: evolution
-    {"queryText": "evolves using a bright thunder stone", "category": "evolution"},
-    {"queryText": "transforms through the energy of a water stone", "category": "evolution"},
-    {"queryText": "evolves by trading with another trainer", "category": "evolution"},
-    {"queryText": "evolutionary line with multiple transformations", "category": "evolution"}
+    {"query_text": "evolves using a bright thunder stone", "category": "evolution"},
+    {"query_text": "transforms through the energy of a water stone", "category": "evolution"},
+    {"query_text": "evolves by trading with another trainer", "category": "evolution"},
+    {"query_text": "evolutionary line with multiple transformations", "category": "evolution"}
 ]
 
 # Enrich each template with extracted keywords
 for tmpl in SEARCH_TEMPLATES:
-    tmpl["keywords"] = tokenize_keywords(tmpl["queryText"])
+    tmpl["keywords"] = tokenize_keywords(tmpl["query_text"])
 
 # ----------------------------------------------------------------------
 # Main

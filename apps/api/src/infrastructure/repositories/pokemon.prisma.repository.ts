@@ -1,33 +1,40 @@
 import { PrismaClient } from "@vector-pokeapi/database";
-import { IPokemonRepository, SearchBySimilarityOptions, SearchTextOptions } from "../../domain/repositories/pokemon.repository.interface.js";
-import { Pokemon, PokemonDetail, PokemonSimilarResult, SimilarGroupedByGen } from "@vector-pokeapi/shared-types";
+import { Pokemon, PokemonDetail, PokemonStats, SimilarGroupedByGen } from "@vector-pokeapi/shared-types";
+import {
+  IPokemonRepository,
+  SearchByEmbeddingOptions,
+  SearchByMultipleEmbeddingsOptions,
+} from "../../domain/repositories/pokemon.repository.interface.js";
+import { IEvolutionEdgeRepository } from "../../domain/repositories/evolution-edge.repository.interface.js";
 
 export class PokemonRepository implements IPokemonRepository {
-  constructor(private prisma: PrismaClient) { }
+  constructor(
+    private prisma: PrismaClient,
+    private evolutionEdgeRepository: IEvolutionEdgeRepository
+  ) { }
 
-  /**
-   * Fetches a Pokemon by ID with its complete bidirectional evolution graph (predecessors and successors)
-   */
+  private formatStats(stats: any): PokemonStats {
+    return {
+      hp: stats?.hp || 0,
+      attack: stats?.attack || 0,
+      defense: stats?.defense || 0,
+      spAtk: stats?.sp_atk || 0,
+      spDef: stats?.sp_def || 0,
+      speed: stats?.speed || 0,
+    }
+  }
+
   async getById(id: number): Promise<PokemonDetail | null> {
     const rawPokemon = await this.prisma.pokemon.findUnique({
       where: { id },
-      include: {
-        evolvesFrom: {
-          include: {
-            from: true,
-          },
-        },
-        evolvesTo: {
-          include: {
-            to: true,
-          },
-        },
-      },
     });
 
     if (!rawPokemon) return null;
 
-    const stats = rawPokemon.stats as any;
+    const [evolvesFrom, evolvesTo] = await Promise.all([
+      this.evolutionEdgeRepository.findEdgesTo(id),
+      this.evolutionEdgeRepository.findEdgesFrom(id),
+    ]);
 
     return {
       id: rawPokemon.id,
@@ -36,77 +43,28 @@ export class PokemonRepository implements IPokemonRepository {
       description: rawPokemon.description,
       types: rawPokemon.types,
       generation: rawPokemon.generation,
-      stats: {
-        hp: stats?.hp || 0,
-        attack: stats?.attack || 0,
-        defense: stats?.defense || 0,
-        spAtk: stats?.spAtk || 0,
-        spDef: stats?.spDef || 0,
-        speed: stats?.speed || 0,
-      },
+      stats: this.formatStats(rawPokemon.stats),
       sprite: rawPokemon.sprite,
-      evolvesFrom: rawPokemon.evolvesFrom.map((edge) => ({
-        id: edge.id,
-        fromPokemonId: edge.fromPokemonId,
-        toPokemonId: edge.toPokemonId,
-        trigger: edge.trigger,
-        minLevel: edge.minLevel,
-        itemName: edge.itemName,
-        from: {
-          id: edge.from.id,
-          name: edge.from.name,
-          nameEs: edge.from.nameEs,
-          description: edge.from.description,
-          types: edge.from.types,
-          generation: edge.from.generation,
-          stats: edge.from.stats as any,
-          sprite: edge.from.sprite,
-        }
-        ,
-      })),
-      evolvesTo: rawPokemon.evolvesTo.map((edge) => ({
-        id: edge.id,
-        fromPokemonId: edge.fromPokemonId,
-        toPokemonId: edge.toPokemonId,
-        trigger: edge.trigger,
-        minLevel: edge.minLevel,
-        itemName: edge.itemName,
-        to: {
-          id: edge.to.id,
-          name: edge.to.name,
-          nameEs: edge.to.nameEs,
-          description: edge.to.description,
-          types: edge.to.types,
-          generation: edge.to.generation,
-          stats: edge.to.stats as any,
-          sprite: edge.to.sprite,
-        },
-      })),
+      evolvesFrom,
+      evolvesTo,
     };
   }
 
-  /**
-   * Semantic search using a pre-computed embedding vector.
-   * Uses pgvector cosine distance (<=>).
-   */
-  async searchBySimilarity(
+  async searchByEmbedding(
     embedding: number[],
-    options?: SearchBySimilarityOptions
+    options?: SearchByEmbeddingOptions
   ): Promise<Pokemon[]> {
-    const limit = options?.limit || 12;
-    const type = options?.type || null;
-    const gen = options?.gen || null;
+    const limit = options?.limit ?? 12;
+    const type = options?.type ?? null;
+    const gen = options?.gen ?? null;
     const distanceThreshold = options?.distanceThreshold ?? null;
 
     const embeddingString = `[${embedding.join(",")}]`;
-    const sqlParams: any[] = [];
-
-    // $1 is always the embedding vector so we can reference it multiple times
-    sqlParams.push(embeddingString);
-    const embeddingParamIndex = sqlParams.length; // 1
+    const sqlParams: any[] = [embeddingString];
+    const embeddingParamIndex = 1;
 
     let query = `
-      SELECT id, name, "nameEs", description, types, generation, stats, sprite, height, weight
+      SELECT id, name, name_es, description, types, generation, stats, sprite, height, weight
       FROM pokemons
       WHERE embedding IS NOT NULL
     `;
@@ -115,62 +73,137 @@ export class PokemonRepository implements IPokemonRepository {
       sqlParams.push(type);
       query += ` AND $${sqlParams.length} = ANY(types)`;
     }
-
     if (gen) {
       sqlParams.push(Number(gen));
       query += ` AND generation = $${sqlParams.length}`;
     }
-
-    // Distance threshold: only include results closer than the threshold
     if (distanceThreshold !== null) {
       sqlParams.push(distanceThreshold);
       query += ` AND (embedding <=> $${embeddingParamIndex}::vector) <= $${sqlParams.length}`;
     }
 
     query += ` ORDER BY embedding <=> $${embeddingParamIndex}::vector ASC`;
-
     sqlParams.push(limit);
     query += ` LIMIT $${sqlParams.length}`;
 
     const rawResults = await this.prisma.$queryRawUnsafe<any[]>(query, ...sqlParams);
-
-    return rawResults.map((r) => {
-      const stats = typeof r.stats === "string" ? JSON.parse(r.stats) : r.stats;
-      return {
-        id: r.id,
-        name: r.name,
-        nameEs: r.nameEs,
-        description: r.description,
-        types: r.types,
-        generation: r.generation,
-        stats: {
-          hp: stats?.hp || 0,
-          attack: stats?.attack || 0,
-          defense: stats?.defense || 0,
-          spAtk: stats?.spAtk || 0,
-          spDef: stats?.spDef || 0,
-          speed: stats?.speed || 0,
-        },
-        sprite: r.sprite,
-        height: r.height,
-        weight: r.weight,
-      };
-    }).sort((a, b) => a.id - b.id);
+    return this.mapResults(rawResults);
   }
 
-  /**
-   * Text-based search using ILIKE pattern matching.
-   */
+  async searchByMultipleEmbeddings(
+    embeddings: number[][],
+    options?: SearchByMultipleEmbeddingsOptions
+  ): Promise<Pokemon[]> {
+    const limit = options?.limit ?? 12;
+    const type = options?.type ?? null;
+    const gen = options?.gen ?? null;
+    const minSimilarity = options?.minSimilarityThreshold ?? 0.0;
+
+    if (!embeddings.length) return [];
+
+    const positiveThreshold = 0.25;
+    const negativeWeight = 1.2;
+
+    const vectorLiterals = embeddings
+      .map((emb) => `'[${emb.join(",")}]'::vector`)
+      .join(", ");
+
+    const sqlParams: any[] = [positiveThreshold, minSimilarity];
+    let paramIndex = 3;
+
+    let query = `
+    WITH keyword_vectors AS (
+      SELECT emb
+      FROM unnest(ARRAY[${vectorLiterals}]::vector[]) AS kv(emb)
+    ),
+    base AS (
+      SELECT
+        p.id,
+        p.name,
+        p.name_es,
+        p.description,
+        p.types,
+        p.generation,
+        p.stats,
+        p.sprite,
+        p.height,
+        p.weight,
+        1 - (p.embedding <=> kv.emb) AS similarity
+      FROM pokemons p
+      CROSS JOIN keyword_vectors kv
+      WHERE p.embedding IS NOT NULL
+  `;
+
+    if (type) {
+      sqlParams.push(type);
+      query += ` AND $${paramIndex} = ANY(p.types)`;
+      paramIndex++;
+    }
+
+    if (gen) {
+      sqlParams.push(Number(gen));
+      query += ` AND p.generation = $${paramIndex}`;
+      paramIndex++;
+    }
+
+    query += `
+    ),
+    scored AS (
+      SELECT
+        id,
+        name,
+        name_es,
+        description,
+        types,
+        generation,
+        stats,
+        sprite,
+        height,
+        weight,
+        COUNT(*) AS keyword_count,
+        COUNT(*) FILTER (WHERE similarity >= $1) AS matched_keywords,
+        MAX(similarity) AS best_similarity,
+        AVG(similarity) AS avg_similarity,
+        SUM(
+          CASE
+            WHEN similarity >= $1 THEN similarity
+            ELSE -( $1 - similarity ) * ${negativeWeight}
+          END
+        ) / COUNT(*)::float AS score
+      FROM base
+      GROUP BY
+        id, name, name_es, description, types, generation, stats, sprite, height, weight
+      HAVING
+        COUNT(*) FILTER (WHERE similarity >= $1) > 0
+    )
+    SELECT *
+    FROM scored
+    WHERE score >= $2
+    ORDER BY
+      matched_keywords DESC,
+      score DESC,
+      best_similarity DESC,
+      avg_similarity DESC,
+      id ASC
+    LIMIT $${paramIndex};
+  `;
+
+    sqlParams.push(limit);
+
+    const rawResults = await this.prisma.$queryRawUnsafe<any[]>(query, ...sqlParams);
+    return this.mapResults(rawResults);
+  }
+
   async searchByText(
     query: string,
-    options?: SearchTextOptions
+    options?: { type?: string; gen?: number; limit?: number }
   ): Promise<Pokemon[]> {
-    const limit = options?.limit || 12;
-    const type = options?.type || null;
-    const gen = options?.gen || null;
+    const limit = options?.limit ?? 12;
+    const type = options?.type ?? null;
+    const gen = options?.gen ?? null;
 
     let sql = `
-      SELECT id, name, "nameEs", description, types, generation, stats, sprite, height, weight
+      SELECT id, name, name_es, description, types, generation, stats, sprite, height, weight
       FROM pokemons
       WHERE 1=1
     `;
@@ -180,66 +213,34 @@ export class PokemonRepository implements IPokemonRepository {
       sqlParams.push(type);
       sql += ` AND $${sqlParams.length} = ANY(types)`;
     }
-
     if (gen) {
       sqlParams.push(Number(gen));
       sql += ` AND generation = $${sqlParams.length}`;
     }
-
     if (query) {
       sqlParams.push(`%${query}%`);
-      sql += ` AND (name ILIKE $${sqlParams.length} OR "nameEs" ILIKE $${sqlParams.length} OR description ILIKE $${sqlParams.length})`;
-      sql += ` ORDER BY id ASC`;
-    } else {
-      sql += ` ORDER BY id ASC`;
+      sql += ` AND (name ILIKE $${sqlParams.length} OR name_es ILIKE $${sqlParams.length} OR description ILIKE $${sqlParams.length})`;
     }
-
+    sql += ` ORDER BY id ASC`;
     sqlParams.push(limit);
     sql += ` LIMIT $${sqlParams.length}`;
 
     const rawResults = await this.prisma.$queryRawUnsafe<any[]>(sql, ...sqlParams);
-
-    return rawResults.map((r) => {
-      const stats = typeof r.stats === "string" ? JSON.parse(r.stats) : r.stats;
-      return {
-        id: r.id,
-        name: r.name,
-        nameEs: r.nameEs,
-        description: r.description,
-        types: r.types,
-        generation: r.generation,
-        stats: {
-          hp: stats?.hp || 0,
-          attack: stats?.attack || 0,
-          defense: stats?.defense || 0,
-          spAtk: stats?.spAtk || 0,
-          spDef: stats?.spDef || 0,
-          speed: stats?.speed || 0,
-        },
-        sprite: r.sprite,
-        height: r.height,
-        weight: r.weight,
-      };
-    });
+    return this.mapResults(rawResults);
   }
 
-  /**
-   * Fetches conceptually similar Pokemons to the target ID using Cosine Similarity (vector pgvector matching),
-   * grouped by generation.
-   */
-  async getConceptuallySimilar(id: number, limit: number = 24): Promise<SimilarGroupedByGen[]> {
+  async getConceptuallySimilar(id: number): Promise<SimilarGroupedByGen[]> {
     const query = `
-      SELECT id, name, "nameEs", description, types, generation, stats, sprite,
+      SELECT id, name, name_es, description, types, generation, stats, sprite,
              1 - (embedding <=> (SELECT embedding FROM pokemons WHERE id = $1)) AS similarity_score
       FROM pokemons
       WHERE id != $1 AND embedding IS NOT NULL
       ORDER BY embedding <=> (SELECT embedding FROM pokemons WHERE id = $1) ASC
-      LIMIT $2;
+      LIMIT 24;
     `;
+    const rawResults = await this.prisma.$queryRawUnsafe<any[]>(query, Number(id));
 
-    const rawResults = await this.prisma.$queryRawUnsafe<any[]>(query, Number(id), limit);
-
-    const similarResults: PokemonSimilarResult[] = rawResults.map((r) => {
+    const similar = rawResults.map((r) => {
       const stats = typeof r.stats === "string" ? JSON.parse(r.stats) : r.stats;
       return {
         id: r.id,
@@ -248,117 +249,40 @@ export class PokemonRepository implements IPokemonRepository {
         description: r.description,
         types: r.types,
         generation: r.generation,
-        stats: {
-          hp: stats?.hp || 0,
-          attack: stats?.attack || 0,
-          defense: stats?.defense || 0,
-          spAtk: stats?.spAtk || 0,
-          spDef: stats?.spDef || 0,
-          speed: stats?.speed || 0,
-        },
+        stats: this.formatStats(stats),
         sprite: r.sprite,
         similarity_score: Number(r.similarity_score || 0),
       };
     });
 
-    // Group by generation
-    const grouped = new Map<number, PokemonSimilarResult[]>();
-    for (const pokemon of similarResults) {
-      const gen = pokemon.generation;
-      if (!grouped.has(gen)) {
-        grouped.set(gen, []);
-      }
-      grouped.get(gen)!.push(pokemon);
+    const grouped = new Map<number, typeof similar>();
+    for (const p of similar) {
+      const gen = p.generation;
+      if (!grouped.has(gen)) grouped.set(gen, []);
+      grouped.get(gen)!.push(p);
     }
-
     return Array.from(grouped.entries())
       .map(([generation, pokemons]) => ({ generation, pokemons }))
       .sort((a, b) => a.generation - b.generation);
   }
 
-  async searchByTemplate(
-    templateId: number,
-    options?: SearchBySimilarityOptions & { minSimilarityThreshold: number }
-  ): Promise<Pokemon[]> {
-    const limit = options?.limit ?? 12;
-    const type = options?.type ?? null;
-    const gen = options?.gen ?? null;
-    const minSimilarity = options?.minSimilarityThreshold ?? 0.0;
-
-    // Construcción dinámica de la consulta – corregida: usar AVG en lugar de MIN
-    let sql = `
-      WITH template_keywords AS (
-        SELECT embedding::vector AS emb
-        FROM template_words
-        WHERE "templateId" = $1
-      ),
-      pokemon_similarities AS (
-        SELECT
-          p.id,
-          p.name,
-          p."nameEs",
-          p.description,
-          p.types,
-          p.generation,
-          p.stats,
-          p.sprite,
-          p.height,
-          p.weight,
-          AVG(1 - (p.embedding <=> kw.emb)) AS avg_similarity
-        FROM pokemons p
-        CROSS JOIN template_keywords kw
-        WHERE p.embedding IS NOT NULL
-    `;
-
-    const params: any[] = [templateId];
-    let paramIndex = 2; // $1 ya está usado
-
-    if (type) {
-      params.push(type);
-      sql += ` AND $${paramIndex} = ANY(p.types)`;
-      paramIndex++;
-    }
-    if (gen) {
-      params.push(Number(gen));
-      sql += ` AND p.generation = $${paramIndex}`;
-      paramIndex++;
-    }
-
-    sql += `
-        GROUP BY p.id
-      )
-      SELECT *
-      FROM pokemon_similarities
-      WHERE avg_similarity >= $${paramIndex}
-      ORDER BY avg_similarity DESC
-      LIMIT $${paramIndex + 1}
-    `;
-    params.push(minSimilarity, limit);
-
-    const rawResults = await this.prisma.$queryRawUnsafe<any[]>(sql, ...params);
-
-    return rawResults.map((r) => {
-      const stats = typeof r.stats === "string" ? JSON.parse(r.stats) : r.stats;
-      return {
-        id: r.id,
-        name: r.name,
-        nameEs: r.nameEs,
-        description: r.description,
-        types: r.types,
-        generation: r.generation,
-        stats: {
-          hp: stats?.hp || 0,
-          attack: stats?.attack || 0,
-          defense: stats?.defense || 0,
-          spAtk: stats?.spAtk || 0,
-          spDef: stats?.spDef || 0,
-          speed: stats?.speed || 0,
-        },
-        sprite: r.sprite,
-        height: r.height,
-        weight: r.weight,
-      };
-    });
+  private mapResults(rawResults: any[]): Pokemon[] {
+    return rawResults
+      .map((r) => {
+        const stats = typeof r.stats === "string" ? JSON.parse(r.stats) : r.stats;
+        return {
+          id: r.id,
+          name: r.name,
+          nameEs: r.nameEs,
+          description: r.description,
+          types: r.types,
+          generation: r.generation,
+          stats: this.formatStats(stats),
+          sprite: r.sprite,
+          height: r.height,
+          weight: r.weight,
+        };
+      })
+      .sort((a, b) => a.id - b.id);
   }
-
 }

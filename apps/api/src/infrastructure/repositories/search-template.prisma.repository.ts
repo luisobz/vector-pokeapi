@@ -2,11 +2,6 @@ import { PrismaClient } from "@vector-pokeapi/database";
 import { ISearchTemplateRepository } from "../../domain/repositories/search-template.repository.interface.js";
 import { SearchTemplate } from "@vector-pokeapi/shared-types";
 
-export interface TemplateWithKeywords {
-  template: SearchTemplate;
-  keywords: { word: string; embedding: number[] }[];
-}
-
 export class TemplateRepository implements ISearchTemplateRepository {
   constructor(private prisma: PrismaClient) { }
 
@@ -46,36 +41,5 @@ export class TemplateRepository implements ISearchTemplateRepository {
       category: row.category,
       embedding,
     };
-  }
-
-  /**
-   * Obtiene un template completo incluyendo todas sus palabras clave con sus vectores.
-   */
-  async getTemplateWithKeywords(id: number): Promise<TemplateWithKeywords | null> {
-    // Primero obtenemos el template básico
-    const template = await this.getById(id);
-    if (!template) return null;
-
-    // Luego obtenemos las palabras clave asociadas
-    const keywordRows = await this.prisma.$queryRawUnsafe<any[]>(
-      `SELECT word, embedding::text FROM template_words WHERE template_id = $1 ORDER BY id`,
-      id
-    );
-    const keywords = keywordRows.map((row) => {
-      let embedding: number[] = [];
-      if (row.embedding) {
-        try {
-          embedding = row.embedding
-            .replace(/^\[/, "")
-            .replace(/\]$/, "")
-            .split(",")
-            .map(Number);
-        } catch (err) {
-          console.error(`Failed to parse embedding for word ${row.word}`, err);
-        }
-      }
-      return { word: row.word, embedding };
-    });
-    return { template, keywords };
   }
 }

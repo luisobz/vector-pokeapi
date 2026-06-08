@@ -45,32 +45,32 @@ def build_pokemon_lore(species, language='en'):
     lore_fragments = re.sub(r'\s+', ' ', ' '.join(flavor_texts[:10]))
 
     traits = []
-    if species.get('is_baby'): traits.append('un Pokémon bebé')
-    if species.get('is_legendary'): traits.append('un Pokémon legendario')
-    if species.get('is_mythical'): traits.append('un Pokémon singular')
+    if species.get('is_baby'): traits.append('a baby Pokémon')
+    if species.get('is_legendary'): traits.append('a legendary Pokémon')
+    if species.get('is_mythical'): traits.append('a mythical Pokémon')
 
     if genus:
-        traits.append(f'conocido como "{genus}"')
+        traits.append(f'known as "{genus}"')
 
     habitat = species.get('habitat')
     if habitat:
-        traits.append(f"habitante habitual de entornos {habitat['name']}")
+        traits.append(f"commonly found in {habitat['name']} environments")
 
     color = species.get('color')
     if color:
-        traits.append(f"de color predominante {color['name']}")
+        traits.append(f"predominantly {color['name']} in color")
 
     shape = species.get('shape')
     if shape:
-        traits.append(f"con una silueta clasificada como {shape['name']}")
+        traits.append(f"with a silhouette classified as {shape['name']}")
 
-    intro = f"{name} es {', '.join(traits)}." if traits else f"{name} es un Pokémon."
+    intro = f"{name} is {', '.join(traits)}." if traits else f"{name} is a Pokémon."
     
     generation_name = species.get('generation', {}).get('name', '')
-    generation = f"{name} apareció por primera vez en la {generation_name}."
+    generation = f"{name} first appeared in the {generation_name.replace('-', ' ')}."
 
     egg_groups = species.get('egg_groups', [])
-    breeding = f"Pertenece a los grupos huevo {', '.join([g['name'] for g in egg_groups])}." if egg_groups else ""
+    breeding = f"Belongs to the {', '.join([g['name'] for g in egg_groups])} egg groups." if egg_groups else ""
 
     parts = [intro, generation, breeding, lore_fragments]
     return '\n\n'.join([p for p in parts if p])
@@ -91,11 +91,11 @@ def parse_evolution_chain(node, edges, visited_edges):
         if edge_key not in visited_edges:
             visited_edges.add(edge_key)
             edges.append({
-                'fromPokemonId': current_species_id,
-                'toPokemonId': child_species_id,
+                'from_pokemon_id': current_species_id,
+                'to_pokemon_id': child_species_id,
                 'trigger': trigger,
-                'minLevel': min_level,
-                'itemName': item_name
+                'min_level': min_level,
+                'item_name': item_name
             })
         
         parse_evolution_chain(child, edges, visited_edges)
@@ -127,7 +127,7 @@ def main():
     pokemons = state["pokemons"]
     evolution_edges = state["evolution_edges"]
     processed_chains = set(state["processed_chains"])
-    visited_edges = set(f"{edge['fromPokemonId']}-{edge['toPokemonId']}" for edge in evolution_edges)
+    visited_edges = set(f"{edge['from_pokemon_id']}-{edge['to_pokemon_id']}" for edge in evolution_edges)
     
     start_id = max(start_id, state["last_id"] + 1)
     
@@ -148,8 +148,8 @@ def main():
                 "hp": next(s['base_stat'] for s in stats_raw if s['stat']['name'] == 'hp'),
                 "attack": next(s['base_stat'] for s in stats_raw if s['stat']['name'] == 'attack'),
                 "defense": next(s['base_stat'] for s in stats_raw if s['stat']['name'] == 'defense'),
-                "spAtk": next(s['base_stat'] for s in stats_raw if s['stat']['name'] == 'special-attack'),
-                "spDef": next(s['base_stat'] for s in stats_raw if s['stat']['name'] == 'special-defense'),
+                "sp_atk": next(s['base_stat'] for s in stats_raw if s['stat']['name'] == 'special-attack'),
+                "sp_def": next(s['base_stat'] for s in stats_raw if s['stat']['name'] == 'special-defense'),
                 "speed": next(s['base_stat'] for s in stats_raw if s['stat']['name'] == 'speed')
             }
             
@@ -178,7 +178,7 @@ def main():
             pokemons.append({
                 "id": pokemon_id,
                 "name": p_data["name"],
-                "nameEs": name_en,
+                "name_es": name_en,
                 "description": desc_en,
                 "types": types,
                 "generation": gen_number,
@@ -215,17 +215,17 @@ def main():
     # ── Write one file per domain ────────────────────────────────────────────
     with open(pokemon_path, 'w', encoding='utf-8') as f:
         json.dump(pokemons, f, ensure_ascii=False, indent=2)
-    print(f"   📄 pokemon.json         → {len(pokemons)} registros")
+    print(f"   📄 pokemon.json         → {len(pokemons)} records")
 
     with open(evolution_edges_path, 'w', encoding='utf-8') as f:
         json.dump(evolution_edges, f, ensure_ascii=False, indent=2)
-    print(f"   📄 evolutionEdges.json  → {len(evolution_edges)} registros")
+    print(f"   📄 evolutionEdges.json  → {len(evolution_edges)} records")
         
     # Remove checkpoint after success
     if os.path.exists(checkpoint_path):
         os.remove(checkpoint_path)
         
-    print(f"\n✅ Data fetching complete! Archivos guardados en {output_dir}/")
+    print(f"\n✅ Data fetching complete! Files saved to {output_dir}/")
 
 if __name__ == "__main__":
     main()

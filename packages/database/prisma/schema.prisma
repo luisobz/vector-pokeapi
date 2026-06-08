@@ -5,15 +5,16 @@ generator client {
 
 datasource db {
   provider   = "postgresql"
-  extensions = [pgvector(map: "vector"), unaccent]
+  extensions = [pgvector, unaccent]
 }
 
 // Pokémon principal
 model Pokemon {
   id           Int      @id
   name         String
-  nameEs       String?
+  nameEs       String? @map("name_es")
   description  String?
+  descriptionEs String? @map("description_es")
   types        String[]
   generation   Int
   stats        Json
@@ -21,7 +22,7 @@ model Pokemon {
   height       Int?
   order        Int?
   weight       Int?
-  embedding    Unsupported("vector(1536)")?
+  embedding    Unsupported("halfvec(3072)")?
 
   evolvesFrom  EvolutionEdge[] @relation("EvolvesTo")
   evolvesTo    EvolutionEdge[] @relation("EvolvesFrom")
@@ -32,11 +33,11 @@ model Pokemon {
 // Grafo de evoluciones
 model EvolutionEdge {
   id            Int     @id @default(autoincrement())
-  fromPokemonId Int
-  toPokemonId   Int
+  fromPokemonId Int     @map("from_pokemon_id")
+  toPokemonId   Int     @map("to_pokemon_id")
   trigger       String  // "level-up" | "use-item" | "trade" | "other"
-  minLevel      Int?
-  itemName      String?
+  minLevel      Int?    @map("min_level")
+  itemName      String? @map("item_name")
 
   from Pokemon @relation("EvolvesFrom", fields: [fromPokemonId], references: [id])
   to   Pokemon @relation("EvolvesTo",   fields: [toPokemonId],   references: [id])
@@ -49,7 +50,7 @@ model SearchTemplate {
   id          Int     @id @default(autoincrement())
   queryText   String  @unique @map("query_text")
   category    String?
-  embedding   Unsupported("vector(1536)")?
+  embedding   Unsupported("halfvec(3072)")?
   words       TemplateWord[]
 
   @@map("search_templates")
@@ -57,9 +58,9 @@ model SearchTemplate {
 
 model TemplateWord {
   id          Int    @id @default(autoincrement())
-  templateId  Int
+  templateId  Int    @map("template_id")
   word        String
-  embedding   Unsupported("vector(1536)")
+  embedding   Unsupported("halfvec(3072)")
 
   template    SearchTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
 
