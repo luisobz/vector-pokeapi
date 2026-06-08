@@ -7,15 +7,14 @@ import { useDebounce } from "../hooks/useDebounce";
 
 import SearchHero from "../components/search/SearchHero";
 import SearchInput from "../components/search/SearchInput";
-import FilterToggleButton from "../components/search/FilterToggleButton";
 import ClearFiltersButton from "../components/search/ClearFiltersButton";
 import FilterPanel from "../components/search/FilterPanel";
 import TypeSelector from "../components/search/TypeSelector";
 import GenerationSelector from "../components/search/GenerationSelector";
-import SemanticTemplates from "../components/search/SemanticTemplates";
 import ResultsGrid from "../components/search/ResultsGrid";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { Sparkles, ToggleLeft, ToggleRight } from "lucide-react";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
@@ -39,6 +38,7 @@ export default function SearchPage() {
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedGen, setSelectedGen] = useState<number | "">("");
   const [selectedTemplateId, setSelectedTemplateId] = useState<number | null>(null);
+  const [useKeywords, setUseKeywords] = useState(true);
 
   const [templates, setTemplates] = useState<SearchTemplate[]>([]);
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
@@ -65,6 +65,7 @@ export default function SearchPage() {
       // If we clicked a template, search semantically
       if (selectedTemplateId) {
         queryParams.append("templateId", String(selectedTemplateId));
+        queryParams.append("useKeywords", String(useKeywords));
       } else if (debouncedSearchTerm) {
         // Otherwise use plain text
         queryParams.append("q", debouncedSearchTerm);
@@ -85,7 +86,7 @@ export default function SearchPage() {
       setIsSearching(false);
       setIsLoading(false);
     }
-  }, [debouncedSearchTerm, selectedType, selectedGen, selectedTemplateId]);
+  }, [debouncedSearchTerm, selectedType, selectedGen, selectedTemplateId, useKeywords]);
 
   // Re-run search whenever any filter value changes
   useEffect(() => {
@@ -115,13 +116,7 @@ export default function SearchPage() {
     setSelectedTemplateId(null);
   };
 
-  // Group templates by their categories
-  const templatesByCategory = templates.reduce<Record<string, SearchTemplate[]>>((acc, t) => {
-    const cat = t.category || "General";
-    if (!acc[cat]) acc[cat] = [];
-    acc[cat].push(t);
-    return acc;
-  }, {});
+  const hasActiveFilters = !!(selectedType || selectedGen || selectedTemplateId);
 
   return (
     <div className="space-y-8 pb-12">
@@ -131,19 +126,20 @@ export default function SearchPage() {
       {/* Search Bar & Filters Interface */}
       <div className="w-full max-w-4xl mx-auto space-y-4">
         <div className="flex flex-col sm:flex-row gap-3">
-          {/* Text Input */}
+          {/* Text Input with embedded filter toggle and autocomplete */}
           <SearchInput
             value={searchTerm}
             onChange={handleTextChange}
             isSearching={isSearching}
+            templates={templates}
+            onTemplateSelect={handleTemplateClick}
+            activeTemplateId={selectedTemplateId}
+            onFilterToggle={() => setShowFilters(!showFilters)}
+            hasActiveFilters={hasActiveFilters}
           />
 
           {/* Filter Toggle & Clear */}
           <div className="flex gap-2">
-            <FilterToggleButton
-              isActive={showFilters || !!selectedType || !!selectedGen}
-              onClick={() => setShowFilters(!showFilters)}
-            />
             <ClearFiltersButton
               isVisible={!!(searchTerm || selectedType || selectedGen || selectedTemplateId)}
               onClick={handleClearFilters}
@@ -152,7 +148,7 @@ export default function SearchPage() {
         </div>
 
         {/* Collapsible Filter Panel */}
-        <FilterPanel isOpen={showFilters}>
+        <FilterPanel isOpen={showFilters} onClose={() => setShowFilters(false)}>
           <TypeSelector
             selectedType={selectedType}
             onSelect={setSelectedType}
@@ -163,14 +159,23 @@ export default function SearchPage() {
             onSelect={setSelectedGen}
             generations={generations}
           />
+          <div className="col-span-1 sm:col-span-2 pt-4 mt-2 border-t border-white/5 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Sparkles size={16} className="text-cyan-400" />
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold text-zinc-200">Use Keywords (Template)</span>
+                <span className="text-xs text-zinc-500">Filtrar por palabras clave de IA en lugar de similitud vectorial</span>
+              </div>
+            </div>
+            <button
+              onClick={() => setUseKeywords(!useKeywords)}
+              className={`flex items-center justify-center p-1 rounded-full transition-colors ${useKeywords ? "text-cyan-400" : "text-zinc-600"
+                }`}
+            >
+              {useKeywords ? <ToggleRight size={32} /> : <ToggleLeft size={32} />}
+            </button>
+          </div>
         </FilterPanel>
-
-        {/* AI Semantic Suggestion Chips */}
-        <SemanticTemplates
-          templatesByCategory={templatesByCategory}
-          selectedTemplateId={selectedTemplateId}
-          onTemplateClick={handleTemplateClick}
-        />
       </div>
 
       {/* Grid Results Section */}

@@ -11,13 +11,14 @@ export async function searchRoutes(fastify: FastifyInstance, opts: { searchServi
     {
       schema: { querystring: searchQuerystringSchema },
     },
-    async (request, reply) => {
-      const { q, type, gen, limit, templateId } = request.query;
-      const options: { type?: string; gen?: number; limit?: number; templateId?: number } = {};
+    async (request) => {
+      const { q, type, gen, limit, templateId, useKeywords } = request.query;
+      const options: { type?: string; gen?: number; limit?: number; templateId?: number; useKeywords?: boolean } = {};
       if (type !== undefined) options.type = type;
       if (gen !== undefined) options.gen = gen;
       if (limit !== undefined) options.limit = limit;
       if (templateId !== undefined) options.templateId = templateId;
+      if (useKeywords !== undefined) options.useKeywords = useKeywords;
       const pokemons = await opts.searchService.search(q || "", options);
       return pokemons;
     }

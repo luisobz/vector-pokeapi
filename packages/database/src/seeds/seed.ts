@@ -16,22 +16,37 @@ function readJson<T>(filename: string): T {
 
 async function main() {
   // ── Load seed files ──────────────────────────────────────────────────────
-  const pokemons        = readJson<any[]>("pokemon.json");
-  const evolutionEdges  = readJson<any[]>("evolutionEdges.json");
-  const templates       = readJson<any[]>("templates.json");
+  const pokemons = readJson<any[]>("pokemon.json");
+  const evolutionEdges = readJson<any[]>("evolutionEdges.json");
+  const templates = readJson<any[]>("templates.json"); // Ahora contiene campo "keywords"
 
   // Vector files are optional (seeding without embeddings is allowed)
-  const pokemonVectors:  (number[] | null)[] = fs.existsSync(path.join(__dirname, "pokemon.vectors.json"))
+  const pokemonVectors: (number[] | null)[] = fs.existsSync(path.join(__dirname, "pokemon.vectors.json"))
     ? readJson<number[][]>("pokemon.vectors.json")
     : [];
+
   const templateVectors: (number[] | null)[] = fs.existsSync(path.join(__dirname, "templates.vectors.json"))
     ? readJson<number[][]>("templates.vectors.json")
     : [];
+
+  let templateKeywordsVectors: any[] = [];
+  const keywordsPath = path.join(__dirname, "templates.keywords.vectors.json");
+  if (fs.existsSync(keywordsPath)) {
+    try {
+      templateKeywordsVectors = JSON.parse(fs.readFileSync(keywordsPath, "utf8"));
+      console.log(`✅ Cargado keywords desde ${keywordsPath}`);
+    } catch (err) {
+      console.error(`❌ Error al parsear ${keywordsPath}:`, err);
+    }
+  } else {
+    console.log(`ℹ️  No se encontró ${keywordsPath}, omitiendo keywords.`);
+  }
 
   console.log("Seeding database...");
 
   // ── Clean existing data (reverse dependency order) ───────────────────────
   console.log("Cleaning existing database records...");
+  await prisma.templateWord.deleteMany();     // <--- nuevo
   await prisma.evolutionEdge.deleteMany();
   await prisma.pokemon.deleteMany();
   await prisma.searchTemplate.deleteMany();
@@ -82,7 +97,7 @@ async function main() {
     });
   }
 
-  // ── 3. Insert Search Templates ───────────────────────────────────────────
+  // ── 3. Insert Search Templates (completos) ───────────────────────────────
   console.log(`Inserting ${templates.length} search templates...`);
   for (let i = 0; i < templates.length; i++) {
     const t = templates[i];
@@ -97,6 +112,39 @@ async function main() {
       t.category || null,
       embeddingString
     );
+  }
+
+  // ── 4. Insert TemplateWords (keywords con embedding) ─────────────────────
+  if (templateKeywordsVectors.length > 0) {
+    console.log(`Inserting template keywords...`);
+    for (const kwItem of templateKeywordsVectors) {
+      const templateId = kwItem.template_index + 1; // porque id en BD empieza en 1
+      const keywords = kwItem.keywords;
+      const embeddings = kwItem.embeddings;
+
+      if (keywords.length !== embeddings.length) {
+        console.warn(`Template ${templateId}: keywords length mismatch, skipping.`);
+        continue;
+      }
+
+      for (let j = 0; j < keywords.length; j++) {
+        const word = keywords[j];
+        const embVec = embeddings[j];
+        if (!embVec) continue;
+        const embString = `[${embVec.join(",")}]`;
+        await prisma.$executeRawUnsafe(
+          `INSERT INTO template_words ("templateId", word, embedding)
+   VALUES ($1, $2, $3::vector)
+   ON CONFLICT ("templateId", word) DO UPDATE SET embedding = EXCLUDED.embedding`,
+          templateId,
+          word,
+          embString
+        );
+      }
+    }
+    console.log(`Inserted/updated keywords for ${templateKeywordsVectors.length} templates.`);
+  } else {
+    console.log("No keyword vectors provided. Skipping template_words insertion.");
   }
 
   console.log("Database seeded successfully!");

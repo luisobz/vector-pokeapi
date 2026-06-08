@@ -24,7 +24,7 @@ def clean_text(text):
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
 
-def build_pokemon_lore(species, language='es'):
+def build_pokemon_lore(species, language='en'):
     names = species.get('names', [])
     name = next((n['name'] for n in names if n['language']['name'] == language), species.get('name', ''))
 
@@ -162,11 +162,11 @@ def main():
                 continue
             s_data = s_res.json()
             
-            # Extract Spanish name if available, fallback to default name
-            name_es = next((n['name'] for n in s_data['names'] if n['language']['name'] == 'es'), None)
+            # Extract English name if available, fallback to default name
+            name_en = next((n['name'] for n in s_data['names'] if n['language']['name'] == 'en'), None)
             
-            # Extract Spanish description (flavor text) using the new lore builder
-            desc_es = build_pokemon_lore(s_data, 'es')
+            # Extract English description (flavor text) using the new lore builder
+            desc_en = build_pokemon_lore(s_data, 'en')
             
             gen_number = parse_roman_generation(s_data['generation']['name'])
             
@@ -178,8 +178,8 @@ def main():
             pokemons.append({
                 "id": pokemon_id,
                 "name": p_data["name"],
-                "nameEs": name_es,
-                "description": desc_es,
+                "nameEs": name_en,
+                "description": desc_en,
                 "types": types,
                 "generation": gen_number,
                 "stats": stats,

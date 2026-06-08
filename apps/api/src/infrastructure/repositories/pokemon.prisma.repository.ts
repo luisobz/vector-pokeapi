@@ -275,4 +275,90 @@ export class PokemonRepository implements IPokemonRepository {
       .map(([generation, pokemons]) => ({ generation, pokemons }))
       .sort((a, b) => a.generation - b.generation);
   }
+
+  async searchByTemplate(
+    templateId: number,
+    options?: SearchBySimilarityOptions & { minSimilarityThreshold: number }
+  ): Promise<Pokemon[]> {
+    const limit = options?.limit ?? 12;
+    const type = options?.type ?? null;
+    const gen = options?.gen ?? null;
+    const minSimilarity = options?.minSimilarityThreshold ?? 0.0;
+
+    // Construcción dinámica de la consulta – corregida: usar AVG en lugar de MIN
+    let sql = `
+      WITH template_keywords AS (
+        SELECT embedding::vector AS emb
+        FROM template_words
+        WHERE "templateId" = $1
+      ),
+      pokemon_similarities AS (
+        SELECT
+          p.id,
+          p.name,
+          p."nameEs",
+          p.description,
+          p.types,
+          p.generation,
+          p.stats,
+          p.sprite,
+          p.height,
+          p.weight,
+          AVG(1 - (p.embedding <=> kw.emb)) AS avg_similarity
+        FROM pokemons p
+        CROSS JOIN template_keywords kw
+        WHERE p.embedding IS NOT NULL
+    `;
+
+    const params: any[] = [templateId];
+    let paramIndex = 2; // $1 ya está usado
+
+    if (type) {
+      params.push(type);
+      sql += ` AND $${paramIndex} = ANY(p.types)`;
+      paramIndex++;
+    }
+    if (gen) {
+      params.push(Number(gen));
+      sql += ` AND p.generation = $${paramIndex}`;
+      paramIndex++;
+    }
+
+    sql += `
+        GROUP BY p.id
+      )
+      SELECT *
+      FROM pokemon_similarities
+      WHERE avg_similarity >= $${paramIndex}
+      ORDER BY avg_similarity DESC
+      LIMIT $${paramIndex + 1}
+    `;
+    params.push(minSimilarity, limit);
+
+    const rawResults = await this.prisma.$queryRawUnsafe<any[]>(sql, ...params);
+
+    return rawResults.map((r) => {
+      const stats = typeof r.stats === "string" ? JSON.parse(r.stats) : r.stats;
+      return {
+        id: r.id,
+        name: r.name,
+        nameEs: r.nameEs,
+        description: r.description,
+        types: r.types,
+        generation: r.generation,
+        stats: {
+          hp: stats?.hp || 0,
+          attack: stats?.attack || 0,
+          defense: stats?.defense || 0,
+          spAtk: stats?.spAtk || 0,
+          spDef: stats?.spDef || 0,
+          speed: stats?.speed || 0,
+        },
+        sprite: r.sprite,
+        height: r.height,
+        weight: r.weight,
+      };
+    });
+  }
+
 }

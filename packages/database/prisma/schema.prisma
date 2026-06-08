@@ -21,7 +21,7 @@ model Pokemon {
   height       Int?
   order        Int?
   weight       Int?
-  embedding  Unsupported("vector(1536)")?
+  embedding    Unsupported("vector(1536)")?
 
   evolvesFrom  EvolutionEdge[] @relation("EvolvesTo")
   evolvesTo    EvolutionEdge[] @relation("EvolvesFrom")
@@ -29,14 +29,14 @@ model Pokemon {
   @@map("pokemons")
 }
 
-// Grafo de evoluciones (extraído de /evolution-chain)
+// Grafo de evoluciones
 model EvolutionEdge {
   id            Int     @id @default(autoincrement())
   fromPokemonId Int
   toPokemonId   Int
   trigger       String  // "level-up" | "use-item" | "trade" | "other"
   minLevel      Int?
-  itemName      String? // piedra lunar, etc.
+  itemName      String?
 
   from Pokemon @relation("EvolvesFrom", fields: [fromPokemonId], references: [id])
   to   Pokemon @relation("EvolvesTo",   fields: [toPokemonId],   references: [id])
@@ -49,8 +49,20 @@ model SearchTemplate {
   id          Int     @id @default(autoincrement())
   queryText   String  @unique @map("query_text")
   category    String?
-  embedding  Unsupported("vector(1536)")?
+  embedding   Unsupported("vector(1536)")?
+  words       TemplateWord[]
 
   @@map("search_templates")
 }
 
+model TemplateWord {
+  id          Int    @id @default(autoincrement())
+  templateId  Int
+  word        String
+  embedding   Unsupported("vector(1536)")
+
+  template    SearchTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@unique([templateId, word])
+  @@map("template_words")
+}

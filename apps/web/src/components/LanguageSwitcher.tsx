@@ -26,7 +26,7 @@ export default function LanguageSwitcher() {
       title="Cambiar idioma / Change language"
     >
       <Globe size={14} className={isPending ? "animate-spin" : ""} />
-      {locale.toUpperCase()}
+      <span className="hidden sm:inline">{locale.toUpperCase()}</span>
     </button>
   );
 }

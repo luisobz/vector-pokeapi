@@ -22,4 +22,15 @@ export async function pokemonRoutes(fastify: FastifyInstance, opts: { pokemonRep
       return pokemon;
     }
   );
+
+  server.get(
+    "/api/pokemon/:id/similar",
+    {
+      schema: { params: getPokemonParamsSchema },
+    },
+    async (request) => {
+      const { id } = request.params;
+      return await opts.pokemonRepository.getConceptuallySimilar(id);
+    }
+  );
 }

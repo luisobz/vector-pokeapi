@@ -8,7 +8,6 @@ import { SearchService } from "./infrastructure/services/search.service.js";
 
 import { pokemonRoutes } from "./presentation/routes/pokemon.routes.js";
 import { searchRoutes } from "./presentation/routes/search.routes.js";
-import { similarRoutes } from "./presentation/routes/similar.routes.js";
 import { templatesRoutes } from "./presentation/routes/templates.routes.js";
 
 export async function buildApp(): Promise<FastifyInstance> {
@@ -28,7 +27,6 @@ export async function buildApp(): Promise<FastifyInstance> {
 
   app.register(pokemonRoutes, { pokemonRepository });
   app.register(searchRoutes, { searchService });
-  app.register(similarRoutes, { pokemonRepository });
   app.register(templatesRoutes, { templateRepository });
 
   app.get("/health", async () => ({ status: "OK", timestamp: new Date().toISOString() }));

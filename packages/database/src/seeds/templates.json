@@ -1,0 +1,205 @@
+[
+  {
+    "queryText": "ratón eléctrico amarillo rápido",
+    "category": "tipo",
+    "keywords": [
+      "ratón",
+      "eléctrico",
+      "amarillo",
+      "rápido"
+    ]
+  },
+  {
+    "queryText": "lagarto de fuego con cola ardiente",
+    "category": "tipo",
+    "keywords": [
+      "lagarto",
+      "fuego",
+      "cola",
+      "ardiente"
+    ]
+  },
+  {
+    "queryText": "tortuga de agua con cañones en el caparazón",
+    "category": "tipo",
+    "keywords": [
+      "tortuga",
+      "agua",
+      "cañones",
+      "caparazón"
+    ]
+  },
+  {
+    "queryText": "dinosaurio de planta con una flor en el lomo",
+    "category": "tipo",
+    "keywords": [
+      "dinosaurio",
+      "planta",
+      "flor",
+      "lomo"
+    ]
+  },
+  {
+    "queryText": "dragón volador de fuego temible",
+    "category": "tipo",
+    "keywords": [
+      "dragón",
+      "volador",
+      "fuego",
+      "temible"
+    ]
+  },
+  {
+    "queryText": "pájaro volador rápido de tipo normal",
+    "category": "tipo",
+    "keywords": [
+      "pájaro",
+      "volador",
+      "rápido",
+      "normal"
+    ]
+  },
+  {
+    "queryText": "serpiente venenosa de color morado",
+    "category": "tipo",
+    "keywords": [
+      "serpiente",
+      "venenosa",
+      "morado"
+    ]
+  },
+  {
+    "queryText": "tanque defensivo lento y pesado",
+    "category": "rol",
+    "keywords": [
+      "tanque",
+      "defensivo",
+      "lento",
+      "pesado"
+    ]
+  },
+  {
+    "queryText": "atacante físico rápido y agresivo",
+    "category": "rol",
+    "keywords": [
+      "atacante",
+      "físico",
+      "rápido",
+      "agresivo"
+    ]
+  },
+  {
+    "queryText": "atacante especial con alto poder espiritual",
+    "category": "rol",
+    "keywords": [
+      "atacante",
+      "especial",
+      "alto",
+      "poder",
+      "espiritual"
+    ]
+  },
+  {
+    "queryText": "soporte curativo para el equipo",
+    "category": "rol",
+    "keywords": [
+      "soporte",
+      "curativo",
+      "equipo"
+    ]
+  },
+  {
+    "queryText": "muralla defensiva con mucha salud",
+    "category": "rol",
+    "keywords": [
+      "muralla",
+      "defensiva",
+      "mucha",
+      "salud"
+    ]
+  },
+  {
+    "queryText": "experimento genético científico misterioso y poderoso",
+    "category": "lore",
+    "keywords": [
+      "experimento",
+      "genético",
+      "científico",
+      "misterioso",
+      "poderoso"
+    ]
+  },
+  {
+    "queryText": "criatura mística que vive en cuevas oscuras",
+    "category": "lore",
+    "keywords": [
+      "criatura",
+      "mística",
+      "vive",
+      "cuevas",
+      "oscuras"
+    ]
+  },
+  {
+    "queryText": "pokémon fósil prehistórico resucitado",
+    "category": "lore",
+    "keywords": [
+      "pokémon",
+      "fósil",
+      "prehistórico",
+      "resucitado"
+    ]
+  },
+  {
+    "queryText": "guardián legendario de los bosques y la naturaleza",
+    "category": "lore",
+    "keywords": [
+      "guardián",
+      "legendario",
+      "bosques",
+      "naturaleza"
+    ]
+  },
+  {
+    "queryText": "evoluciona usando una piedra trueno brillante",
+    "category": "evolución",
+    "keywords": [
+      "evoluciona",
+      "usando",
+      "piedra",
+      "trueno",
+      "brillante"
+    ]
+  },
+  {
+    "queryText": "se transforma con la energía de la piedra agua",
+    "category": "evolución",
+    "keywords": [
+      "transforma",
+      "energía",
+      "piedra",
+      "agua"
+    ]
+  },
+  {
+    "queryText": "evoluciona mediante intercambio con otro entrenador",
+    "category": "evolución",
+    "keywords": [
+      "evoluciona",
+      "intercambio",
+      "otro",
+      "entrenador"
+    ]
+  },
+  {
+    "queryText": "línea evolutiva que tiene múltiples transformaciones",
+    "category": "evolución",
+    "keywords": [
+      "línea",
+      "evolutiva",
+      "tiene",
+      "múltiples",
+      "transformaciones"
+    ]
+  }
+]

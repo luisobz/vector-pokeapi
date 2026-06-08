@@ -7,9 +7,8 @@ export async function templatesRoutes(fastify: FastifyInstance, opts: { template
 
   server.get(
     "/api/templates",
-    async (request, reply) => {
-      const templates = await opts.templateRepository.getAll();
-      return templates;
+    async () => {
+      return await opts.templateRepository.getAll();
     }
   );
 }
