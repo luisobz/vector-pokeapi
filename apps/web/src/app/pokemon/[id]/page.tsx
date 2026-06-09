@@ -23,6 +23,11 @@ export default function PokemonDetailPage() {
   if (isLoading) return <LoadingState />;
   if (error || !pokemon) return <ErrorState errorMessage={error || t("errorDefault")} />;
 
+  const descriptions = {
+    en: pokemon.description,
+    es: pokemon.descriptionEs
+  };
+
   return (
     <div className="space-y-8 pb-16">
       <BackButton />
@@ -34,7 +39,7 @@ export default function PokemonDetailPage() {
         </div>
         <div className="lg:col-span-8 space-y-8">
           <StatsSection stats={pokemon.stats} />
-          <LoreSection description={pokemon.description} />
+          <LoreSection descriptions={descriptions} />
           <EvolutionSection pokemon={pokemon} />
           <section className="space-y-4">
             <h2 className="text-lg font-black uppercase tracking-wider text-zinc-400 flex items-center gap-2">

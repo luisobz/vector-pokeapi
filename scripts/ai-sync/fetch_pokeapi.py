@@ -6,8 +6,105 @@ from tqdm import tqdm
 
 BASE_URL = "https://pokeapi.co/api/v2"
 
+# ─── Traducciones fijas (inglés y español) ────────────────────────────────
+TEXTS = {
+    "en": {
+        "baby": "a baby Pokémon",
+        "legendary": "a legendary Pokémon",
+        "mythical": "a mythical Pokémon",
+        "known_as": 'known as "{genus}"',
+        "found_in": "commonly found in {habitat} environments",
+        "color": "predominantly {color} in color",
+        "shape": "with a silhouette classified as {shape}",
+        "intro": "{name} is {traits}.",
+        "intro_no_traits": "{name} is a Pokémon.",
+        "generation": "{name} first appeared in the {generation}.",
+        "breeding": "Belongs to the {egg_groups} egg groups."
+    },
+    "es": {
+        "baby": "un Pokémon bebé",
+        "legendary": "un Pokémon legendario",
+        "mythical": "un Pokémon singular",
+        "known_as": 'conocido como "{genus}"',
+        "found_in": "comúnmente encontrado en entornos de {habitat}",
+        "color": "de color predominantemente {color}",
+        "shape": "con una silueta clasificada como {shape}",
+        "intro": "{name} es {traits}.",
+        "intro_no_traits": "{name} es un Pokémon.",
+        "generation": "{name} apareció por primera vez en la {generation}.",
+        "breeding": "Pertenece a los grupos huevo {egg_groups}."
+    }
+}
+
+# Traducciones de términos de la API (hábitats, colores, formas, grupos huevo)
+TERM_TRANSLATIONS = {
+    "habitat": {
+        "cave": {"es": "cueva"},
+        "forest": {"es": "bosque"},
+        "grassland": {"es": "pradera"},
+        "mountain": {"es": "montaña"},
+        "rare": {"es": "raro"},
+        "rough-terrain": {"es": "terreno escarpado"},
+        "sea": {"es": "mar"},
+        "urban": {"es": "urbano"},
+        "waters-edge": {"es": "orilla del agua"}
+    },
+    "color": {
+        "black": {"es": "negro"},
+        "blue": {"es": "azul"},
+        "brown": {"es": "marrón"},
+        "gray": {"es": "gris"},
+        "green": {"es": "verde"},
+        "pink": {"es": "rosa"},
+        "purple": {"es": "púrpura"},
+        "red": {"es": "rojo"},
+        "white": {"es": "blanco"},
+        "yellow": {"es": "amarillo"}
+    },
+    "shape": {
+        "ball": {"es": "bola"},
+        "squiggle": {"es": "garabato"},
+        "fish": {"es": "pez"},
+        "arms": {"es": "brazos"},
+        "blob": {"es": "gota"},
+        "upright": {"es": "erguido"},
+        "legs": {"es": "piernas"},
+        "quadruped": {"es": "cuadrúpedo"},
+        "wings": {"es": "alas"},
+        "tentacles": {"es": "tentáculos"},
+        "heads": {"es": "cabezas"},
+        "humanoid": {"es": "humanoide"},
+        "bug-wings": {"es": "alas de insecto"},
+        "armor": {"es": "armadura"}
+    },
+    "egg_group": {
+        "monster": {"es": "monstruo"},
+        "water1": {"es": "agua 1"},
+        "bug": {"es": "bicho"},
+        "flying": {"es": "volador"},
+        "field": {"es": "campo"},
+        "fairy": {"es": "hada"},
+        "grass": {"es": "planta"},
+        "human-like": {"es": "humanoide"},
+        "water3": {"es": "agua 3"},
+        "mineral": {"es": "mineral"},
+        "amorphous": {"es": "amorfo"},
+        "water2": {"es": "agua 2"},
+        "ditto": {"es": "ditto"},
+        "dragon": {"es": "dragón"},
+        "no-eggs": {"es": "sin huevos"}
+    }
+}
+
+def translate_term(category, value, language):
+    """Traduce un término de la API (hábitat, color, etc.) al idioma deseado."""
+    if language == "en":
+        return value
+    term_dict = TERM_TRANSLATIONS.get(category, {})
+    term_info = term_dict.get(value, {})
+    return term_info.get(language, value)  # fallback al original si no existe traducción
+
 def parse_roman_generation(gen_name):
-    # e.g., "generation-i" -> 1
     roman = gen_name.lower().replace("generation-", "").strip()
     mapping = {
         "i": 1, "ii": 2, "iii": 3, "iv": 4, "v": 5,
@@ -18,21 +115,28 @@ def parse_roman_generation(gen_name):
 def clean_text(text):
     if not text:
         return ""
-    # Replace line breaks and control characters with space
     text = re.sub(r'[\n\r\f\t]', ' ', text)
-    # Deduplicate spaces
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
 
 def build_pokemon_lore(species, language='en'):
+    # Textos del idioma solicitado (fallback al inglés)
+    texts = TEXTS.get(language, TEXTS['en'])
+    
+    # Nombre en el idioma (si existe)
     names = species.get('names', [])
-    name = next((n['name'] for n in names if n['language']['name'] == language), species.get('name', ''))
-
+    name = next((n['name'] for n in names if n['language']['name'] == language), None)
+    if not name:
+        # fallback al nombre por defecto (inglés interno) o inglés
+        name = species.get('name', '???')
+    
+    # Género (category)
     genera = species.get('genera', [])
     genus = next((g['genus'] for g in genera if g['language']['name'] == language), None)
     if not genus:
         genus = next((g['genus'] for g in genera if g['language']['name'] == 'en'), '')
-
+    
+    # Descripciones de sabor
     flavor_text_entries = species.get('flavor_text_entries', [])
     flavor_texts = []
     for f in flavor_text_entries:
@@ -41,37 +145,62 @@ def build_pokemon_lore(species, language='en'):
             text = re.sub(r'\s+', ' ', text).strip()
             if text not in flavor_texts:
                 flavor_texts.append(text)
-
+    # Si no hay en el idioma deseado, usar inglés
+    if not flavor_texts:
+        for f in flavor_text_entries:
+            if f['language']['name'] == 'en':
+                text = f['flavor_text'].replace('\f', ' ').replace('\n', ' ')
+                text = re.sub(r'\s+', ' ', text).strip()
+                if text not in flavor_texts:
+                    flavor_texts.append(text)
+    
     lore_fragments = re.sub(r'\s+', ' ', ' '.join(flavor_texts[:10]))
-
+    
+    # Construir traits traducidos
     traits = []
-    if species.get('is_baby'): traits.append('a baby Pokémon')
-    if species.get('is_legendary'): traits.append('a legendary Pokémon')
-    if species.get('is_mythical'): traits.append('a mythical Pokémon')
-
+    if species.get('is_baby'):
+        traits.append(texts["baby"])
+    if species.get('is_legendary'):
+        traits.append(texts["legendary"])
+    if species.get('is_mythical'):
+        traits.append(texts["mythical"])
+    
     if genus:
-        traits.append(f'known as "{genus}"')
-
+        traits.append(texts["known_as"].format(genus=genus))
+    
     habitat = species.get('habitat')
     if habitat:
-        traits.append(f"commonly found in {habitat['name']} environments")
-
+        habitat_name = translate_term("habitat", habitat['name'], language)
+        traits.append(texts["found_in"].format(habitat=habitat_name))
+    
     color = species.get('color')
     if color:
-        traits.append(f"predominantly {color['name']} in color")
-
+        color_name = translate_term("color", color['name'], language)
+        traits.append(texts["color"].format(color=color_name))
+    
     shape = species.get('shape')
     if shape:
-        traits.append(f"with a silhouette classified as {shape['name']}")
-
-    intro = f"{name} is {', '.join(traits)}." if traits else f"{name} is a Pokémon."
+        shape_name = translate_term("shape", shape['name'], language)
+        traits.append(texts["shape"].format(shape=shape_name))
+    
+    if traits:
+        intro = texts["intro"].format(name=name, traits=', '.join(traits))
+    else:
+        intro = texts["intro_no_traits"].format(name=name)
     
     generation_name = species.get('generation', {}).get('name', '')
-    generation = f"{name} first appeared in the {generation_name.replace('-', ' ')}."
-
+    generation = texts["generation"].format(
+        name=name,
+        generation=generation_name.replace('-', ' ')
+    )
+    
     egg_groups = species.get('egg_groups', [])
-    breeding = f"Belongs to the {', '.join([g['name'] for g in egg_groups])} egg groups." if egg_groups else ""
-
+    if egg_groups:
+        translated_groups = [translate_term("egg_group", g['name'], language) for g in egg_groups]
+        breeding = texts["breeding"].format(egg_groups=', '.join(translated_groups))
+    else:
+        breeding = ""
+    
     parts = [intro, generation, breeding, lore_fragments]
     return '\n\n'.join([p for p in parts if p])
 
@@ -103,27 +232,16 @@ def parse_evolution_chain(node, edges, visited_edges):
 def main():
     print("🚀 Starting PokéAPI data fetching pipeline...")
     
-    # 151 original
-    # 251 original + Johto
-    # 386 + Hoenn
-    # 493 + Sinnoh
-    # 649 + Unova
-    # 721 + Kalos
-    # 809 + Alola
-    # 905 + Galar
-    # 1025 + Paldea
     start_id = 1
     end_id = 1025
     
     output_dir = os.path.join(os.path.dirname(__file__), "..", "..", "packages", "database", "src", "seeds")
     os.makedirs(output_dir, exist_ok=True)
     
-    # ── Output paths (one file per domain) ──────────────────────────────────
     checkpoint_path       = os.path.join(output_dir, "checkpoint.json")
     pokemon_path          = os.path.join(output_dir, "pokemon.json")
     evolution_edges_path  = os.path.join(output_dir, "evolutionEdges.json")
     
-    # Load checkpoint if exists
     state = {"last_id": 0, "pokemons": [], "evolution_edges": [], "processed_chains": []}
     if os.path.exists(checkpoint_path):
         try:
@@ -142,14 +260,12 @@ def main():
     
     for pokemon_id in tqdm(range(start_id, end_id + 1), desc="Fetching Pokémons"):
         try:
-            # 1. Fetch Pokemon base data
             p_res = requests.get(f"{BASE_URL}/pokemon/{pokemon_id}")
             if p_res.status_code != 200:
                 print(f"\n❌ Failed to fetch Pokemon {pokemon_id}")
                 continue
             p_data = p_res.json()
             
-            # Extract types, stats, and official-artwork sprite
             types = [t['type']['name'] for t in p_data['types']]
             
             stats_raw = p_data['stats']
@@ -164,18 +280,23 @@ def main():
             
             sprite = p_data['sprites']['other']['official-artwork']['front_default']
             
-            # 2. Fetch Pokemon species data
             s_res = requests.get(f"{BASE_URL}/pokemon-species/{pokemon_id}")
             if s_res.status_code != 200:
                 print(f"\n❌ Failed to fetch Pokemon Species {pokemon_id}")
                 continue
             s_data = s_res.json()
             
-            # Extract English name if available, fallback to default name
+            # Nombres
             name_en = next((n['name'] for n in s_data['names'] if n['language']['name'] == 'en'), None)
+            name_es = next((n['name'] for n in s_data['names'] if n['language']['name'] == 'es'), None)
+            if not name_en:
+                name_en = p_data["name"]  # fallback al nombre interno
+            if not name_es:
+                name_es = name_en  # fallback al inglés si no hay español
             
-            # Extract English description (flavor text) using the new lore builder
+            # Descripciones en ambos idiomas
             desc_en = build_pokemon_lore(s_data, 'en')
+            desc_es = build_pokemon_lore(s_data, 'es')
             
             gen_number = parse_roman_generation(s_data['generation']['name'])
             
@@ -183,12 +304,12 @@ def main():
             order = p_data.get('order')
             weight = p_data.get('weight')
             
-            # Append Pokemon
             pokemons.append({
                 "id": pokemon_id,
-                "name": p_data["name"],
-                "name_es": name_en,
+                "name": name_en,
+                "name_es": name_es,
                 "description": desc_en,
+                "description_es": desc_es,
                 "types": types,
                 "generation": gen_number,
                 "stats": stats,
@@ -198,7 +319,7 @@ def main():
                 "weight": weight
             })
             
-            # 3. Fetch Evolution Chain if not processed yet
+            # Evolution chain
             chain_url = s_data['evolution_chain']['url']
             chain_id = int(chain_url.split('/')[-2])
             
@@ -209,7 +330,6 @@ def main():
                     c_data = c_res.json()
                     parse_evolution_chain(c_data['chain'], evolution_edges, visited_edges)
             
-            # Save checkpoint incrementally (every 10 items)
             if pokemon_id % 10 == 0 or pokemon_id == end_id:
                 state["last_id"] = pokemon_id
                 state["pokemons"] = pokemons
@@ -221,7 +341,6 @@ def main():
         except Exception as e:
             print(f"\n❌ Exception occurred for Pokemon {pokemon_id}: {str(e)}")
             
-    # ── Write one file per domain ────────────────────────────────────────────
     with open(pokemon_path, 'w', encoding='utf-8') as f:
         json.dump(pokemons, f, ensure_ascii=False, indent=2)
     print(f"   📄 pokemon.json         → {len(pokemons)} records")
@@ -230,7 +349,6 @@ def main():
         json.dump(evolution_edges, f, ensure_ascii=False, indent=2)
     print(f"   📄 evolutionEdges.json  → {len(evolution_edges)} records")
         
-    # Remove checkpoint after success
     if os.path.exists(checkpoint_path):
         os.remove(checkpoint_path)
         

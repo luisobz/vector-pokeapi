@@ -82,6 +82,7 @@ export class PokemonRepository implements IPokemonRepository {
       name: rawPokemon.name,
       nameEs: rawPokemon.nameEs,
       description: rawPokemon.description,
+      descriptionEs: rawPokemon.descriptionEs,
       types: rawPokemon.types,
       generation: rawPokemon.generation,
       stats: this.formatStats(rawPokemon.stats),

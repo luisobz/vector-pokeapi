@@ -2,7 +2,7 @@
 
 import { useLocale } from 'next-intl';
 import { setUserLocale } from '../services/locale';
-import { useState, useTransition } from 'react';
+import { useTransition } from 'react';
 import { Globe } from 'lucide-react';
 
 export default function LanguageSwitcher() {

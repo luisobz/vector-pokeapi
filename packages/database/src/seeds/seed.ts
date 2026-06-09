@@ -59,12 +59,13 @@ async function main() {
     const embedding_string = embedding ? `[${embedding.join(",")}]` : null;
 
     await prisma.$executeRawUnsafe(
-      `INSERT INTO pokemons (id, name, name_es, description, types, generation, stats, sprite, height, weight, embedding)
-       VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, $9, $10, $11::vector)`,
+      `INSERT INTO pokemons (id, name, name_es, description, description_es, types, generation, stats, sprite, height, weight, embedding)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9, $10, $11, $12::vector)`,
       p.id,
       p.name,
       p.name_es,
       p.description || null,
+      p.description_es || null,
       p.types,
       p.generation,
       JSON.stringify(p.stats),

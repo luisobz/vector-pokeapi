@@ -14,6 +14,7 @@ export interface PokemonDetail {
     name: string;
     nameEs?: string | null;
     description?: string | null;
+    descriptionEs?: string | null;
     types: string[];
     generation: number;
     stats: PokemonStats;
